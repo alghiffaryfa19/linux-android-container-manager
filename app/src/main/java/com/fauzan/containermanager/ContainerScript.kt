@@ -2,13 +2,11 @@ package com.fauzan.containermanager
 
 object ContainerScript {
     
-    const val ROOTFS_DIR = "/data/local/tmp/rootfs"
-
-    fun getStartScript(): String {
+    fun getStartScript(rootfsPath: String): String {
         return """
             #!/system/bin/sh
             
-            MNT="$ROOTFS_DIR"
+            MNT="$rootfsPath"
             
             echo "[*] Preparing Container Environment (Droidspaces style)..."
             
@@ -67,11 +65,11 @@ object ContainerScript {
         """.trimIndent()
     }
 
-    fun getStopScript(): String {
+    fun getStopScript(rootfsPath: String): String {
         return """
             #!/system/bin/sh
             
-            MNT="$ROOTFS_DIR"
+            MNT="$rootfsPath"
             
             echo "[*] Stopping Container..."
             

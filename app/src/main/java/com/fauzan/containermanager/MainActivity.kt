@@ -1,5 +1,6 @@
 package com.fauzan.containermanager
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.SurfaceHolder
@@ -10,6 +11,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +31,28 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStreamReader
+import java.util.UUID
+
+data class ContainerInfo(val id: String, val name: String, val path: String)
+
+private const val PREFS_NAME = "ContainerPrefs"
+private const val KEY_CONTAINERS = "containers_list"
+
+fun saveContainers(context: Context, containers: List<ContainerInfo>) {
+    val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    val jsonString = containers.joinToString(";") { "${it.id},${it.name},${it.path}" }
+    prefs.edit().putString(KEY_CONTAINERS, jsonString).apply()
+}
+
+fun loadContainers(context: Context): List<ContainerInfo> {
+    val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    val jsonString = prefs.getString(KEY_CONTAINERS, "") ?: ""
+    if (jsonString.isEmpty()) return emptyList()
+    return jsonString.split(";").mapNotNull {
+        val parts = it.split(",")
+        if (parts.size == 3) ContainerInfo(parts[0], parts[1], parts[2]) else null
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +70,17 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContainerManagerApp() {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    
+    var containers by remember { mutableStateOf(loadContainers(context)) }
+    var runningContainers by remember { mutableStateOf(setOf<String>()) }
+    var viewingContainerId by remember { mutableStateOf<String?>(null) }
     var outputLog by remember { mutableStateOf("Ready to start...") }
     var isExtracting by remember { mutableStateOf(false) }
-    var isContainerRunning by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val tarballPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -58,110 +89,157 @@ fun ContainerManagerApp() {
             coroutineScope.launch {
                 isExtracting = true
                 outputLog = "Starting extraction process...\n"
-                val res = extractTarball(context, uri)
-                outputLog += res
+                val containerName = "Container ${containers.size + 1}"
+                val newContainer = extractTarball(context, uri, containerName)
+                if (newContainer != null) {
+                    val updatedList = containers + newContainer
+                    containers = updatedList
+                    saveContainers(context, updatedList)
+                    outputLog = "Successfully added $containerName\n"
+                } else {
+                    outputLog = "Failed to extract container.\n"
+                }
                 isExtracting = false
             }
         }
     }
 
-    if (isContainerRunning) {
+    if (viewingContainerId != null) {
         ContainerDisplayScreen(
-            onStopContainer = {
-                coroutineScope.launch {
-                    outputLog = "Stopping container...\n"
-                    val res = executeSuCommand(ContainerScript.getStopScript())
-                    outputLog += res
-                    isContainerRunning = false
-                }
+            onBack = {
+                viewingContainerId = null
             }
         )
     } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Linux Container Manager",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
-            
-            Button(
-                onClick = { tarballPickerLauncher.launch("application/gzip") },
-                enabled = !isExtracting,
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-            ) {
-                Text(if (isExtracting) "Extracting... Please wait." else "Select RootFS Tarball (.tar.gz)")
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text("Linux Container Manager") })
+            },
+            floatingActionButton = {
+                FloatingActionButton(onClick = {
+                    if (!isExtracting) {
+                        tarballPickerLauncher.launch("application/gzip")
+                    }
+                }) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add Container")
+                }
             }
-
-            if (isExtracting) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp))
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp)
             ) {
-                Button(onClick = {
-                    coroutineScope.launch {
-                        outputLog = "Starting container...\n"
-                        val res = executeSuCommand(ContainerScript.getStartScript())
-                        outputLog += res
-                        if (!res.contains("ERROR")) {
-                            isContainerRunning = true
+                if (isExtracting) {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp))
+                    Text("Extracting container, please wait...")
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                LazyColumn(modifier = Modifier.weight(1f)) {
+                    items(containers) { container ->
+                        val isRunning = runningContainers.contains(container.id)
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(text = container.name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                Text(text = "Path: ${container.path}", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Spacer(modifier = Modifier.height(16.dp))
+                                
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    if (isRunning) {
+                                        Button(
+                                            onClick = { viewingContainerId = container.id },
+                                            modifier = Modifier.padding(end = 8.dp)
+                                        ) {
+                                            Text("View")
+                                        }
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    outputLog = "Stopping ${container.name}...\n"
+                                                    val res = executeSuCommand(ContainerScript.getStopScript(container.path))
+                                                    outputLog = res
+                                                    runningContainers = runningContainers - container.id
+                                                }
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                                        ) {
+                                            Text("Stop")
+                                        }
+                                    } else {
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    outputLog = "Starting ${container.name}...\n"
+                                                    val res = executeSuCommand(ContainerScript.getStartScript(container.path))
+                                                    outputLog = res
+                                                    if (!res.contains("ERROR")) {
+                                                        runningContainers = runningContainers + container.id
+                                                    }
+                                                }
+                                            },
+                                            modifier = Modifier.padding(end = 8.dp)
+                                        ) {
+                                            Text("Start")
+                                        }
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    outputLog = "Deleting ${container.name}...\n"
+                                                    executeSuCommand("rm -rf ${container.path}")
+                                                    val updatedList = containers.filter { it.id != container.id }
+                                                    containers = updatedList
+                                                    saveContainers(context, updatedList)
+                                                    outputLog = "Deleted ${container.name}\n"
+                                                }
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                                        ) {
+                                            Text("Delete")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                }, enabled = !isExtracting) {
-                    Text("Start Container")
                 }
 
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            outputLog = "Stopping container...\n"
-                            val res = executeSuCommand(ContainerScript.getStopScript())
-                            outputLog += res
-                        }
-                    },
-                    enabled = !isExtracting,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Logs:", fontWeight = FontWeight.Bold)
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(120.dp)
+                        .padding(top = 8.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = MaterialTheme.shapes.medium
                 ) {
-                    Text("Stop Container")
+                    Text(
+                        text = outputLog,
+                        modifier = Modifier.padding(16.dp),
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        fontSize = 12.sp
+                    )
                 }
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(text = "Logs:", fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
-            
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(top = 8.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Text(
-                    text = outputLog,
-                    modifier = Modifier.padding(16.dp),
-                    fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
-                    fontSize = 12.sp
-                )
             }
         }
     }
 }
 
 @Composable
-fun ContainerDisplayScreen(onStopContainer: () -> Unit) {
+fun ContainerDisplayScreen(onBack: () -> Unit) {
     BackHandler(onBack = {
         DisplayManager.stopDisplay()
-        onStopContainer()
+        onBack()
     })
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -179,7 +257,6 @@ fun ContainerDisplayScreen(onStopContainer: () -> Unit) {
                             width: Int,
                             height: Int
                         ) {
-                            // Handle surface size changes if necessary
                         }
 
                         override fun surfaceDestroyed(holder: SurfaceHolder) {
@@ -193,16 +270,18 @@ fun ContainerDisplayScreen(onStopContainer: () -> Unit) {
     }
 }
 
-suspend fun extractTarball(context: android.content.Context, uri: Uri): String = withContext(Dispatchers.IO) {
+suspend fun extractTarball(context: Context, uri: Uri, containerName: String): ContainerInfo? = withContext(Dispatchers.IO) {
     try {
-        val cacheFile = File(context.cacheDir, "rootfs_temp.tar.gz")
+        val cacheFile = File(context.cacheDir, "rootfs_temp_${System.currentTimeMillis()}.tar.gz")
         context.contentResolver.openInputStream(uri)?.use { input ->
             FileOutputStream(cacheFile).use { output ->
                 input.copyTo(output)
             }
         }
 
-        val destDir = ContainerScript.ROOTFS_DIR
+        val id = UUID.randomUUID().toString()
+        val containersDir = File(context.filesDir, "containers")
+        val destDir = File(containersDir, "container_$id").absolutePath
         
         val cmd = """
             echo "Creating target directory: $destDir"
@@ -213,9 +292,14 @@ suspend fun extractTarball(context: android.content.Context, uri: Uri): String =
             rm -f ${cacheFile.absolutePath}
         """.trimIndent()
         
-        executeSuCommand(cmd)
+        val res = executeSuCommand(cmd)
+        if (res.contains("ERROR")) {
+            null
+        } else {
+            ContainerInfo(id, containerName, destDir)
+        }
     } catch (e: Exception) {
-        "Exception during extraction: ${e.message}\n"
+        null
     }
 }
 
