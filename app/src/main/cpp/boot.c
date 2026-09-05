@@ -109,13 +109,13 @@ int main(int argc, char *argv[]) {
 
     log_msg("[*] Mounting virtual filesystems...");
     mount("proc", "proc", "proc", 0, NULL);
-    mount("sysfs", "sys", "sysfs", 0, NULL);
+    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
     mount("tmpfs", "tmp", "tmpfs", 0, "mode=1777");
     mount("tmpfs", "run", "tmpfs", 0, "mode=755");
 
-    // Bind mount host /dev to container's /dev
-    if (mount("/dev", "dev", NULL, MS_BIND, NULL) != 0) {
-        log_err("bind mount /dev failed");
+    // Use an isolated tmpfs for /dev instead of host's /dev to prevent systemd-udevd from messing with Android hardware
+    if (mount("tmpfs", "dev", "tmpfs", 0, "mode=755") != 0) {
+        log_err("mount tmpfs on /dev failed");
     }
 
     log_msg("[*] Pivoting root...");
@@ -142,8 +142,17 @@ int main(int argc, char *argv[]) {
     log_msg("[*] Container Started Successfully!");
 
     // Execute the init system
+    // Tell systemd that it's running in a container, otherwise it might try to reboot the host
     char *init_args[] = {"/sbin/init", NULL};
-    execve("/sbin/init", init_args, NULL);
+    char *init_env[] = {
+        "container=lxc",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TERM=xterm",
+        "HOME=/root",
+        "USER=root",
+        NULL
+    };
+    execve("/sbin/init", init_args, init_env);
     
     // If execve fails
     log_err("execve /sbin/init failed");
