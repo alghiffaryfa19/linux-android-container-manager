@@ -311,6 +311,16 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
                 SurfaceView(context).apply {
                     holder.addCallback(object : SurfaceHolder.Callback {
                         override fun surfaceCreated(holder: SurfaceHolder) {
+                            looping = true
+                            permissionJob = coroutineScope.launch(Dispatchers.IO) {
+                                val helperPath = "${context.applicationInfo.nativeLibraryDir}/libfdhelper.so"
+                                val daemonSock = "$containerPath/var/display_daemon.sock"
+                                val bridgeSock = "${context.cacheDir.absolutePath}/bridge.sock"
+                                while (looping) {
+                                    executeSuCommand("$helperPath $daemonSock $bridgeSock")
+                                    kotlinx.coroutines.delay(1000)
+                                }
+                            }
                             coroutineScope.launch(Dispatchers.Main) {
                                 DisplayManager.startDisplay(context, holder.surface, containerPath)
                             }
