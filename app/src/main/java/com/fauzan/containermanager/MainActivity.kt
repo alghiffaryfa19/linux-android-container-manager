@@ -170,6 +170,24 @@ fun ContainerManagerApp() {
                                         }
                                         Button(
                                             onClick = {
+                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} /bin/sh\""
+                                                val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                                val clip = android.content.ClipData.newPlainText("CLI Command", cmd)
+                                                clipboard.setPrimaryClip(clip)
+                                                android.widget.Toast.makeText(context, "Command copied! Paste in Termux", android.widget.Toast.LENGTH_LONG).show()
+                                                
+                                                val intent = context.packageManager.getLaunchIntentForPackage("com.termux")
+                                                if (intent != null) {
+                                                    context.startActivity(intent)
+                                                }
+                                            },
+                                            modifier = Modifier.padding(end = 8.dp),
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                                        ) {
+                                            Text("CLI")
+                                        }
+                                        Button(
+                                            onClick = {
                                                 coroutineScope.launch {
                                                     outputLog = "Stopping ${container.name}...\n"
                                                     val res = executeSuCommand(ContainerScript.getStopScript(container.path))
@@ -196,6 +214,24 @@ fun ContainerManagerApp() {
                                             modifier = Modifier.padding(end = 8.dp)
                                         ) {
                                             Text("Start")
+                                        }
+                                        Button(
+                                            onClick = {
+                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} /bin/sh\""
+                                                val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                                val clip = android.content.ClipData.newPlainText("CLI Command", cmd)
+                                                clipboard.setPrimaryClip(clip)
+                                                android.widget.Toast.makeText(context, "Command copied! Paste in Termux", android.widget.Toast.LENGTH_LONG).show()
+                                                
+                                                val intent = context.packageManager.getLaunchIntentForPackage("com.termux")
+                                                if (intent != null) {
+                                                    context.startActivity(intent)
+                                                }
+                                            },
+                                            modifier = Modifier.padding(end = 8.dp),
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                                        ) {
+                                            Text("CLI")
                                         }
                                         Button(
                                             onClick = {

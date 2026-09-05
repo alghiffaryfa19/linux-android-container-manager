@@ -61,27 +61,34 @@ int main(int argc, char *argv[]) {
         perror("fork failed");
         return 1;
     } else if (pid > 0) {
-        // Parent exits immediately, child runs in the background
+        // Parent
+        if (argc > 2) {
+            // CLI mode: Wait for the child so the terminal session stays active
+            int status;
+            waitpid(pid, &status, 0);
+        }
         return 0;
     }
 
     // --- We are now PID 1 in the new namespace ---
 
-    // Redirect stdout and stderr to rootfs/container.log
-    char log_path[1024];
-    snprintf(log_path, sizeof(log_path), "%s/container.log", rootfs);
-    int log_fd = open(log_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (log_fd >= 0) {
-        dup2(log_fd, STDOUT_FILENO);
-        dup2(log_fd, STDERR_FILENO);
-        close(log_fd);
-    }
-    
-    // Redirect stdin to /dev/null
-    int null_fd = open("/dev/null", O_RDONLY);
-    if (null_fd >= 0) {
-        dup2(null_fd, STDIN_FILENO);
-        close(null_fd);
+    // Redirect stdout and stderr to rootfs/container.log ONLY if in background mode
+    if (argc <= 2) {
+        char log_path[1024];
+        snprintf(log_path, sizeof(log_path), "%s/container.log", rootfs);
+        int log_fd = open(log_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (log_fd >= 0) {
+            dup2(log_fd, STDOUT_FILENO);
+            dup2(log_fd, STDERR_FILENO);
+            close(log_fd);
+        }
+        
+        // Redirect stdin to /dev/null
+        int null_fd = open("/dev/null", O_RDONLY);
+        if (null_fd >= 0) {
+            dup2(null_fd, STDIN_FILENO);
+            close(null_fd);
+        }
     }
 
     log_msg("[*] Preparing Container Environment (Droidspaces style via Native C)...");
@@ -152,8 +159,18 @@ int main(int argc, char *argv[]) {
     log_msg("[*] Container Started Successfully!");
 
     // Execute the init system
+    char **init_args;
+    char *init_path;
+    if (argc > 2) {
+        init_args = &argv[2];
+        init_path = argv[2];
+    } else {
+        static char *default_init[] = {"/sbin/init", NULL};
+        init_args = default_init;
+        init_path = "/sbin/init";
+    }
+
     // Tell systemd that it's running in a container, otherwise it might try to reboot the host
-    char *init_args[] = {"/sbin/init", NULL};
     char *init_env[] = {
         "container=lxc",
         "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -162,9 +179,9 @@ int main(int argc, char *argv[]) {
         "USER=root",
         NULL
     };
-    execve("/sbin/init", init_args, init_env);
+    execve(init_path, init_args, init_env);
     
     // If execve fails
-    log_err("execve /sbin/init failed");
+    log_err("execve failed");
     return 1;
 }
