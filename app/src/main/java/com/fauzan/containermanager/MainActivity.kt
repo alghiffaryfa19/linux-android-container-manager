@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                         input.copyTo(output)
                     }
                 }
-            } catch (e: IOException) {
+            } catch (e: java.io.IOException) {
                 e.printStackTrace()
             }
         }
