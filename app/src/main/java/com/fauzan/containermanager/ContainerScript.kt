@@ -71,6 +71,9 @@ object ContainerScript {
             # Kill the container processes (targeting the init system if we started it)
             pkill -f '/sbin/init'
             
+            # Clean up PID file
+            rm -f ${'$'}MNT/container.pid
+            
             # Unmount system dirs (lazy unmount) just in case they were mounted in the host namespace
             echo "[*] Cleaning up host mounts (if any)..."
             umount -l ${'$'}MNT/tmp 2>/dev/null

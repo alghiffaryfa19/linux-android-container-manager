@@ -42,6 +42,61 @@ int main(int argc, char *argv[]) {
 
     const char *rootfs = argv[1];
 
+    if (argc >= 3 && strcmp(argv[2], "enter") == 0) {
+        char pid_path[1024];
+        snprintf(pid_path, sizeof(pid_path), "%s/container.pid", rootfs);
+        FILE *f = fopen(pid_path, "r");
+        if (!f) {
+            printf("[ERROR] Container is not running (no container.pid)\n");
+            return 1;
+        }
+        int init_pid;
+        if (fscanf(f, "%d", &init_pid) != 1) {
+            printf("[ERROR] Invalid container.pid\n");
+            fclose(f);
+            return 1;
+        }
+        fclose(f);
+        
+        printf("[*] Entering container namespaces (PID %d)...\n", init_pid);
+        
+        char ns_path[256];
+        const char *namespaces[] = {"user", "ipc", "uts", "net", "pid", "mnt", "cgroup"};
+        for (int i = 0; i < 7; i++) {
+            snprintf(ns_path, sizeof(ns_path), "/proc/%d/ns/%s", init_pid, namespaces[i]);
+            int fd = open(ns_path, O_RDONLY);
+            if (fd >= 0) {
+                setns(fd, 0);
+                close(fd);
+            }
+        }
+        
+        pid_t child = fork();
+        if (child == 0) {
+            chdir("/");
+            char *sh_env[] = {
+                "container=lxc",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TERM=xterm",
+                "HOME=/root",
+                "USER=root",
+                NULL
+            };
+            char *bash_args[] = {"/bin/bash", NULL};
+            execve("/bin/bash", bash_args, sh_env);
+            char *sh_args[] = {"/bin/sh", NULL};
+            execve("/bin/sh", sh_args, sh_env);
+            return 1;
+        } else if (child > 0) {
+            int status;
+            waitpid(child, &status, 0);
+            return 0;
+        } else {
+            perror("fork");
+            return 1;
+        }
+    }
+
     // Check if rootfs exists
     struct stat st;
     if (stat(rootfs, &st) != 0 || !S_ISDIR(st.st_mode)) {
@@ -62,6 +117,14 @@ int main(int argc, char *argv[]) {
         return 1;
     } else if (pid > 0) {
         // Parent
+        char pid_path[1024];
+        snprintf(pid_path, sizeof(pid_path), "%s/container.pid", rootfs);
+        FILE *f = fopen(pid_path, "w");
+        if (f) {
+            fprintf(f, "%d\n", pid);
+            fclose(f);
+        }
+
         if (argc > 2) {
             // CLI mode: Wait for the child so the terminal session stays active
             int status;
@@ -133,6 +196,13 @@ int main(int argc, char *argv[]) {
         mknod("dev/null", S_IFCHR | 0666, makedev(1, 3));
         mknod("dev/zero", S_IFCHR | 0666, makedev(1, 5));
         mknod("dev/urandom", S_IFCHR | 0666, makedev(1, 9));
+        
+        // Setup devpts for terminal emulators and apt
+        mkdir("dev/pts", 0755);
+        if (mount("devpts", "dev/pts", "devpts", 0, "newinstance,ptmxmode=0666") != 0) {
+            log_err("mount devpts failed");
+        }
+        symlink("pts/ptmx", "dev/ptmx");
     }
 
     log_msg("[*] Pivoting root...");

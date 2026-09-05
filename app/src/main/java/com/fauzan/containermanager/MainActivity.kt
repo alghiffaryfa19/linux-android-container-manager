@@ -170,7 +170,7 @@ fun ContainerManagerApp() {
                                         }
                                         Button(
                                             onClick = {
-                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} /bin/sh\""
+                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} enter\""
                                                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                                                 val clip = android.content.ClipData.newPlainText("CLI Command", cmd)
                                                 clipboard.setPrimaryClip(clip)
@@ -217,7 +217,7 @@ fun ContainerManagerApp() {
                                         }
                                         Button(
                                             onClick = {
-                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} /bin/sh\""
+                                                val cmd = "su -c \"${ContainerScript.bootBinaryPath} ${container.path} enter\""
                                                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                                                 val clip = android.content.ClipData.newPlainText("CLI Command", cmd)
                                                 clipboard.setPrimaryClip(clip)
