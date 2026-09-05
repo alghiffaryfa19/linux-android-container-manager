@@ -83,8 +83,9 @@ int main(int argc, char *argv[]) {
     log_msg("[*] Entering isolated mount namespace...");
 
     // Make all mounts private so they don't leak to host
-    if (mount("none", "/", NULL, MS_REC | MS_PRIVATE, NULL) != 0) {
-        log_err("mount --make-rprivate failed (ignoring)");
+    if (mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL) != 0) {
+        log_err("mount --make-rprivate failed");
+        return 1;
     }
 
     // Bind mount rootfs to itself so pivot_root works
