@@ -79,11 +79,45 @@ int connect_unix(const char *path)
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    strncpy(addr.sun_path, path, sizeof(addr.sun_path) - 1);
 
-    if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-        close(fd);
-        return -1;
+    if (strlen(path) < sizeof(addr.sun_path)) {
+        strncpy(addr.sun_path, path, sizeof(addr.sun_path) - 1);
+        if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+            close(fd);
+            return -1;
+        }
+    } else {
+        // Path too long for sun_path, use /proc/self/fd/ workaround
+        const char *slash = strrchr(path, '/');
+        if (!slash) {
+            close(fd);
+            return -1;
+        }
+        
+        size_t dirlen = slash - path;
+        char dir[4096];
+        if (dirlen >= sizeof(dir)) {
+            close(fd);
+            return -1;
+        }
+        memcpy(dir, path, dirlen);
+        dir[dirlen] = '\0';
+        const char *base = slash + 1;
+        
+        int dirfd = open(dir, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+        if (dirfd < 0) {
+            close(fd);
+            return -1;
+        }
+        
+        snprintf(addr.sun_path, sizeof(addr.sun_path), "/proc/self/fd/%d/%s", dirfd, base);
+        
+        if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+            close(dirfd);
+            close(fd);
+            return -1;
+        }
+        close(dirfd);
     }
     return fd;
 }

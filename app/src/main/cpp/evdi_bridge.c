@@ -54,23 +54,23 @@ int main(int argc, char **argv) {
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    strncpy(addr.sun_path, "/tmp/display_daemon.sock", sizeof(addr.sun_path) - 1);
+    strncpy(addr.sun_path, "/var/display_daemon.sock", sizeof(addr.sun_path) - 1);
 
-    unlink("/tmp/display_daemon.sock");
+    unlink("/var/display_daemon.sock");
     if (bind(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-        perror("[evdi-bridge] Failed to bind to /tmp/display_daemon.sock");
+        perror("[evdi-bridge] Failed to bind to /var/display_daemon.sock");
         return 1;
     }
     
     // Allow Android app (unprivileged user) to connect to this socket
-    chmod("/tmp/display_daemon.sock", 0777);
+    chmod("/var/display_daemon.sock", 0777);
     
     if (listen(sock, 1) < 0) {
         perror("[evdi-bridge] Failed to listen");
         return 1;
     }
     
-    printf("[evdi-bridge] Listening on /tmp/display_daemon.sock. Waiting for Android app...\n");
+    printf("[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...\n");
     
     int client_sock = accept(sock, NULL, NULL);
     if (client_sock < 0) {
