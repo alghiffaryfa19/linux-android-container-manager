@@ -24,6 +24,10 @@ target_link_libraries(
 
 # Add the standalone boot binary executable
 add_executable(container_boot boot.c)
-
-# Make the executable look like a shared library so Gradle packages it automatically
 set_target_properties(container_boot PROPERTIES PREFIX "lib" SUFFIX ".so")
+
+# Add the fdhelper executable
+add_executable(fdhelper fd_helper.c common/socket_utils.c)
+target_include_directories(fdhelper PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/common)
+target_link_libraries(fdhelper log)
+set_target_properties(fdhelper PROPERTIES PREFIX "lib" SUFFIX ".so")

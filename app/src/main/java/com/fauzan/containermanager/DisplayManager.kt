@@ -19,12 +19,14 @@ object DisplayManager {
     @JvmStatic external fun nativeStart(handle: Long, surface: Surface, clipboardTarget: Any?, activityTarget: Any?)
     @JvmStatic external fun nativeStop(handle: Long)
 
-    fun startDisplay(surface: Surface, containerPath: String) {
+    fun startDisplay(context: android.content.Context, surface: Surface, containerPath: String) {
         if (handle == 0L) {
             handle = nativeCreate()
         }
         val socketPath = "$containerPath/tmp/display_daemon.sock"
-        nativeConfigure(handle, socketPath, false, "", "", false, "", 1, "")
+        val bridgePath = "$containerPath/tmp/bridge.sock"
+        val helperPath = "${context.applicationInfo.nativeLibraryDir}/libfdhelper.so"
+        nativeConfigure(handle, socketPath, true, helperPath, bridgePath, false, "", 1, "")
         nativeStart(handle, surface, null, null)
     }
 

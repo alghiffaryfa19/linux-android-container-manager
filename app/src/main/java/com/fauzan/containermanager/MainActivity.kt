@@ -316,7 +316,7 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
                                 executeSuCommand("chown $uid:$uid $containerPath/tmp/display_daemon.sock")
                                 executeSuCommand("chcon u:object_r:app_data_file:s0 $containerPath/tmp/display_daemon.sock")
                                 withContext(Dispatchers.Main) {
-                                    DisplayManager.startDisplay(holder.surface, containerPath)
+                                    DisplayManager.startDisplay(context, holder.surface, containerPath)
                                 }
                             }
                         }
