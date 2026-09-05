@@ -279,7 +279,9 @@ int main(int argc, char *argv[]) {
             int fd = open(dest, O_CREAT | O_WRONLY, 0666);
             if (fd >= 0) close(fd);
             mount(src, dest, NULL, MS_BIND, NULL);
-            log_msg("[*] Injected standalone %s", compat_libs[i]);
+            char msg[256];
+            snprintf(msg, sizeof(msg), "[*] Injected standalone %s", compat_libs[i]);
+            log_msg(msg);
         }
     }
 
