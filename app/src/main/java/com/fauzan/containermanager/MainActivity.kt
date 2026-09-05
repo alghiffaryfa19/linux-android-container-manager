@@ -311,7 +311,10 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
                         override fun surfaceCreated(holder: SurfaceHolder) {
                             coroutineScope.launch {
                                 // Ensure the Android app can access the root-owned daemon socket
+                                val uid = android.os.Process.myUid()
                                 executeSuCommand("chmod 777 $containerPath/tmp/display_daemon.sock")
+                                executeSuCommand("chown $uid:$uid $containerPath/tmp/display_daemon.sock")
+                                executeSuCommand("chcon u:object_r:app_data_file:s0 $containerPath/tmp/display_daemon.sock")
                                 withContext(Dispatchers.Main) {
                                     DisplayManager.startDisplay(holder.surface, containerPath)
                                 }
