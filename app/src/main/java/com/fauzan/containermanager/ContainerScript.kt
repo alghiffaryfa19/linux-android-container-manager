@@ -17,7 +17,8 @@ object ContainerScript {
             
             # Start the container inside a new isolated mount namespace
             # We run it in the background so the Android UI doesn't block forever
-            unshare -m /system/bin/sh -c "
+            # Redirect output to prevent the pipe from hanging executeSuCommand
+            nohup unshare -m /system/bin/sh -c "
                 echo \"[*] Entering isolated mount namespace...\"
                 
                 # Prevent our mounts from leaking back to the Android host
@@ -61,7 +62,12 @@ object ContainerScript {
                 
                 # Execute the native OS init system
                 exec /sbin/init
-            " &
+            " > "${'$'}MNT/container.log" 2>&1 < /dev/null &
+            
+            # Wait a moment for initialization and then output the log so UI can show it
+            sleep 3
+            echo "[*] Container init log:"
+            cat "${'$'}MNT/container.log"
         """.trimIndent()
     }
 
