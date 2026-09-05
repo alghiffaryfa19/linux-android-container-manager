@@ -413,16 +413,25 @@ static int recv_fd_via_root_helper(const char *daemon_sock,
     }
 
     /* Wait for the helper to connect (root prompt may take a while). */
+    LOGI("root helper: waiting for connection on lfd=%d", lfd);
     int fd = -1;
     struct pollfd pfd = { .fd = lfd, .events = POLLIN };
     if (poll(&pfd, 1, 30000) > 0 && (pfd.revents & POLLIN)) {
+        LOGI("root helper: poll success, accepting connection");
         int cfd = accept(lfd, NULL, NULL);
         if (cfd >= 0) {
+            LOGI("root helper: accepted connection cfd=%d, receiving fds...", cfd);
             char b;
             int got = 0;
-            if (recv_fds(cfd, &b, 1, &fd, 1, &got) < 0 || got < 1)
+            if (recv_fds(cfd, &b, 1, &fd, 1, &got) < 0 || got < 1) {
+                LOGE("root helper: recv_fds failed (got=%d)", got);
                 fd = -1;
+            } else {
+                LOGI("root helper: successfully received fd=%d from helper", fd);
+            }
             close(cfd);
+        } else {
+            LOGE("root helper: accept() failed: %s", strerror(errno));
         }
     } else {
         LOGE("root helper: timed out waiting for helper connection");
@@ -746,11 +755,13 @@ static int do_connect(struct consumer_state *s)
          s->screen_w, s->screen_h, s->buf_count, use_root);
 
     if (use_root) {
+        LOGI("do_connect: attempting recv_fd_via_root_helper");
         int ctrl_fd = recv_fd_via_root_helper(sock, helper_path, bridge_path);
         if (ctrl_fd < 0) {
-            LOGE("root helper connect failed");
+            LOGE("do_connect: recv_fd_via_root_helper failed (ctrl_fd=%d)", ctrl_fd);
             return -1;
         }
+        LOGI("do_connect: recv_fd_via_root_helper succeeded, ctrl_fd=%d", ctrl_fd);
         if (connect_to_deamon_with_fd(&s->ctx, ctrl_fd) < 0) {
             LOGE("connect_to_deamon_with_fd failed");
             return -1;
@@ -760,9 +771,18 @@ static int do_connect(struct consumer_state *s)
         return -1;
     }
 
+    if (!s->ctx) {
+        LOGE("do_connect: connect_with_fd/connect_with_path failed!");
+        return -1;
+    }
+
+    LOGI("do_connect: connected successfully! ctx=%p", s->ctx);
+
     set_screen_info(s->ctx, s->screen_w, s->screen_h,
                     PIXEL_FORMAT_RGBA_8888, s->refresh_mhz);
+    LOGI("do_connect: pushing %d dmabufs (refresh=%d)", s->buf_count, s->refresh_mhz);
     push_dmabufs(s->ctx, s->dmabuf_fds, s->dmabuf_infos, s->buf_count);
+    LOGI("do_connect: pushed dmabufs successfully");
 
     /* Register the camera service only when it was initialised (i.e. the user
      * enabled it in settings and granted CAMERA). The service_info lives in this
