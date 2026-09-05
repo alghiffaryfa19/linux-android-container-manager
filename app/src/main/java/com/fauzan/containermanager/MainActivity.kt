@@ -306,18 +306,23 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
+                var permissionJob: kotlinx.coroutines.Job? = null
+                var looping = false
                 SurfaceView(context).apply {
                     holder.addCallback(object : SurfaceHolder.Callback {
                         override fun surfaceCreated(holder: SurfaceHolder) {
-                            coroutineScope.launch {
-                                // Ensure the Android app can access the root-owned daemon socket
+                            looping = true
+                            permissionJob = coroutineScope.launch(Dispatchers.IO) {
                                 val uid = android.os.Process.myUid()
-                                executeSuCommand("chmod 777 $containerPath/tmp/display_daemon.sock")
-                                executeSuCommand("chown $uid:$uid $containerPath/tmp/display_daemon.sock")
-                                executeSuCommand("chcon u:object_r:app_data_file:s0 $containerPath/tmp/display_daemon.sock")
-                                withContext(Dispatchers.Main) {
-                                    DisplayManager.startDisplay(context, holder.surface, containerPath)
+                                while (looping) {
+                                    executeSuCommand("chmod 777 $containerPath/tmp/display_daemon.sock")
+                                    executeSuCommand("chown $uid:$uid $containerPath/tmp/display_daemon.sock")
+                                    executeSuCommand("chcon u:object_r:app_data_file:s0 $containerPath/tmp/display_daemon.sock")
+                                    kotlinx.coroutines.delay(1000)
                                 }
+                            }
+                            coroutineScope.launch(Dispatchers.Main) {
+                                DisplayManager.startDisplay(context, holder.surface, containerPath)
                             }
                         }
 
@@ -330,6 +335,8 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
                         }
 
                         override fun surfaceDestroyed(holder: SurfaceHolder) {
+                            looping = false
+                            permissionJob?.cancel()
                             DisplayManager.stopDisplay()
                         }
                     })
