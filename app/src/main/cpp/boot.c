@@ -12,11 +12,16 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include <sys/sysmacros.h>
+
 #ifndef CLONE_NEWNS
 #define CLONE_NEWNS 0x00020000
 #endif
 #ifndef CLONE_NEWPID
 #define CLONE_NEWPID 0x20000000
+#endif
+#ifndef CLONE_NEWUTS
+#define CLONE_NEWUTS 0x04000000
 #endif
 
 void log_msg(const char *msg) {
@@ -44,8 +49,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Unshare mount and PID namespaces
-    if (unshare(CLONE_NEWNS | CLONE_NEWPID) != 0) {
+    // Unshare mount, PID, and UTS (hostname) namespaces
+    if (unshare(CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS) != 0) {
         perror("unshare failed");
         return 1;
     }
@@ -116,6 +121,11 @@ int main(int argc, char *argv[]) {
     // Use an isolated tmpfs for /dev instead of host's /dev to prevent systemd-udevd from messing with Android hardware
     if (mount("tmpfs", "dev", "tmpfs", 0, "mode=755") != 0) {
         log_err("mount tmpfs on /dev failed");
+    } else {
+        // Create basic device nodes for systemd
+        mknod("dev/null", S_IFCHR | 0666, makedev(1, 3));
+        mknod("dev/zero", S_IFCHR | 0666, makedev(1, 5));
+        mknod("dev/urandom", S_IFCHR | 0666, makedev(1, 9));
     }
 
     log_msg("[*] Pivoting root...");

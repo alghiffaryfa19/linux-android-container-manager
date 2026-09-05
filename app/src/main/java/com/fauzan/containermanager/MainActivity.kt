@@ -85,7 +85,7 @@ fun ContainerManagerApp() {
     
     var containers by remember { mutableStateOf(loadContainers(context)) }
     var runningContainers by remember { mutableStateOf(setOf<String>()) }
-    var viewingContainerId by remember { mutableStateOf<String?>(null) }
+
     var outputLog by remember { mutableStateOf("Ready to start...") }
     var isExtracting by remember { mutableStateOf(false) }
 
@@ -111,14 +111,7 @@ fun ContainerManagerApp() {
         }
     }
 
-    if (viewingContainerId != null) {
-        ContainerDisplayScreen(
-            onBack = {
-                viewingContainerId = null
-            }
-        )
-    } else {
-        Scaffold(
+    Scaffold(
             topBar = {
                 TopAppBar(title = { Text("Linux Container Manager") })
             },
@@ -164,7 +157,13 @@ fun ContainerManagerApp() {
                                 ) {
                                     if (isRunning) {
                                         Button(
-                                            onClick = { viewingContainerId = container.id },
+                                            onClick = {
+                                                val intent = android.content.Intent(context, ContainerDisplayActivity::class.java).apply {
+                                                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                                                    putExtra("CONTAINER_ID", container.id)
+                                                }
+                                                context.startActivity(intent)
+                                            },
                                             modifier = Modifier.padding(end = 8.dp)
                                         ) {
                                             Text("View")
@@ -243,7 +242,6 @@ fun ContainerManagerApp() {
                 }
             }
         }
-    }
 }
 
 @Composable

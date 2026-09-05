@@ -16,5 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ContainerDisplayActivity"
+            android:documentLaunchMode="intoExisting"
+            android:exported="false" />
     </application>
 </manifest>
