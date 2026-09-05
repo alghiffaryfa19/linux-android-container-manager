@@ -5,3 +5,5 @@
 #define TracyCZoneCtx(...)
 #define TracyCZoneEnd(...)
 #define TracyCZoneColor(ctx, color)
+#define TracyCZoneN(ctx, name, active)
+#define TracyCFrameMark
