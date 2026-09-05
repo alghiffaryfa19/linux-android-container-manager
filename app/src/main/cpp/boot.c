@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
     if (stat("/sys/devices/evdi-lindroid", &evdi_st) == 0) {
         mount("/sys/devices/evdi-lindroid", "sys/devices/evdi-lindroid", NULL, MS_BIND, NULL);
     }
-    mount("tmpfs", "tmp", "tmpfs", 0, "mode=1777");
+    // Removed tmpfs mount on /tmp so the host can access /tmp/display_daemon.sock
     mount("tmpfs", "run", "tmpfs", 0, "mode=755");
 
     // Use an isolated tmpfs for /dev instead of host's /dev to prevent systemd-udevd from messing with Android hardware

@@ -1,0 +1,983 @@
+﻿2026-09-05T18:02:36.1036568Z Current runner version: '2.337.0'
+2026-09-05T18:02:36.1061583Z ##[group]Runner Image Provisioner
+2026-09-05T18:02:36.1062452Z Hosted Compute Agent
+2026-09-05T18:02:36.1063098Z Version: 20260828.587
+2026-09-05T18:02:36.1063912Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-05T18:02:36.1064690Z Build Date: 2026-08-28T16:44:25Z
+2026-09-05T18:02:36.1065939Z Worker ID: {4a0ed0c3-240b-4258-8cb9-90b3c06bc7e4}
+2026-09-05T18:02:36.1066736Z Azure Region: northcentralus
+2026-09-05T18:02:36.1067374Z ##[endgroup]
+2026-09-05T18:02:36.1069352Z ##[group]Operating System
+2026-09-05T18:02:36.1070006Z Ubuntu
+2026-09-05T18:02:36.1070641Z 24.04.4
+2026-09-05T18:02:36.1071195Z LTS
+2026-09-05T18:02:36.1071785Z ##[endgroup]
+2026-09-05T18:02:36.1072455Z ##[group]Runner Image
+2026-09-05T18:02:36.1073068Z Image: ubuntu-24.04
+2026-09-05T18:02:36.1073698Z Version: 20260831.293.1
+2026-09-05T18:02:36.1075279Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260831.293/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-05T18:02:36.1076945Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260831.293
+2026-09-05T18:02:36.1077916Z ##[endgroup]
+2026-09-05T18:02:36.1079170Z ##[group]GITHUB_TOKEN Permissions
+2026-09-05T18:02:36.1081195Z Contents: read
+2026-09-05T18:02:36.1081890Z Metadata: read
+2026-09-05T18:02:36.1082509Z Packages: read
+2026-09-05T18:02:36.1083092Z ##[endgroup]
+2026-09-05T18:02:36.1085993Z Secret source: Actions
+2026-09-05T18:02:36.1087150Z Prepare workflow directory
+2026-09-05T18:02:36.1525404Z Prepare all required actions
+2026-09-05T18:02:36.1591964Z Getting action download info
+2026-09-05T18:02:36.3753576Z Download action repository 'actions/checkout@v2' (SHA:0717577d45739eb3c851188b29f50ed6c0b2194e)
+2026-09-05T18:02:36.7320440Z Download action repository 'docker/setup-qemu-action@v1' (SHA:27d0a4f181a40b142cce983c5393082c365d1480)
+2026-09-05T18:02:36.9061383Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-09-05T18:02:37.1275687Z Complete job name: rootfs (plasma edition) - arm64
+2026-09-05T18:02:37.2019036Z ##[group]Run echo "current_date=$(date +'%Y%m%d')" >> $GITHUB_ENV
+2026-09-05T18:02:37.2020367Z [36;1mecho "current_date=$(date +'%Y%m%d')" >> $GITHUB_ENV[0m
+2026-09-05T18:02:37.2065082Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:37.2066099Z ##[endgroup]
+2026-09-05T18:02:37.2360650Z ##[group]Run echo "release_suffix=_20260905" >> $GITHUB_ENV
+2026-09-05T18:02:37.2361770Z [36;1mecho "release_suffix=_20260905" >> $GITHUB_ENV[0m
+2026-09-05T18:02:37.2400935Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:37.2401570Z env:
+2026-09-05T18:02:37.2402038Z   current_date: 20260905
+2026-09-05T18:02:37.2402622Z ##[endgroup]
+2026-09-05T18:02:37.2540345Z ##[group]Run echo "LINDROID_VERSION=nightly" >> $GITHUB_ENV
+2026-09-05T18:02:37.2541433Z [36;1mecho "LINDROID_VERSION=nightly" >> $GITHUB_ENV[0m
+2026-09-05T18:02:37.2578868Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:37.2579519Z env:
+2026-09-05T18:02:37.2579974Z   current_date: 20260905
+2026-09-05T18:02:37.2580583Z   release_suffix: _20260905
+2026-09-05T18:02:37.2581257Z ##[endgroup]
+2026-09-05T18:02:37.2708906Z ##[group]Run echo "LINDROID_IDENTIFIER=arm64-plasma" >> $GITHUB_ENV
+2026-09-05T18:02:37.2710155Z [36;1mecho "LINDROID_IDENTIFIER=arm64-plasma" >> $GITHUB_ENV[0m
+2026-09-05T18:02:37.2746884Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:37.2747507Z env:
+2026-09-05T18:02:37.2747975Z   current_date: 20260905
+2026-09-05T18:02:37.2748572Z   release_suffix: _20260905
+2026-09-05T18:02:37.2749190Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:37.2749795Z ##[endgroup]
+2026-09-05T18:02:37.3044514Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-05T18:02:37.3054286Z ##[group]Run actions/checkout@v2
+2026-09-05T18:02:37.3055571Z with:
+2026-09-05T18:02:37.3056094Z   lfs: true
+2026-09-05T18:02:37.3056573Z   submodules: recursive
+2026-09-05T18:02:37.3057228Z   repository: alghiffaryfa19/lindroid-rootfs
+2026-09-05T18:02:37.3064517Z   token: ***
+2026-09-05T18:02:37.3065375Z   ssh-strict: true
+2026-09-05T18:02:37.3065932Z   persist-credentials: true
+2026-09-05T18:02:37.3066538Z   clean: true
+2026-09-05T18:02:37.3067023Z   fetch-depth: 1
+2026-09-05T18:02:37.3067553Z   set-safe-directory: true
+2026-09-05T18:02:37.3068195Z   allow-unsafe-pr-checkout: false
+2026-09-05T18:02:37.3068851Z env:
+2026-09-05T18:02:37.3069372Z   current_date: 20260905
+2026-09-05T18:02:37.3069959Z   release_suffix: _20260905
+2026-09-05T18:02:37.3070577Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:37.3071205Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:02:37.3071864Z ##[endgroup]
+2026-09-05T18:02:37.4082502Z (node:2157) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-05T18:02:37.4086112Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-05T18:02:37.4193588Z Syncing repository: alghiffaryfa19/lindroid-rootfs
+2026-09-05T18:02:37.4196267Z ##[group]Getting Git version info
+2026-09-05T18:02:37.4197395Z Working directory is '/home/runner/work/lindroid-rootfs/lindroid-rootfs'
+2026-09-05T18:02:37.4199204Z [command]/usr/bin/git version
+2026-09-05T18:02:37.4209905Z git version 2.55.0
+2026-09-05T18:02:37.4241991Z [command]/usr/bin/git lfs version
+2026-09-05T18:02:38.1429199Z git-lfs/3.8.0 (GitHub; linux amd64; go 1.27.0)
+2026-09-05T18:02:38.1445134Z ##[endgroup]
+2026-09-05T18:02:38.1462398Z Temporarily overriding HOME='/home/runner/work/_temp/7533233c-866a-478c-b0b1-d60f5396d594' before making global git config changes
+2026-09-05T18:02:38.1466655Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-05T18:02:38.1470369Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lindroid-rootfs/lindroid-rootfs
+2026-09-05T18:02:38.1519632Z Deleting the contents of '/home/runner/work/lindroid-rootfs/lindroid-rootfs'
+2026-09-05T18:02:38.1525632Z ##[group]Initializing the repository
+2026-09-05T18:02:38.1533228Z [command]/usr/bin/git init /home/runner/work/lindroid-rootfs/lindroid-rootfs
+2026-09-05T18:02:38.1623146Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-05T18:02:38.1625318Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-05T18:02:38.1627095Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-05T18:02:38.1628605Z hint: call:
+2026-09-05T18:02:38.1629630Z hint:
+2026-09-05T18:02:38.1630829Z hint: 	git config --global init.defaultBranch <name>
+2026-09-05T18:02:38.1632194Z hint:
+2026-09-05T18:02:38.1633557Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-05T18:02:38.1635837Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-05T18:02:38.1637638Z hint:
+2026-09-05T18:02:38.1638892Z hint: 	git branch -m <name>
+2026-09-05T18:02:38.1640465Z hint:
+2026-09-05T18:02:38.1641923Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-05T18:02:38.1644168Z Initialized empty Git repository in /home/runner/work/lindroid-rootfs/lindroid-rootfs/.git/
+2026-09-05T18:02:38.1647507Z [command]/usr/bin/git remote add origin https://github.com/alghiffaryfa19/lindroid-rootfs
+2026-09-05T18:02:38.1675981Z ##[endgroup]
+2026-09-05T18:02:38.1677991Z ##[group]Disabling automatic garbage collection
+2026-09-05T18:02:38.1680212Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-05T18:02:38.1707437Z ##[endgroup]
+2026-09-05T18:02:38.1709207Z ##[group]Setting up auth
+2026-09-05T18:02:38.1713105Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-05T18:02:38.1744284Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-05T18:02:38.1998557Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-05T18:02:38.2030258Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-05T18:02:38.2265792Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-05T18:02:38.2304199Z ##[endgroup]
+2026-09-05T18:02:38.2307466Z [command]/usr/bin/git lfs install --local
+2026-09-05T18:02:38.2712898Z Updated Git hooks.
+2026-09-05T18:02:38.2714385Z Git LFS initialized.
+2026-09-05T18:02:38.2719328Z ##[group]Fetching the repository
+2026-09-05T18:02:38.2728246Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +a4654971a91ceb9e3db96d5246c43579f0f6edfa:refs/remotes/origin/trixie
+2026-09-05T18:02:38.5599150Z remote: Enumerating objects: 15, done.        
+2026-09-05T18:02:38.5600983Z remote: Counting objects:   6% (1/15)        
+2026-09-05T18:02:38.5602594Z remote: Counting objects:  13% (2/15)        
+2026-09-05T18:02:38.5603882Z remote: Counting objects:  20% (3/15)        
+2026-09-05T18:02:38.5605387Z remote: Counting objects:  26% (4/15)        
+2026-09-05T18:02:38.5606664Z remote: Counting objects:  33% (5/15)        
+2026-09-05T18:02:38.5607929Z remote: Counting objects:  40% (6/15)        
+2026-09-05T18:02:38.5609244Z remote: Counting objects:  46% (7/15)        
+2026-09-05T18:02:38.5610506Z remote: Counting objects:  53% (8/15)        
+2026-09-05T18:02:38.5611762Z remote: Counting objects:  60% (9/15)        
+2026-09-05T18:02:38.5613026Z remote: Counting objects:  66% (10/15)        
+2026-09-05T18:02:38.5614295Z remote: Counting objects:  73% (11/15)        
+2026-09-05T18:02:38.5615900Z remote: Counting objects:  80% (12/15)        
+2026-09-05T18:02:38.5617274Z remote: Counting objects:  86% (13/15)        
+2026-09-05T18:02:38.5618521Z remote: Counting objects:  93% (14/15)        
+2026-09-05T18:02:38.5619782Z remote: Counting objects: 100% (15/15)        
+2026-09-05T18:02:38.5621093Z remote: Counting objects: 100% (15/15), done.        
+2026-09-05T18:02:38.5622430Z remote: Compressing objects:  10% (1/10)        
+2026-09-05T18:02:38.5623938Z remote: Compressing objects:  20% (2/10)        
+2026-09-05T18:02:38.5625435Z remote: Compressing objects:  30% (3/10)        
+2026-09-05T18:02:38.5626761Z remote: Compressing objects:  40% (4/10)        
+2026-09-05T18:02:38.5628070Z remote: Compressing objects:  50% (5/10)        
+2026-09-05T18:02:38.5629362Z remote: Compressing objects:  60% (6/10)        
+2026-09-05T18:02:38.5630662Z remote: Compressing objects:  70% (7/10)        
+2026-09-05T18:02:38.5631961Z remote: Compressing objects:  80% (8/10)        
+2026-09-05T18:02:38.5633263Z remote: Compressing objects:  90% (9/10)        
+2026-09-05T18:02:38.5634558Z remote: Compressing objects: 100% (10/10)        
+2026-09-05T18:02:38.5636204Z remote: Compressing objects: 100% (10/10), done.        
+2026-09-05T18:02:38.5637798Z remote: Total 15 (delta 1), reused 10 (delta 0), pack-reused 0 (from 0)        
+2026-09-05T18:02:38.5701965Z From https://github.com/alghiffaryfa19/lindroid-rootfs
+2026-09-05T18:02:38.5703894Z  * [new ref]         a4654971a91ceb9e3db96d5246c43579f0f6edfa -> origin/trixie
+2026-09-05T18:02:38.5708402Z ##[endgroup]
+2026-09-05T18:02:38.5710502Z ##[group]Determining the checkout info
+2026-09-05T18:02:38.5712765Z ##[endgroup]
+2026-09-05T18:02:38.5714985Z ##[group]Fetching LFS objects
+2026-09-05T18:02:38.5716857Z [command]/usr/bin/git lfs fetch origin refs/remotes/origin/trixie
+2026-09-05T18:02:38.6004592Z Fetching reference refs/remotes/origin/trixie
+2026-09-05T18:02:38.6428234Z ##[endgroup]
+2026-09-05T18:02:38.6432296Z ##[group]Checking out the ref
+2026-09-05T18:02:38.6433895Z [command]/usr/bin/git checkout --progress --force -B trixie refs/remotes/origin/trixie
+2026-09-05T18:02:38.6494551Z Switched to a new branch 'trixie'
+2026-09-05T18:02:38.6499697Z branch 'trixie' set up to track 'origin/trixie'.
+2026-09-05T18:02:38.6832953Z ##[endgroup]
+2026-09-05T18:02:38.6835453Z ##[group]Setting up auth for fetching submodules
+2026-09-05T18:02:38.6841108Z [command]/usr/bin/git config --global http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-05T18:02:38.6879886Z [command]/usr/bin/git config --global --unset-all url.https://github.com/.insteadOf
+2026-09-05T18:02:38.6910624Z [command]/usr/bin/git config --global --add url.https://github.com/.insteadOf git@github.com:
+2026-09-05T18:02:38.6941095Z [command]/usr/bin/git config --global --add url.https://github.com/.insteadOf org-56854433@github.com:
+2026-09-05T18:02:38.6967569Z ##[endgroup]
+2026-09-05T18:02:38.6969585Z ##[group]Fetching submodules
+2026-09-05T18:02:38.6971175Z [command]/usr/bin/git submodule sync --recursive
+2026-09-05T18:02:38.7207063Z [command]/usr/bin/git -c protocol.version=2 submodule update --init --force --depth=1 --recursive
+2026-09-05T18:02:38.7437027Z Submodule 'rootfs-templates' (https://github.com/Linux-on-droid/rootfs-templates) registered for path 'rootfs-templates'
+2026-09-05T18:02:38.7464643Z Cloning into '/home/runner/work/lindroid-rootfs/lindroid-rootfs/rootfs-templates'...
+2026-09-05T18:02:39.8475958Z From https://github.com/Linux-on-droid/rootfs-templates
+2026-09-05T18:02:39.8476754Z  * branch            2c5528ff67f0ff14d593a1e1a128fc50ba99c2f2 -> FETCH_HEAD
+2026-09-05T18:02:39.8550857Z Submodule path 'rootfs-templates': checked out '2c5528ff67f0ff14d593a1e1a128fc50ba99c2f2'
+2026-09-05T18:02:39.8581912Z [command]/usr/bin/git submodule foreach --recursive git config --local gc.auto 0
+2026-09-05T18:02:39.8806601Z Entering 'rootfs-templates'
+2026-09-05T18:02:39.8855572Z ##[endgroup]
+2026-09-05T18:02:39.8856553Z ##[group]Persisting credentials for submodules
+2026-09-05T18:02:39.8866944Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'url\.https\:\/\/github\.com\/\.insteadOf' && git config --local --unset-all 'url.https://github.com/.insteadOf' || :"
+2026-09-05T18:02:39.9090624Z Entering 'rootfs-templates'
+2026-09-05T18:02:39.9149415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local 'http.https://github.com/.extraheader' 'AUTHORIZATION: basic ***' && git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-09-05T18:02:39.9379348Z Entering 'rootfs-templates'
+2026-09-05T18:02:39.9420087Z file:/home/runner/work/lindroid-rootfs/lindroid-rootfs/.git/modules/rootfs-templates/config	remote.origin.url
+2026-09-05T18:02:39.9457385Z [command]/usr/bin/git submodule foreach --recursive git config --local --add 'url.https://github.com/.insteadOf' 'git@github.com:'
+2026-09-05T18:02:39.9683711Z Entering 'rootfs-templates'
+2026-09-05T18:02:39.9734600Z [command]/usr/bin/git submodule foreach --recursive git config --local --add 'url.https://github.com/.insteadOf' 'org-56854433@github.com:'
+2026-09-05T18:02:39.9963417Z Entering 'rootfs-templates'
+2026-09-05T18:02:40.0010701Z ##[endgroup]
+2026-09-05T18:02:40.0049078Z [command]/usr/bin/git log -1 --format='%H'
+2026-09-05T18:02:40.0074432Z 'a4654971a91ceb9e3db96d5246c43579f0f6edfa'
+2026-09-05T18:02:40.0231610Z ##[group]Run git submodule update --init --recursive
+2026-09-05T18:02:40.0232013Z [36;1mgit submodule update --init --recursive[0m
+2026-09-05T18:02:40.0273314Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:40.0273571Z env:
+2026-09-05T18:02:40.0273776Z   current_date: 20260905
+2026-09-05T18:02:40.0274021Z   release_suffix: _20260905
+2026-09-05T18:02:40.0274263Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:40.0274538Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:02:40.0275077Z ##[endgroup]
+2026-09-05T18:02:40.0621851Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-05T18:02:40.0623450Z ##[group]Run docker/setup-qemu-action@v1
+2026-09-05T18:02:40.0623771Z with:
+2026-09-05T18:02:40.0623989Z   image: tonistiigi/binfmt:latest
+2026-09-05T18:02:40.0624244Z   platforms: all
+2026-09-05T18:02:40.0624453Z env:
+2026-09-05T18:02:40.0624654Z   current_date: 20260905
+2026-09-05T18:02:40.0625128Z   release_suffix: _20260905
+2026-09-05T18:02:40.0625377Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:40.0625619Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:02:40.0625874Z ##[endgroup]
+2026-09-05T18:02:40.0924427Z ##[group]Docker info
+2026-09-05T18:02:40.0961095Z [command]/usr/bin/docker version
+2026-09-05T18:02:40.1692155Z Client: Docker Engine - Community
+2026-09-05T18:02:40.1694881Z  Version:           28.0.4
+2026-09-05T18:02:40.1695785Z  API version:       1.48
+2026-09-05T18:02:40.1696200Z  Go version:        go1.23.7
+2026-09-05T18:02:40.1696610Z  Git commit:        b8034c0
+2026-09-05T18:02:40.1697052Z  Built:             Tue Mar 25 15:07:16 2025
+2026-09-05T18:02:40.1697737Z  OS/Arch:           linux/amd64
+2026-09-05T18:02:40.1698123Z  Context:           default
+2026-09-05T18:02:40.1698356Z 
+2026-09-05T18:02:40.1698522Z Server: Docker Engine - Community
+2026-09-05T18:02:40.1698902Z  Engine:
+2026-09-05T18:02:40.1699187Z   Version:          28.0.4
+2026-09-05T18:02:40.1699612Z   API version:      1.48 (minimum version 1.24)
+2026-09-05T18:02:40.1700070Z   Go version:       go1.23.7
+2026-09-05T18:02:40.1700424Z   Git commit:       6430e49
+2026-09-05T18:02:40.1700790Z   Built:            Tue Mar 25 15:07:16 2025
+2026-09-05T18:02:40.1701197Z   OS/Arch:          linux/amd64
+2026-09-05T18:02:40.1701565Z   Experimental:     false
+2026-09-05T18:02:40.1701921Z  containerd:
+2026-09-05T18:02:40.1702233Z   Version:          v2.3.4
+2026-09-05T18:02:40.1702681Z   GitCommit:        db8809540e1a7a9da5d518876894933ff55692ab
+2026-09-05T18:02:40.1703167Z  runc:
+2026-09-05T18:02:40.1703463Z   Version:          1.4.3
+2026-09-05T18:02:40.1703832Z   GitCommit:        v1.4.3-0-gbb14dabe
+2026-09-05T18:02:40.1704238Z  docker-init:
+2026-09-05T18:02:40.1704583Z   Version:          0.19.0
+2026-09-05T18:02:40.1705137Z   GitCommit:        de40ad0
+2026-09-05T18:02:40.1739609Z [command]/usr/bin/docker info
+2026-09-05T18:02:43.4042090Z Client: Docker Engine - Community
+2026-09-05T18:02:43.4042955Z  Version:    28.0.4
+2026-09-05T18:02:43.4043762Z  Context:    default
+2026-09-05T18:02:43.4044119Z  Debug Mode: false
+2026-09-05T18:02:43.4044433Z  Plugins:
+2026-09-05T18:02:43.4044911Z   buildx: Docker Buildx (Docker Inc.)
+2026-09-05T18:02:43.4045247Z     Version:  v0.36.1
+2026-09-05T18:02:43.4045545Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+2026-09-05T18:02:43.4045928Z   compose: Docker Compose (Docker Inc.)
+2026-09-05T18:02:43.4046197Z     Version:  v2.38.2
+2026-09-05T18:02:43.4046468Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+2026-09-05T18:02:43.4046703Z 
+2026-09-05T18:02:43.4046795Z Server:
+2026-09-05T18:02:43.4046987Z  Containers: 0
+2026-09-05T18:02:43.4047183Z   Running: 0
+2026-09-05T18:02:43.4047389Z   Paused: 0
+2026-09-05T18:02:43.4047575Z   Stopped: 0
+2026-09-05T18:02:43.4047760Z  Images: 6
+2026-09-05T18:02:43.4047952Z  Server Version: 28.0.4
+2026-09-05T18:02:43.4048183Z  Storage Driver: overlay2
+2026-09-05T18:02:43.4048416Z   Backing Filesystem: extfs
+2026-09-05T18:02:43.4048848Z   Supports d_type: true
+2026-09-05T18:02:43.4049071Z   Using metacopy: false
+2026-09-05T18:02:43.4049298Z   Native Overlay Diff: false
+2026-09-05T18:02:43.4049535Z   userxattr: false
+2026-09-05T18:02:43.4049758Z  Logging Driver: json-file
+2026-09-05T18:02:43.4049989Z  Cgroup Driver: systemd
+2026-09-05T18:02:43.4050209Z  Cgroup Version: 2
+2026-09-05T18:02:43.4050813Z  Plugins:
+2026-09-05T18:02:43.4051008Z   Volume: local
+2026-09-05T18:02:43.4051247Z   Network: bridge host ipvlan macvlan null overlay
+2026-09-05T18:02:43.4051837Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+2026-09-05T18:02:43.4053136Z  Swarm: inactive
+2026-09-05T18:02:43.4053480Z  Runtimes: io.containerd.runc.v2 runc
+2026-09-05T18:02:43.4053848Z  Default Runtime: runc
+2026-09-05T18:02:43.4054157Z  Init Binary: docker-init
+2026-09-05T18:02:43.4054572Z  containerd version: db8809540e1a7a9da5d518876894933ff55692ab
+2026-09-05T18:02:43.4055200Z  runc version: v1.4.3-0-gbb14dabe
+2026-09-05T18:02:43.4055548Z  init version: de40ad0
+2026-09-05T18:02:43.4055860Z  Security Options:
+2026-09-05T18:02:43.4056140Z   apparmor
+2026-09-05T18:02:43.4056399Z   seccomp
+2026-09-05T18:02:43.4056663Z    Profile: builtin
+2026-09-05T18:02:43.4056953Z   cgroupns
+2026-09-05T18:02:43.4057244Z  Kernel Version: 6.17.0-1022-azure
+2026-09-05T18:02:43.4057628Z  Operating System: Ubuntu 24.04.4 LTS
+2026-09-05T18:02:43.4057996Z  OSType: linux
+2026-09-05T18:02:43.4058269Z  Architecture: x86_64
+2026-09-05T18:02:43.4058582Z  CPUs: 4
+2026-09-05T18:02:43.4058844Z  Total Memory: 15.61GiB
+2026-09-05T18:02:43.4059172Z  Name: runnervmejwal
+2026-09-05T18:02:43.4059523Z  ID: 02d77f28-5fe8-4751-adeb-1ee06e2a3270
+2026-09-05T18:02:43.4059917Z  Docker Root Dir: /var/lib/docker
+2026-09-05T18:02:43.4060172Z  Debug Mode: false
+2026-09-05T18:02:43.4060392Z  Username: githubactions
+2026-09-05T18:02:43.4060625Z  Experimental: false
+2026-09-05T18:02:43.4060849Z  Insecure Registries:
+2026-09-05T18:02:43.4067455Z   ::1/128
+2026-09-05T18:02:43.4067768Z   127.0.0.0/8
+2026-09-05T18:02:43.4068153Z  Live Restore Enabled: false
+2026-09-05T18:02:43.4068409Z 
+2026-09-05T18:02:43.4069033Z ##[endgroup]
+2026-09-05T18:02:43.4069699Z ##[group]Pulling binfmt Docker image
+2026-09-05T18:02:43.4079740Z [command]/usr/bin/docker pull tonistiigi/binfmt:latest
+2026-09-05T18:02:43.8474560Z latest: Pulling from tonistiigi/binfmt
+2026-09-05T18:02:43.9657671Z 56685a25fbf3: Pulling fs layer
+2026-09-05T18:02:43.9658152Z 0c46aa6e9c41: Pulling fs layer
+2026-09-05T18:02:44.0667351Z 0c46aa6e9c41: Download complete
+2026-09-05T18:02:44.1455472Z 56685a25fbf3: Download complete
+2026-09-05T18:02:44.5491493Z 56685a25fbf3: Pull complete
+2026-09-05T18:02:44.6022160Z 0c46aa6e9c41: Pull complete
+2026-09-05T18:02:44.6056603Z Digest: sha256:400a4873b838d1b89194d982c45e5fb3cda4593fbfd7e08a02e76b03b21166f0
+2026-09-05T18:02:44.6069204Z Status: Downloaded newer image for tonistiigi/binfmt:latest
+2026-09-05T18:02:44.6085328Z docker.io/tonistiigi/binfmt:latest
+2026-09-05T18:02:44.6096006Z ##[endgroup]
+2026-09-05T18:02:44.6096598Z ##[group]Image info
+2026-09-05T18:02:44.6109466Z [command]/usr/bin/docker image inspect tonistiigi/binfmt:latest
+2026-09-05T18:02:44.6245773Z [
+2026-09-05T18:02:44.6246074Z     {
+2026-09-05T18:02:44.6246665Z         "Id": "sha256:15935d0512bf0a8e5afa1df990d971cf97a619ede08fa60f2d5966a62de6d6b7",
+2026-09-05T18:02:44.6247321Z         "RepoTags": [
+2026-09-05T18:02:44.6247635Z             "tonistiigi/binfmt:latest"
+2026-09-05T18:02:44.6247897Z         ],
+2026-09-05T18:02:44.6248093Z         "RepoDigests": [
+2026-09-05T18:02:44.6248523Z             "tonistiigi/binfmt@sha256:400a4873b838d1b89194d982c45e5fb3cda4593fbfd7e08a02e76b03b21166f0"
+2026-09-05T18:02:44.6248990Z         ],
+2026-09-05T18:02:44.6249179Z         "Parent": "",
+2026-09-05T18:02:44.6249431Z         "Comment": "buildkit.dockerfile.v0",
+2026-09-05T18:02:44.6249742Z         "Created": "2026-06-05T19:12:02.167333037Z",
+2026-09-05T18:02:44.6250213Z         "DockerVersion": "",
+2026-09-05T18:02:44.6250531Z         "Author": "",
+2026-09-05T18:02:44.6250737Z         "Config": {
+2026-09-05T18:02:44.6251017Z             "Hostname": "",
+2026-09-05T18:02:44.6251344Z             "Domainname": "",
+2026-09-05T18:02:44.6251670Z             "User": "",
+2026-09-05T18:02:44.6251988Z             "AttachStdin": false,
+2026-09-05T18:02:44.6252334Z             "AttachStdout": false,
+2026-09-05T18:02:44.6253080Z             "AttachStderr": false,
+2026-09-05T18:02:44.6253450Z             "Tty": false,
+2026-09-05T18:02:44.6253681Z             "OpenStdin": false,
+2026-09-05T18:02:44.6253919Z             "StdinOnce": false,
+2026-09-05T18:02:44.6254151Z             "Env": [
+2026-09-05T18:02:44.6254972Z                 "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+2026-09-05T18:02:44.6255584Z                 "QEMU_PRESERVE_ARGV0=1"
+2026-09-05T18:02:44.6255969Z             ],
+2026-09-05T18:02:44.6256254Z             "Cmd": null,
+2026-09-05T18:02:44.6256583Z             "Image": "",
+2026-09-05T18:02:44.6256816Z             "Volumes": {
+2026-09-05T18:02:44.6257082Z                 "/tmp": {}
+2026-09-05T18:02:44.6257397Z             },
+2026-09-05T18:02:44.6257605Z             "WorkingDir": "/",
+2026-09-05T18:02:44.6257851Z             "Entrypoint": [
+2026-09-05T18:02:44.6258090Z                 "/usr/bin/binfmt"
+2026-09-05T18:02:44.6258325Z             ],
+2026-09-05T18:02:44.6258527Z             "OnBuild": null,
+2026-09-05T18:02:44.6258765Z             "Labels": null
+2026-09-05T18:02:44.6258977Z         },
+2026-09-05T18:02:44.6259178Z         "Architecture": "amd64",
+2026-09-05T18:02:44.6259414Z         "Os": "linux",
+2026-09-05T18:02:44.6259682Z         "Size": 85304497,
+2026-09-05T18:02:44.6259966Z         "GraphDriver": {
+2026-09-05T18:02:44.6260185Z             "Data": {
+2026-09-05T18:02:44.6260666Z                 "LowerDir": "/var/lib/docker/overlay2/c175b32323607a4a7534ab79ba54ddf3e0ae0bdb35a828222dbf79d654cc5e25/diff",
+2026-09-05T18:02:44.6261500Z                 "MergedDir": "/var/lib/docker/overlay2/ec1874cf9004cb93423a88f36a40c6d926254e53528bad31942fc48f19a789fd/merged",
+2026-09-05T18:02:44.6262324Z                 "UpperDir": "/var/lib/docker/overlay2/ec1874cf9004cb93423a88f36a40c6d926254e53528bad31942fc48f19a789fd/diff",
+2026-09-05T18:02:44.6263538Z                 "WorkDir": "/var/lib/docker/overlay2/ec1874cf9004cb93423a88f36a40c6d926254e53528bad31942fc48f19a789fd/work"
+2026-09-05T18:02:44.6264180Z             },
+2026-09-05T18:02:44.6264387Z             "Name": "overlay2"
+2026-09-05T18:02:44.6264618Z         },
+2026-09-05T18:02:44.6265016Z         "RootFS": {
+2026-09-05T18:02:44.6265232Z             "Type": "layers",
+2026-09-05T18:02:44.6265479Z             "Layers": [
+2026-09-05T18:02:44.6265903Z                 "sha256:c747b796d990a647df062f87e24f1ef5e4a90a312cd9c4ae8b7d09667d57befb",
+2026-09-05T18:02:44.6266481Z                 "sha256:6d831b0f477d9df7afe18e5a65c97e8084fef8fe10c2930b65f728ab68d0bb5b"
+2026-09-05T18:02:44.6266864Z             ]
+2026-09-05T18:02:44.6267186Z         },
+2026-09-05T18:02:44.6267409Z         "Metadata": {
+2026-09-05T18:02:44.6267710Z             "LastTagTime": "0001-01-01T00:00:00Z"
+2026-09-05T18:02:44.6268040Z         }
+2026-09-05T18:02:44.6268226Z     }
+2026-09-05T18:02:44.6268407Z ]
+2026-09-05T18:02:44.6293909Z ##[endgroup]
+2026-09-05T18:02:44.6294450Z ##[group]Installing QEMU static binaries
+2026-09-05T18:02:44.6295382Z [command]/usr/bin/docker run --rm --privileged tonistiigi/binfmt:latest --install all
+2026-09-05T18:02:45.6270769Z installing: arm64 OK
+2026-09-05T18:02:45.6273145Z installing: riscv64 OK
+2026-09-05T18:02:45.6273649Z installing: mips64le OK
+2026-09-05T18:02:45.6274079Z installing: mips64 OK
+2026-09-05T18:02:45.6274483Z installing: loong64 OK
+2026-09-05T18:02:45.6275459Z installing: arm OK
+2026-09-05T18:02:45.6275937Z installing: s390x OK
+2026-09-05T18:02:45.6276307Z installing: ppc64le OK
+2026-09-05T18:02:45.6482579Z {
+2026-09-05T18:02:45.6486041Z   "supported": [
+2026-09-05T18:02:45.6486281Z     "linux/amd64",
+2026-09-05T18:02:45.6486506Z     "linux/amd64/v2",
+2026-09-05T18:02:45.6486840Z     "linux/amd64/v3",
+2026-09-05T18:02:45.6487149Z     "linux/arm64",
+2026-09-05T18:02:45.6487412Z     "linux/riscv64",
+2026-09-05T18:02:45.6487629Z     "linux/ppc64le",
+2026-09-05T18:02:45.6487969Z     "linux/s390x",
+2026-09-05T18:02:45.6488267Z     "linux/386",
+2026-09-05T18:02:45.6488582Z     "linux/mips64le",
+2026-09-05T18:02:45.6488900Z     "linux/mips64",
+2026-09-05T18:02:45.6489593Z     "linux/loong64",
+2026-09-05T18:02:45.6489932Z     "linux/arm/v7",
+2026-09-05T18:02:45.6490252Z     "linux/arm/v6"
+2026-09-05T18:02:45.6490569Z   ],
+2026-09-05T18:02:45.6490858Z   "emulators": [
+2026-09-05T18:02:45.6491209Z     "llvm-16-runtime.binfmt",
+2026-09-05T18:02:45.6491827Z     "llvm-17-runtime.binfmt",
+2026-09-05T18:02:45.6492206Z     "llvm-18-runtime.binfmt",
+2026-09-05T18:02:45.6492576Z     "python3.12",
+2026-09-05T18:02:45.6492892Z     "qemu-aarch64",
+2026-09-05T18:02:45.6493184Z     "qemu-arm",
+2026-09-05T18:02:45.6493464Z     "qemu-loongarch64",
+2026-09-05T18:02:45.6493779Z     "qemu-mips64",
+2026-09-05T18:02:45.6494055Z     "qemu-mips64el",
+2026-09-05T18:02:45.6494347Z     "qemu-ppc64le",
+2026-09-05T18:02:45.6494645Z     "qemu-riscv64",
+2026-09-05T18:02:45.6495959Z     "qemu-s390x"
+2026-09-05T18:02:45.6496255Z   ]
+2026-09-05T18:02:45.6496523Z }
+2026-09-05T18:02:45.7320286Z ##[endgroup]
+2026-09-05T18:02:45.7320927Z ##[group]Extracting available platforms
+2026-09-05T18:02:45.9501102Z linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/386,linux/mips64le,linux/mips64,linux/loong64,linux/arm/v7,linux/arm/v6
+2026-09-05T18:02:45.9521703Z ##[warning]The `set-output` command is deprecated and will be disabled soon. Please upgrade to using Environment Files. For more information see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+2026-09-05T18:02:45.9535990Z ##[endgroup]
+2026-09-05T18:02:45.9593958Z ##[group]Run mkdir -p /tmp/buildd-results
+2026-09-05T18:02:45.9594325Z [36;1mmkdir -p /tmp/buildd-results[0m
+2026-09-05T18:02:45.9633997Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:45.9634256Z env:
+2026-09-05T18:02:45.9634461Z   current_date: 20260905
+2026-09-05T18:02:45.9634701Z   release_suffix: _20260905
+2026-09-05T18:02:45.9635158Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:45.9635411Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:02:45.9635673Z ##[endgroup]
+2026-09-05T18:02:45.9739456Z ##[group]Run docker pull registry.lindroid.org/lindroid/rootfs-builder:next-amd64
+2026-09-05T18:02:45.9740035Z [36;1mdocker pull registry.lindroid.org/lindroid/rootfs-builder:next-amd64[0m
+2026-09-05T18:02:45.9776096Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:02:45.9776362Z env:
+2026-09-05T18:02:45.9776565Z   current_date: 20260905
+2026-09-05T18:02:45.9776798Z   release_suffix: _20260905
+2026-09-05T18:02:45.9777031Z   LINDROID_VERSION: nightly
+2026-09-05T18:02:45.9777280Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:02:45.9777536Z ##[endgroup]
+2026-09-05T18:02:47.5640892Z next-amd64: Pulling from lindroid/rootfs-builder
+2026-09-05T18:02:47.5641904Z 1e00838e1e7b: Pulling fs layer
+2026-09-05T18:02:47.5642604Z 6ce174883051: Pulling fs layer
+2026-09-05T18:02:47.5643824Z 4f4fb700ef54: Pulling fs layer
+2026-09-05T18:02:47.5644401Z 2683b8eafa06: Pulling fs layer
+2026-09-05T18:02:47.5645068Z 0b3037f7982a: Pulling fs layer
+2026-09-05T18:02:47.5645410Z 0d6fd3d24680: Pulling fs layer
+2026-09-05T18:02:47.5646107Z aad2951edd33: Pulling fs layer
+2026-09-05T18:02:47.5646431Z 10caad914ff7: Pulling fs layer
+2026-09-05T18:02:47.5646885Z 7243c188702d: Pulling fs layer
+2026-09-05T18:02:47.5647262Z 7a71999d386a: Pulling fs layer
+2026-09-05T18:02:47.5647637Z 8d346aa1ea4c: Pulling fs layer
+2026-09-05T18:02:47.5647993Z 7c185ee43076: Pulling fs layer
+2026-09-05T18:02:47.5648357Z cd6c365808ee: Pulling fs layer
+2026-09-05T18:02:47.5648726Z c153bce8ca29: Pulling fs layer
+2026-09-05T18:02:47.5649088Z 2683b8eafa06: Waiting
+2026-09-05T18:02:47.5649423Z 0b3037f7982a: Waiting
+2026-09-05T18:02:47.5649782Z 0d6fd3d24680: Waiting
+2026-09-05T18:02:47.5650085Z aad2951edd33: Waiting
+2026-09-05T18:02:47.5650337Z 10caad914ff7: Waiting
+2026-09-05T18:02:47.5650603Z 7243c188702d: Waiting
+2026-09-05T18:02:47.5650922Z 7a71999d386a: Waiting
+2026-09-05T18:02:47.5651238Z 7c185ee43076: Waiting
+2026-09-05T18:02:47.5651543Z 8d346aa1ea4c: Waiting
+2026-09-05T18:02:47.5651840Z cd6c365808ee: Waiting
+2026-09-05T18:02:47.5652171Z c153bce8ca29: Waiting
+2026-09-05T18:02:48.0410032Z 6ce174883051: Verifying Checksum
+2026-09-05T18:02:48.0410416Z 6ce174883051: Download complete
+2026-09-05T18:02:48.0527462Z 4f4fb700ef54: Download complete
+2026-09-05T18:02:48.3903492Z 2683b8eafa06: Verifying Checksum
+2026-09-05T18:02:48.3904539Z 2683b8eafa06: Download complete
+2026-09-05T18:02:48.5476557Z 0b3037f7982a: Download complete
+2026-09-05T18:02:48.7718542Z 0d6fd3d24680: Verifying Checksum
+2026-09-05T18:02:48.7719227Z 0d6fd3d24680: Download complete
+2026-09-05T18:02:48.9060304Z aad2951edd33: Verifying Checksum
+2026-09-05T18:02:48.9060769Z aad2951edd33: Download complete
+2026-09-05T18:02:49.3157313Z 7243c188702d: Verifying Checksum
+2026-09-05T18:02:49.3157786Z 7243c188702d: Download complete
+2026-09-05T18:02:49.6607844Z 7a71999d386a: Verifying Checksum
+2026-09-05T18:02:49.6608449Z 7a71999d386a: Download complete
+2026-09-05T18:02:50.1246338Z 8d346aa1ea4c: Verifying Checksum
+2026-09-05T18:02:50.1246834Z 8d346aa1ea4c: Download complete
+2026-09-05T18:02:50.4864650Z 7c185ee43076: Verifying Checksum
+2026-09-05T18:02:50.4865279Z 7c185ee43076: Download complete
+2026-09-05T18:02:50.8370597Z cd6c365808ee: Verifying Checksum
+2026-09-05T18:02:50.8373487Z cd6c365808ee: Download complete
+2026-09-05T18:02:51.6565010Z 1e00838e1e7b: Verifying Checksum
+2026-09-05T18:02:51.6565515Z 1e00838e1e7b: Download complete
+2026-09-05T18:02:53.5972343Z 1e00838e1e7b: Pull complete
+2026-09-05T18:02:54.0786027Z 6ce174883051: Pull complete
+2026-09-05T18:02:54.1350660Z 4f4fb700ef54: Pull complete
+2026-09-05T18:02:54.1482517Z 2683b8eafa06: Pull complete
+2026-09-05T18:02:54.1585102Z 0b3037f7982a: Pull complete
+2026-09-05T18:02:54.1778253Z 0d6fd3d24680: Pull complete
+2026-09-05T18:02:54.1872764Z aad2951edd33: Pull complete
+2026-09-05T18:02:56.8620147Z 10caad914ff7: Verifying Checksum
+2026-09-05T18:02:56.8620883Z 10caad914ff7: Download complete
+2026-09-05T18:02:59.8331805Z 10caad914ff7: Pull complete
+2026-09-05T18:02:59.8809406Z 7243c188702d: Pull complete
+2026-09-05T18:02:59.8973112Z 7a71999d386a: Pull complete
+2026-09-05T18:02:59.9314330Z 8d346aa1ea4c: Pull complete
+2026-09-05T18:02:59.9413565Z 7c185ee43076: Pull complete
+2026-09-05T18:02:59.9506632Z cd6c365808ee: Pull complete
+2026-09-05T18:03:09.4275480Z c153bce8ca29: Verifying Checksum
+2026-09-05T18:03:09.4276020Z c153bce8ca29: Download complete
+2026-09-05T18:03:19.0783315Z c153bce8ca29: Pull complete
+2026-09-05T18:03:19.0898482Z Digest: sha256:9951c62e638ac1114bb519578cd20c74b0c2728da5383249520d307330971057
+2026-09-05T18:03:19.0906406Z Status: Downloaded newer image for registry.lindroid.org/lindroid/rootfs-builder:next-amd64
+2026-09-05T18:03:19.0913467Z registry.lindroid.org/lindroid/rootfs-builder:next-amd64
+2026-09-05T18:03:19.0958591Z ##[group]Run echo "CONTAINER_HASH=$(docker run --detach --privileged \
+2026-09-05T18:03:19.0959120Z [36;1mecho "CONTAINER_HASH=$(docker run --detach --privileged \[0m
+2026-09-05T18:03:19.0959477Z [36;1m--cgroupns=host \[0m
+2026-09-05T18:03:19.0959724Z [36;1m--tmpfs /run \[0m
+2026-09-05T18:03:19.0959959Z [36;1m--tmpfs /run/lock \[0m
+2026-09-05T18:03:19.0960201Z [36;1m--tmpfs /tmp \[0m
+2026-09-05T18:03:19.0960455Z [36;1m-v /sys/fs/cgroup:/sys/fs/cgroup:rw \[0m
+2026-09-05T18:03:19.0960773Z [36;1m-v /tmp/buildd-results:/buildd/out \[0m
+2026-09-05T18:03:19.0961081Z [36;1m-v /dev:/host-dev \[0m
+2026-09-05T18:03:19.0961332Z [36;1m-v ${PWD}:/buildd/sources \[0m
+2026-09-05T18:03:19.0961638Z [36;1m--security-opt seccomp:unconfined \[0m
+2026-09-05T18:03:19.0962016Z [36;1mregistry.lindroid.org/lindroid/rootfs-builder:next-amd64 \[0m
+2026-09-05T18:03:19.0962385Z [36;1m/sbin/init)" >> $GITHUB_ENV[0m
+2026-09-05T18:03:19.1000909Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:03:19.1001206Z env:
+2026-09-05T18:03:19.1001408Z   current_date: 20260905
+2026-09-05T18:03:19.1001649Z   release_suffix: _20260905
+2026-09-05T18:03:19.1001887Z   LINDROID_VERSION: nightly
+2026-09-05T18:03:19.1002132Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:03:19.1002397Z ##[endgroup]
+2026-09-05T18:03:19.2370494Z ##[group]Run docker exec $CONTAINER_HASH /bin/sh -c 'cd /buildd/sources; ./generate_recipe.py  && debos --disable-fakemachine generated/lindroid-plasma-arm64.yaml'
+2026-09-05T18:03:19.2371589Z [36;1mdocker exec $CONTAINER_HASH /bin/sh -c 'cd /buildd/sources; ./generate_recipe.py  && debos --disable-fakemachine generated/lindroid-plasma-arm64.yaml'[0m
+2026-09-05T18:03:19.2414237Z shell: /usr/bin/bash -e {0}
+2026-09-05T18:03:19.2414492Z env:
+2026-09-05T18:03:19.2414698Z   current_date: 20260905
+2026-09-05T18:03:19.2415139Z   release_suffix: _20260905
+2026-09-05T18:03:19.2415386Z   LINDROID_VERSION: nightly
+2026-09-05T18:03:19.2415647Z   LINDROID_IDENTIFIER: arm64-plasma
+2026-09-05T18:03:19.2416070Z   CONTAINER_HASH: 63e73f40f33ba16ec7f5aef94d3592d3b02e78daebb773ea8fce49d5cb4f9c09
+2026-09-05T18:03:19.2416481Z ##[endgroup]
+2026-09-05T18:03:19.3214645Z 2026/09/05 18:03:19 fakemachine not supported, running on the host!
+2026-09-05T18:03:19.3222859Z 2026/09/05 18:03:19 ==== Do nothing ====
+2026-09-05T18:03:19.3234206Z 2026/09/05 18:03:19 echo "Doing nothing!" | Doing nothing!
+2026-09-05T18:03:19.3235148Z 2026/09/05 18:03:19 ==== Build Droidian ====
+2026-09-05T18:03:19.3235587Z 2026/09/05 18:03:19 ==== create rootfs ====
+2026-09-05T18:03:19.3236103Z 2026/09/05 18:03:19 ==== Generate base rootfs ====
+2026-09-05T18:03:19.3236764Z 2026/09/05 18:03:19 ==== debootstrap ====
+2026-09-05T18:03:19.3844077Z 2026/09/05 18:03:19 Debootstrap | I: Retrieving InRelease 
+2026-09-05T18:03:19.6095707Z 2026/09/05 18:03:19 Debootstrap | I: Checking Release signature
+2026-09-05T18:03:19.6200793Z 2026/09/05 18:03:19 Debootstrap | I: Valid Release signature
+2026-09-05T18:03:20.4635142Z 2026/09/05 18:03:20 Debootstrap | I: Retrieving Packages 
+2026-09-05T18:03:20.7823634Z 2026/09/05 18:03:20 Debootstrap | I: Validating Packages 
+2026-09-05T18:03:21.2948197Z 2026/09/05 18:03:21 Debootstrap | I: Resolving dependencies of required packages...
+2026-09-05T18:03:24.1595196Z 2026/09/05 18:03:24 Debootstrap | I: Resolving dependencies of base packages...
+2026-09-05T18:03:27.0720668Z 2026/09/05 18:03:27 Debootstrap | I: Checking component main on http://deb.debian.org/debian...
+2026-09-05T18:03:28.3405263Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving apt 3.0.3
+2026-09-05T18:03:28.3695867Z 2026/09/05 18:03:28 Debootstrap | I: Validating apt 3.0.3
+2026-09-05T18:03:28.3822061Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving base-files 13.8+deb13u6
+2026-09-05T18:03:28.3977068Z 2026/09/05 18:03:28 Debootstrap | I: Validating base-files 13.8+deb13u6
+2026-09-05T18:03:28.4096430Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving base-passwd 3.6.7
+2026-09-05T18:03:28.4283965Z 2026/09/05 18:03:28 Debootstrap | I: Validating base-passwd 3.6.7
+2026-09-05T18:03:28.4393744Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving bash 5.2.37-2+b9
+2026-09-05T18:03:28.4621449Z 2026/09/05 18:03:28 Debootstrap | I: Validating bash 5.2.37-2+b9
+2026-09-05T18:03:28.4748110Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving bsdutils 1:2.41-5
+2026-09-05T18:03:28.4909569Z 2026/09/05 18:03:28 Debootstrap | I: Validating bsdutils 1:2.41-5
+2026-09-05T18:03:28.5018741Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving coreutils 9.7-3
+2026-09-05T18:03:28.5284224Z 2026/09/05 18:03:28 Debootstrap | I: Validating coreutils 9.7-3
+2026-09-05T18:03:28.5425921Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving dash 0.5.12-12
+2026-09-05T18:03:28.5542200Z 2026/09/05 18:03:28 Debootstrap | I: Validating dash 0.5.12-12
+2026-09-05T18:03:28.5660882Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving debconf 1.5.91
+2026-09-05T18:03:28.5799584Z 2026/09/05 18:03:28 Debootstrap | I: Validating debconf 1.5.91
+2026-09-05T18:03:28.5912932Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving debian-archive-keyring 2025.1
+2026-09-05T18:03:28.6057671Z 2026/09/05 18:03:28 Debootstrap | I: Validating debian-archive-keyring 2025.1
+2026-09-05T18:03:28.6172087Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving debianutils 5.23.2
+2026-09-05T18:03:28.6283649Z 2026/09/05 18:03:28 Debootstrap | I: Validating debianutils 5.23.2
+2026-09-05T18:03:28.6404920Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving diffutils 1:3.10-4
+2026-09-05T18:03:28.6568081Z 2026/09/05 18:03:28 Debootstrap | I: Validating diffutils 1:3.10-4
+2026-09-05T18:03:28.6685848Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving dpkg 1.22.22
+2026-09-05T18:03:28.6953875Z 2026/09/05 18:03:28 Debootstrap | I: Validating dpkg 1.22.22
+2026-09-05T18:03:28.7080429Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving findutils 4.10.0-3
+2026-09-05T18:03:28.7283056Z 2026/09/05 18:03:28 Debootstrap | I: Validating findutils 4.10.0-3
+2026-09-05T18:03:28.7406064Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving gcc-14-base 14.2.0-19
+2026-09-05T18:03:28.7550167Z 2026/09/05 18:03:28 Debootstrap | I: Validating gcc-14-base 14.2.0-19
+2026-09-05T18:03:28.7664489Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving grep 3.11-4+b1
+2026-09-05T18:03:28.7824367Z 2026/09/05 18:03:28 Debootstrap | I: Validating grep 3.11-4+b1
+2026-09-05T18:03:28.7938323Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving gzip 1.13-1
+2026-09-05T18:03:28.8071320Z 2026/09/05 18:03:28 Debootstrap | I: Validating gzip 1.13-1
+2026-09-05T18:03:28.8188241Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving hostname 3.25
+2026-09-05T18:03:28.8302183Z 2026/09/05 18:03:28 Debootstrap | I: Validating hostname 3.25
+2026-09-05T18:03:28.8413286Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving init-system-helpers 1.69~deb13u1
+2026-09-05T18:03:28.8549045Z 2026/09/05 18:03:28 Debootstrap | I: Validating init-system-helpers 1.69~deb13u1
+2026-09-05T18:03:28.8659131Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libacl1 2.3.2-2+b1
+2026-09-05T18:03:28.8768517Z 2026/09/05 18:03:28 Debootstrap | I: Validating libacl1 2.3.2-2+b1
+2026-09-05T18:03:28.8886233Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libapt-pkg7.0 3.0.3
+2026-09-05T18:03:28.9098332Z 2026/09/05 18:03:28 Debootstrap | I: Validating libapt-pkg7.0 3.0.3
+2026-09-05T18:03:28.9218814Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libattr1 1:2.5.2-3
+2026-09-05T18:03:28.9334586Z 2026/09/05 18:03:28 Debootstrap | I: Validating libattr1 1:2.5.2-3
+2026-09-05T18:03:28.9445313Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libaudit-common 1:4.0.2-2
+2026-09-05T18:03:28.9563436Z 2026/09/05 18:03:28 Debootstrap | I: Validating libaudit-common 1:4.0.2-2
+2026-09-05T18:03:28.9675595Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libaudit1 1:4.0.2-2+b2
+2026-09-05T18:03:28.9829246Z 2026/09/05 18:03:28 Debootstrap | I: Validating libaudit1 1:4.0.2-2+b2
+2026-09-05T18:03:28.9945586Z 2026/09/05 18:03:28 Debootstrap | I: Retrieving libblkid1 2.41-5
+2026-09-05T18:03:29.0076569Z 2026/09/05 18:03:29 Debootstrap | I: Validating libblkid1 2.41-5
+2026-09-05T18:03:29.0191771Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libbsd0 0.12.2-2
+2026-09-05T18:03:29.0310555Z 2026/09/05 18:03:29 Debootstrap | I: Validating libbsd0 0.12.2-2
+2026-09-05T18:03:29.0422535Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libbz2-1.0 1.0.8-6
+2026-09-05T18:03:29.0549256Z 2026/09/05 18:03:29 Debootstrap | I: Validating libbz2-1.0 1.0.8-6
+2026-09-05T18:03:29.0673990Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libc-bin 2.41-12+deb13u3
+2026-09-05T18:03:29.0864963Z 2026/09/05 18:03:29 Debootstrap | I: Validating libc-bin 2.41-12+deb13u3
+2026-09-05T18:03:29.0978901Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libc6 2.41-12+deb13u3
+2026-09-05T18:03:29.1254186Z 2026/09/05 18:03:29 Debootstrap | I: Validating libc6 2.41-12+deb13u3
+2026-09-05T18:03:29.1387970Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libcap-ng0 0.8.5-4+b1
+2026-09-05T18:03:29.1517830Z 2026/09/05 18:03:29 Debootstrap | I: Validating libcap-ng0 0.8.5-4+b1
+2026-09-05T18:03:29.1630057Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libcap2 1:2.75-10+deb13u1+b1
+2026-09-05T18:03:29.1773128Z 2026/09/05 18:03:29 Debootstrap | I: Validating libcap2 1:2.75-10+deb13u1+b1
+2026-09-05T18:03:29.1883208Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libcrypt1 1:4.4.38-1
+2026-09-05T18:03:29.2029990Z 2026/09/05 18:03:29 Debootstrap | I: Validating libcrypt1 1:4.4.38-1
+2026-09-05T18:03:29.2142870Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libdb5.3t64 5.3.28+dfsg2-9
+2026-09-05T18:03:29.2322540Z 2026/09/05 18:03:29 Debootstrap | I: Validating libdb5.3t64 5.3.28+dfsg2-9
+2026-09-05T18:03:29.2440371Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libdebconfclient0 0.280
+2026-09-05T18:03:29.2536182Z 2026/09/05 18:03:29 Debootstrap | I: Validating libdebconfclient0 0.280
+2026-09-05T18:03:29.2649440Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libgcc-s1 14.2.0-19
+2026-09-05T18:03:29.2791783Z 2026/09/05 18:03:29 Debootstrap | I: Validating libgcc-s1 14.2.0-19
+2026-09-05T18:03:29.2903454Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libgmp10 2:6.3.0+dfsg-3
+2026-09-05T18:03:29.4007531Z 2026/09/05 18:03:29 Debootstrap | I: Validating libgmp10 2:6.3.0+dfsg-3
+2026-09-05T18:03:29.4128278Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libhogweed6t64 3.10.1-1
+2026-09-05T18:03:29.4342975Z 2026/09/05 18:03:29 Debootstrap | I: Validating libhogweed6t64 3.10.1-1
+2026-09-05T18:03:29.4456460Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving liblastlog2-2 2.41-5
+2026-09-05T18:03:29.4560311Z 2026/09/05 18:03:29 Debootstrap | I: Validating liblastlog2-2 2.41-5
+2026-09-05T18:03:29.4674500Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving liblz4-1 1.10.0-4
+2026-09-05T18:03:29.4838775Z 2026/09/05 18:03:29 Debootstrap | I: Validating liblz4-1 1.10.0-4
+2026-09-05T18:03:29.4957177Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving liblzma5 5.8.1-1+deb13u1
+2026-09-05T18:03:29.5103287Z 2026/09/05 18:03:29 Debootstrap | I: Validating liblzma5 5.8.1-1+deb13u1
+2026-09-05T18:03:29.5219721Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libmd0 1.1.0-2+b1
+2026-09-05T18:03:29.5326017Z 2026/09/05 18:03:29 Debootstrap | I: Validating libmd0 1.1.0-2+b1
+2026-09-05T18:03:29.5435360Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libmount1 2.41-5
+2026-09-05T18:03:29.5578378Z 2026/09/05 18:03:29 Debootstrap | I: Validating libmount1 2.41-5
+2026-09-05T18:03:29.5692102Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libnettle8t64 3.10.1-1
+2026-09-05T18:03:29.5867305Z 2026/09/05 18:03:29 Debootstrap | I: Validating libnettle8t64 3.10.1-1
+2026-09-05T18:03:29.5982506Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libpam-modules 1.7.0-5
+2026-09-05T18:03:29.6132772Z 2026/09/05 18:03:29 Debootstrap | I: Validating libpam-modules 1.7.0-5
+2026-09-05T18:03:29.6245322Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libpam-modules-bin 1.7.0-5
+2026-09-05T18:03:29.6367053Z 2026/09/05 18:03:29 Debootstrap | I: Validating libpam-modules-bin 1.7.0-5
+2026-09-05T18:03:29.6486306Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libpam-runtime 1.7.0-5
+2026-09-05T18:03:29.6638004Z 2026/09/05 18:03:29 Debootstrap | I: Validating libpam-runtime 1.7.0-5
+2026-09-05T18:03:29.6749999Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libpam0g 1.7.0-5
+2026-09-05T18:03:29.6924426Z 2026/09/05 18:03:29 Debootstrap | I: Validating libpam0g 1.7.0-5
+2026-09-05T18:03:29.7035755Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libpcre2-8-0 10.46-1~deb13u1
+2026-09-05T18:03:29.7211361Z 2026/09/05 18:03:29 Debootstrap | I: Validating libpcre2-8-0 10.46-1~deb13u1
+2026-09-05T18:03:29.7332269Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libseccomp2 2.6.0-2
+2026-09-05T18:03:29.7458025Z 2026/09/05 18:03:29 Debootstrap | I: Validating libseccomp2 2.6.0-2
+2026-09-05T18:03:29.7568816Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libselinux1 3.8.1-1
+2026-09-05T18:03:29.7695320Z 2026/09/05 18:03:29 Debootstrap | I: Validating libselinux1 3.8.1-1
+2026-09-05T18:03:29.7804271Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsemanage-common 3.8.1-1
+2026-09-05T18:03:29.7910972Z 2026/09/05 18:03:29 Debootstrap | I: Validating libsemanage-common 3.8.1-1
+2026-09-05T18:03:29.8021404Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsemanage2 3.8.1-1
+2026-09-05T18:03:29.8167466Z 2026/09/05 18:03:29 Debootstrap | I: Validating libsemanage2 3.8.1-1
+2026-09-05T18:03:29.8281658Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsepol2 3.8.1-1
+2026-09-05T18:03:29.8438526Z 2026/09/05 18:03:29 Debootstrap | I: Validating libsepol2 3.8.1-1
+2026-09-05T18:03:29.8551710Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsmartcols1 2.41-5
+2026-09-05T18:03:29.8688567Z 2026/09/05 18:03:29 Debootstrap | I: Validating libsmartcols1 2.41-5
+2026-09-05T18:03:29.8805946Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsqlite3-0 3.46.1-7+deb13u1
+2026-09-05T18:03:29.9000529Z 2026/09/05 18:03:29 Debootstrap | I: Validating libsqlite3-0 3.46.1-7+deb13u1
+2026-09-05T18:03:29.9120687Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libssl3t64 3.5.6-1~deb13u2
+2026-09-05T18:03:29.9372947Z 2026/09/05 18:03:29 Debootstrap | I: Validating libssl3t64 3.5.6-1~deb13u2
+2026-09-05T18:03:29.9510891Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libstdc++6 14.2.0-19
+2026-09-05T18:03:29.9719556Z 2026/09/05 18:03:29 Debootstrap | I: Validating libstdc++6 14.2.0-19
+2026-09-05T18:03:29.9839747Z 2026/09/05 18:03:29 Debootstrap | I: Retrieving libsystemd0 257.13-1~deb13u1
+2026-09-05T18:03:30.0013438Z 2026/09/05 18:03:30 Debootstrap | I: Validating libsystemd0 257.13-1~deb13u1
+2026-09-05T18:03:30.0134607Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving libtinfo6 6.5+20250216-2
+2026-09-05T18:03:30.0303020Z 2026/09/05 18:03:30 Debootstrap | I: Validating libtinfo6 6.5+20250216-2
+2026-09-05T18:03:30.0415671Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving libudev1 257.13-1~deb13u1
+2026-09-05T18:03:30.0553879Z 2026/09/05 18:03:30 Debootstrap | I: Validating libudev1 257.13-1~deb13u1
+2026-09-05T18:03:30.0666730Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving libuuid1 2.41-5
+2026-09-05T18:03:30.0766915Z 2026/09/05 18:03:30 Debootstrap | I: Validating libuuid1 2.41-5
+2026-09-05T18:03:30.0877223Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving libxxhash0 0.8.3-2
+2026-09-05T18:03:30.1910686Z 2026/09/05 18:03:30 Debootstrap | I: Validating libxxhash0 0.8.3-2
+2026-09-05T18:03:30.2026390Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving libzstd1 1.5.7+dfsg-1
+2026-09-05T18:03:30.2204667Z 2026/09/05 18:03:30 Debootstrap | I: Validating libzstd1 1.5.7+dfsg-1
+2026-09-05T18:03:30.2322131Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving login 1:4.16.0-2+really2.41-5
+2026-09-05T18:03:30.2475144Z 2026/09/05 18:03:30 Debootstrap | I: Validating login 1:4.16.0-2+really2.41-5
+2026-09-05T18:03:30.2589242Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving login.defs 1:4.17.4-2
+2026-09-05T18:03:30.2763584Z 2026/09/05 18:03:30 Debootstrap | I: Validating login.defs 1:4.17.4-2
+2026-09-05T18:03:30.2880961Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving mawk 1.3.4.20250131-1
+2026-09-05T18:03:30.3029237Z 2026/09/05 18:03:30 Debootstrap | I: Validating mawk 1.3.4.20250131-1
+2026-09-05T18:03:30.3140990Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving mount 2.41-5
+2026-09-05T18:03:30.3282811Z 2026/09/05 18:03:30 Debootstrap | I: Validating mount 2.41-5
+2026-09-05T18:03:30.3393892Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving ncurses-base 6.5+20250216-2
+2026-09-05T18:03:30.3548223Z 2026/09/05 18:03:30 Debootstrap | I: Validating ncurses-base 6.5+20250216-2
+2026-09-05T18:03:30.3659853Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving ncurses-bin 6.5+20250216-2
+2026-09-05T18:03:30.3945383Z 2026/09/05 18:03:30 Debootstrap | I: Validating ncurses-bin 6.5+20250216-2
+2026-09-05T18:03:30.4063861Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving openssl-provider-legacy 3.5.6-1~deb13u2
+2026-09-05T18:03:30.4220252Z 2026/09/05 18:03:30 Debootstrap | I: Validating openssl-provider-legacy 3.5.6-1~deb13u2
+2026-09-05T18:03:30.4334121Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving passwd 1:4.17.4-2
+2026-09-05T18:03:30.4566012Z 2026/09/05 18:03:30 Debootstrap | I: Validating passwd 1:4.17.4-2
+2026-09-05T18:03:30.4689547Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving perl-base 5.40.1-6
+2026-09-05T18:03:30.4954484Z 2026/09/05 18:03:30 Debootstrap | I: Validating perl-base 5.40.1-6
+2026-09-05T18:03:30.5085861Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving sed 4.9-2+deb13u1
+2026-09-05T18:03:30.5257197Z 2026/09/05 18:03:30 Debootstrap | I: Validating sed 4.9-2+deb13u1
+2026-09-05T18:03:30.5375645Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving sqv 1.3.0-3+b2
+2026-09-05T18:03:30.5572274Z 2026/09/05 18:03:30 Debootstrap | I: Validating sqv 1.3.0-3+b2
+2026-09-05T18:03:30.5690578Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving sysvinit-utils 3.14-4
+2026-09-05T18:03:30.5811983Z 2026/09/05 18:03:30 Debootstrap | I: Validating sysvinit-utils 3.14-4
+2026-09-05T18:03:30.5923466Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving tar 1.35+dfsg-3.1
+2026-09-05T18:03:30.6129681Z 2026/09/05 18:03:30 Debootstrap | I: Validating tar 1.35+dfsg-3.1
+2026-09-05T18:03:30.6245680Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving tzdata 2026b-0+deb13u1
+2026-09-05T18:03:30.6427299Z 2026/09/05 18:03:30 Debootstrap | I: Validating tzdata 2026b-0+deb13u1
+2026-09-05T18:03:30.6542912Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving util-linux 2.41-5
+2026-09-05T18:03:30.6768538Z 2026/09/05 18:03:30 Debootstrap | I: Validating util-linux 2.41-5
+2026-09-05T18:03:30.6887202Z 2026/09/05 18:03:30 Debootstrap | I: Retrieving zlib1g 1:1.3.dfsg+really1.3.1-1+b1
+2026-09-05T18:03:30.7015971Z 2026/09/05 18:03:30 Debootstrap | I: Validating zlib1g 1:1.3.dfsg+really1.3.1-1+b1
+2026-09-05T18:03:30.7139571Z 2026/09/05 18:03:30 Debootstrap | I: Chosen extractor for .deb packages: dpkg-deb
+2026-09-05T18:03:30.7285367Z 2026/09/05 18:03:30 Debootstrap | I: Extracting apt...
+2026-09-05T18:03:30.7865900Z 2026/09/05 18:03:30 Debootstrap | I: Extracting base-files...
+2026-09-05T18:03:30.7935762Z 2026/09/05 18:03:30 Debootstrap | I: Extracting base-passwd...
+2026-09-05T18:03:30.7992803Z 2026/09/05 18:03:30 Debootstrap | I: Extracting bash...
+2026-09-05T18:03:30.8576754Z 2026/09/05 18:03:30 Debootstrap | I: Extracting bsdutils...
+2026-09-05T18:03:30.8660793Z 2026/09/05 18:03:30 Debootstrap | I: Extracting coreutils...
+2026-09-05T18:03:30.9809842Z 2026/09/05 18:03:30 Debootstrap | I: Extracting dash...
+2026-09-05T18:03:30.9884321Z 2026/09/05 18:03:30 Debootstrap | I: Extracting debconf...
+2026-09-05T18:03:30.9980457Z 2026/09/05 18:03:30 Debootstrap | I: Extracting debian-archive-keyring...
+2026-09-05T18:03:31.0077390Z 2026/09/05 18:03:31 Debootstrap | I: Extracting debianutils...
+2026-09-05T18:03:31.0151517Z 2026/09/05 18:03:31 Debootstrap | I: Extracting diffutils...
+2026-09-05T18:03:31.0357853Z 2026/09/05 18:03:31 Debootstrap | I: Extracting dpkg...
+2026-09-05T18:03:31.0945562Z 2026/09/05 18:03:31 Debootstrap | I: Extracting findutils...
+2026-09-05T18:03:31.1192112Z 2026/09/05 18:03:31 Debootstrap | I: Extracting gcc-14-base...
+2026-09-05T18:03:31.1244940Z 2026/09/05 18:03:31 Debootstrap | I: Extracting grep...
+2026-09-05T18:03:31.1405273Z 2026/09/05 18:03:31 Debootstrap | I: Extracting gzip...
+2026-09-05T18:03:31.1495839Z 2026/09/05 18:03:31 Debootstrap | I: Extracting hostname...
+2026-09-05T18:03:31.1542138Z 2026/09/05 18:03:31 Debootstrap | I: Extracting init-system-helpers...
+2026-09-05T18:03:31.1599717Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libacl1...
+2026-09-05T18:03:31.1648964Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libapt-pkg7.0...
+2026-09-05T18:03:31.2112000Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libattr1...
+2026-09-05T18:03:31.2158987Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libaudit-common...
+2026-09-05T18:03:31.2202222Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libaudit1...
+2026-09-05T18:03:31.2265799Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libblkid1...
+2026-09-05T18:03:31.2377242Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libbsd0...
+2026-09-05T18:03:31.2441831Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libbz2-1.0...
+2026-09-05T18:03:31.2494308Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libc-bin...
+2026-09-05T18:03:31.2789448Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libc6...
+2026-09-05T18:03:31.3957296Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libcap-ng0...
+2026-09-05T18:03:31.4008541Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libcap2...
+2026-09-05T18:03:31.4059620Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libcrypt1...
+2026-09-05T18:03:31.4132842Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libdb5.3t64...
+2026-09-05T18:03:31.4456549Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libdebconfclient0...
+2026-09-05T18:03:31.4496595Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libgcc-s1...
+2026-09-05T18:03:31.4557667Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libgmp10...
+2026-09-05T18:03:31.4708731Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libhogweed6t64...
+2026-09-05T18:03:31.4837842Z 2026/09/05 18:03:31 Debootstrap | I: Extracting liblastlog2-2...
+2026-09-05T18:03:31.4887804Z 2026/09/05 18:03:31 Debootstrap | I: Extracting liblz4-1...
+2026-09-05T18:03:31.4953512Z 2026/09/05 18:03:31 Debootstrap | I: Extracting liblzma5...
+2026-09-05T18:03:31.5055958Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libmd0...
+2026-09-05T18:03:31.5106033Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libmount1...
+2026-09-05T18:03:31.5229463Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libnettle8t64...
+2026-09-05T18:03:31.5360717Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libpam-modules...
+2026-09-05T18:03:31.5502905Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libpam-modules-bin...
+2026-09-05T18:03:31.5565431Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libpam-runtime...
+2026-09-05T18:03:31.5720490Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libpam0g...
+2026-09-05T18:03:31.5783104Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libpcre2-8-0...
+2026-09-05T18:03:31.5937243Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libseccomp2...
+2026-09-05T18:03:31.6000259Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libselinux1...
+2026-09-05T18:03:31.6073446Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsemanage-common...
+2026-09-05T18:03:31.6114095Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsemanage2...
+2026-09-05T18:03:31.6190560Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsepol2...
+2026-09-05T18:03:31.6348199Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsmartcols1...
+2026-09-05T18:03:31.6450241Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsqlite3-0...
+2026-09-05T18:03:31.6765906Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libssl3t64...
+2026-09-05T18:03:31.7632368Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libstdc++6...
+2026-09-05T18:03:31.7963469Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libsystemd0...
+2026-09-05T18:03:31.8185578Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libtinfo6...
+2026-09-05T18:03:31.8293087Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libudev1...
+2026-09-05T18:03:31.8388846Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libuuid1...
+2026-09-05T18:03:31.8440948Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libxxhash0...
+2026-09-05T18:03:31.8488115Z 2026/09/05 18:03:31 Debootstrap | I: Extracting libzstd1...
+2026-09-05T18:03:31.8646502Z 2026/09/05 18:03:31 Debootstrap | I: Extracting login...
+2026-09-05T18:03:31.8732970Z 2026/09/05 18:03:31 Debootstrap | I: Extracting login.defs...
+2026-09-05T18:03:31.8806458Z 2026/09/05 18:03:31 Debootstrap | I: Extracting mawk...
+2026-09-05T18:03:31.8895633Z 2026/09/05 18:03:31 Debootstrap | I: Extracting mount...
+2026-09-05T18:03:31.9003476Z 2026/09/05 18:03:31 Debootstrap | I: Extracting ncurses-base...
+2026-09-05T18:03:31.9090153Z 2026/09/05 18:03:31 Debootstrap | I: Extracting ncurses-bin...
+2026-09-05T18:03:31.9222438Z 2026/09/05 18:03:31 Debootstrap | I: Extracting openssl-provider-legacy...
+2026-09-05T18:03:31.9288649Z 2026/09/05 18:03:31 Debootstrap | I: Extracting passwd...
+2026-09-05T18:03:31.9759324Z 2026/09/05 18:03:31 Debootstrap | I: Extracting perl-base...
+2026-09-05T18:03:32.0641905Z 2026/09/05 18:03:32 Debootstrap | I: Extracting sed...
+2026-09-05T18:03:32.0796401Z 2026/09/05 18:03:32 Debootstrap | I: Extracting sqv...
+2026-09-05T18:03:32.1124153Z 2026/09/05 18:03:32 Debootstrap | I: Extracting sysvinit-utils...
+2026-09-05T18:03:32.1179031Z 2026/09/05 18:03:32 Debootstrap | I: Extracting tar...
+2026-09-05T18:03:32.1512792Z 2026/09/05 18:03:32 Debootstrap | I: Extracting tzdata...
+2026-09-05T18:03:32.1755381Z 2026/09/05 18:03:32 Debootstrap | I: Extracting util-linux...
+2026-09-05T18:03:32.2286872Z 2026/09/05 18:03:32 Debootstrap | I: Extracting zlib1g...
+2026-09-05T18:03:34.2885872Z 2026/09/05 18:03:34 Debootstrap (stage 2) | I: Installing core packages...
+2026-09-05T18:03:45.5355080Z 2026/09/05 18:03:45 Debootstrap (stage 2) | I: Unpacking required packages...
+2026-09-05T18:03:45.9185946Z 2026/09/05 18:03:45 Debootstrap (stage 2) | I: Unpacking apt...
+2026-09-05T18:03:46.9489010Z 2026/09/05 18:03:46 Debootstrap (stage 2) | I: Unpacking base-files...
+2026-09-05T18:03:47.5408904Z 2026/09/05 18:03:47 Debootstrap (stage 2) | I: Unpacking base-passwd...
+2026-09-05T18:03:47.8484354Z 2026/09/05 18:03:47 Debootstrap (stage 2) | I: Unpacking bash...
+2026-09-05T18:03:48.4468190Z 2026/09/05 18:03:48 Debootstrap (stage 2) | I: Unpacking bsdutils...
+2026-09-05T18:03:48.6949237Z 2026/09/05 18:03:48 Debootstrap (stage 2) | I: Unpacking coreutils...
+2026-09-05T18:03:49.6916038Z 2026/09/05 18:03:49 Debootstrap (stage 2) | I: Unpacking dash...
+2026-09-05T18:03:49.9695187Z 2026/09/05 18:03:49 Debootstrap (stage 2) | I: Unpacking debconf...
+2026-09-05T18:03:50.2273195Z 2026/09/05 18:03:50 Debootstrap (stage 2) | I: Unpacking debian-archive-keyring...
+2026-09-05T18:03:51.8826581Z 2026/09/05 18:03:51 Debootstrap (stage 2) | I: Unpacking debianutils...
+2026-09-05T18:03:52.1314206Z 2026/09/05 18:03:52 Debootstrap (stage 2) | I: Unpacking diffutils...
+2026-09-05T18:03:52.4607551Z 2026/09/05 18:03:52 Debootstrap (stage 2) | I: Unpacking dpkg...
+2026-09-05T18:03:53.1755488Z 2026/09/05 18:03:53 Debootstrap (stage 2) | I: Unpacking findutils...
+2026-09-05T18:03:53.5417622Z 2026/09/05 18:03:53 Debootstrap (stage 2) | I: Unpacking gcc-14-base:arm64...
+2026-09-05T18:03:53.7651056Z 2026/09/05 18:03:53 Debootstrap (stage 2) | I: Unpacking grep...
+2026-09-05T18:03:54.0721640Z 2026/09/05 18:03:54 Debootstrap (stage 2) | I: Unpacking gzip...
+2026-09-05T18:03:54.6466872Z 2026/09/05 18:03:54 Debootstrap (stage 2) | I: Unpacking hostname...
+2026-09-05T18:03:54.8596709Z 2026/09/05 18:03:54 Debootstrap (stage 2) | I: Unpacking init-system-helpers...
+2026-09-05T18:03:55.0816235Z 2026/09/05 18:03:55 Debootstrap (stage 2) | I: Unpacking libacl1:arm64...
+2026-09-05T18:03:55.3089011Z 2026/09/05 18:03:55 Debootstrap (stage 2) | I: Unpacking libapt-pkg7.0:arm64...
+2026-09-05T18:03:55.9168753Z 2026/09/05 18:03:55 Debootstrap (stage 2) | I: Unpacking libattr1:arm64...
+2026-09-05T18:03:56.1990597Z 2026/09/05 18:03:56 Debootstrap (stage 2) | I: Unpacking libaudit-common...
+2026-09-05T18:03:56.4137869Z 2026/09/05 18:03:56 Debootstrap (stage 2) | I: Unpacking libaudit1:arm64...
+2026-09-05T18:03:56.6529937Z 2026/09/05 18:03:56 Debootstrap (stage 2) | I: Unpacking libblkid1:arm64...
+2026-09-05T18:03:56.9217921Z 2026/09/05 18:03:56 Debootstrap (stage 2) | I: Unpacking libbsd0:arm64...
+2026-09-05T18:03:57.1571139Z 2026/09/05 18:03:57 Debootstrap (stage 2) | I: Unpacking libbz2-1.0:arm64...
+2026-09-05T18:03:57.3889264Z 2026/09/05 18:03:57 Debootstrap (stage 2) | I: Unpacking libc-bin...
+2026-09-05T18:03:57.7941846Z 2026/09/05 18:03:57 Debootstrap (stage 2) | I: Unpacking libc6:arm64...
+2026-09-05T18:04:00.2981740Z 2026/09/05 18:04:00 Debootstrap (stage 2) | I: Unpacking libcap-ng0:arm64...
+2026-09-05T18:04:00.5121035Z 2026/09/05 18:04:00 Debootstrap (stage 2) | I: Unpacking libcap2:arm64...
+2026-09-05T18:04:00.7310927Z 2026/09/05 18:04:00 Debootstrap (stage 2) | I: Unpacking libcrypt1:arm64...
+2026-09-05T18:04:00.9685679Z 2026/09/05 18:04:00 Debootstrap (stage 2) | I: Unpacking libdb5.3t64:arm64...
+2026-09-05T18:04:01.3622872Z 2026/09/05 18:04:01 Debootstrap (stage 2) | I: Unpacking libdebconfclient0:arm64...
+2026-09-05T18:04:01.5794290Z 2026/09/05 18:04:01 Debootstrap (stage 2) | I: Unpacking libgcc-s1:arm64...
+2026-09-05T18:04:01.8060093Z 2026/09/05 18:04:01 Debootstrap (stage 2) | I: Unpacking libgmp10:arm64...
+2026-09-05T18:04:02.1032000Z 2026/09/05 18:04:02 Debootstrap (stage 2) | I: Unpacking libhogweed6t64:arm64...
+2026-09-05T18:04:02.3861286Z 2026/09/05 18:04:02 Debootstrap (stage 2) | I: Unpacking liblastlog2-2:arm64...
+2026-09-05T18:04:02.6043206Z 2026/09/05 18:04:02 Debootstrap (stage 2) | I: Unpacking liblz4-1:arm64...
+2026-09-05T18:04:02.8348225Z 2026/09/05 18:04:02 Debootstrap (stage 2) | I: Unpacking liblzma5:arm64...
+2026-09-05T18:04:03.0972643Z 2026/09/05 18:04:03 Debootstrap (stage 2) | I: Unpacking libmd0:arm64...
+2026-09-05T18:04:03.3179646Z 2026/09/05 18:04:03 Debootstrap (stage 2) | I: Unpacking libmount1:arm64...
+2026-09-05T18:04:03.5913067Z 2026/09/05 18:04:03 Debootstrap (stage 2) | I: Unpacking libnettle8t64:arm64...
+2026-09-05T18:04:03.8789394Z 2026/09/05 18:04:03 Debootstrap (stage 2) | I: Unpacking libpam-modules:arm64...
+2026-09-05T18:04:04.9824879Z 2026/09/05 18:04:04 Debootstrap (stage 2) | I: Unpacking libpam-modules-bin...
+2026-09-05T18:04:05.2219630Z 2026/09/05 18:04:05 Debootstrap (stage 2) | I: Unpacking libpam-runtime...
+2026-09-05T18:04:05.5326704Z 2026/09/05 18:04:05 Debootstrap (stage 2) | I: Unpacking libpam0g:arm64...
+2026-09-05T18:04:05.7630444Z 2026/09/05 18:04:05 Debootstrap (stage 2) | I: Unpacking libpcre2-8-0:arm64...
+2026-09-05T18:04:06.0614253Z 2026/09/05 18:04:06 Debootstrap (stage 2) | I: Unpacking libseccomp2:arm64...
+2026-09-05T18:04:06.3030556Z 2026/09/05 18:04:06 Debootstrap (stage 2) | I: Unpacking libselinux1:arm64...
+2026-09-05T18:04:06.5444469Z 2026/09/05 18:04:06 Debootstrap (stage 2) | I: Unpacking libsemanage-common...
+2026-09-05T18:04:06.7576795Z 2026/09/05 18:04:06 Debootstrap (stage 2) | I: Unpacking libsemanage2:arm64...
+2026-09-05T18:04:06.9973130Z 2026/09/05 18:04:06 Debootstrap (stage 2) | I: Unpacking libsepol2:arm64...
+2026-09-05T18:04:07.2895370Z 2026/09/05 18:04:07 Debootstrap (stage 2) | I: Unpacking libsmartcols1:arm64...
+2026-09-05T18:04:07.5445922Z 2026/09/05 18:04:07 Debootstrap (stage 2) | I: Unpacking libsqlite3-0:arm64...
+2026-09-05T18:04:07.9699377Z 2026/09/05 18:04:07 Debootstrap (stage 2) | I: Unpacking libssl3t64:arm64...
+2026-09-05T18:04:08.7800667Z 2026/09/05 18:04:08 Debootstrap (stage 2) | I: Unpacking libstdc++6:arm64...
+2026-09-05T18:04:09.1872474Z 2026/09/05 18:04:09 Debootstrap (stage 2) | I: Unpacking libsystemd0:arm64...
+2026-09-05T18:04:09.5219840Z 2026/09/05 18:04:09 Debootstrap (stage 2) | I: Unpacking libtinfo6:arm64...
+2026-09-05T18:04:09.7880231Z 2026/09/05 18:04:09 Debootstrap (stage 2) | I: Unpacking libudev1:arm64...
+2026-09-05T18:04:10.0418888Z 2026/09/05 18:04:10 Debootstrap (stage 2) | I: Unpacking libuuid1:arm64...
+2026-09-05T18:04:10.2732619Z 2026/09/05 18:04:10 Debootstrap (stage 2) | I: Unpacking libxxhash0:arm64...
+2026-09-05T18:04:10.4973984Z 2026/09/05 18:04:10 Debootstrap (stage 2) | I: Unpacking libzstd1:arm64...
+2026-09-05T18:04:10.7895816Z 2026/09/05 18:04:10 Debootstrap (stage 2) | I: Unpacking login...
+2026-09-05T18:04:11.2984104Z 2026/09/05 18:04:11 Debootstrap (stage 2) | I: Unpacking login.defs...
+2026-09-05T18:04:11.5759992Z 2026/09/05 18:04:11 Debootstrap (stage 2) | I: Unpacking mawk...
+2026-09-05T18:04:11.8266709Z 2026/09/05 18:04:11 Debootstrap (stage 2) | I: Unpacking mount...
+2026-09-05T18:04:12.0859492Z 2026/09/05 18:04:12 Debootstrap (stage 2) | I: Unpacking ncurses-base...
+2026-09-05T18:04:12.3330385Z 2026/09/05 18:04:12 Debootstrap (stage 2) | I: Unpacking ncurses-bin...
+2026-09-05T18:04:12.6249032Z 2026/09/05 18:04:12 Debootstrap (stage 2) | I: Unpacking openssl-provider-legacy...
+2026-09-05T18:04:12.8624169Z 2026/09/05 18:04:12 Debootstrap (stage 2) | I: Unpacking passwd...
+2026-09-05T18:04:13.5783013Z 2026/09/05 18:04:13 Debootstrap (stage 2) | I: Unpacking perl-base...
+2026-09-05T18:04:14.3959213Z 2026/09/05 18:04:14 Debootstrap (stage 2) | I: Unpacking sed...
+2026-09-05T18:04:14.7050123Z 2026/09/05 18:04:14 Debootstrap (stage 2) | I: Unpacking sqv...
+2026-09-05T18:04:15.1090434Z 2026/09/05 18:04:15 Debootstrap (stage 2) | I: Unpacking sysvinit-utils...
+2026-09-05T18:04:15.3349518Z 2026/09/05 18:04:15 Debootstrap (stage 2) | I: Unpacking tar...
+2026-09-05T18:04:15.7598609Z 2026/09/05 18:04:15 Debootstrap (stage 2) | I: Unpacking tzdata...
+2026-09-05T18:04:16.1326368Z 2026/09/05 18:04:16 Debootstrap (stage 2) | I: Unpacking util-linux...
+2026-09-05T18:04:16.7238929Z 2026/09/05 18:04:16 Debootstrap (stage 2) | I: Unpacking zlib1g:arm64...
+2026-09-05T18:04:16.8766302Z 2026/09/05 18:04:16 Debootstrap (stage 2) | I: Configuring required packages...
+2026-09-05T18:04:17.0866817Z 2026/09/05 18:04:17 Debootstrap (stage 2) | I: Configuring gcc-14-base:arm64...
+2026-09-05T18:04:17.0932487Z 2026/09/05 18:04:17 Debootstrap (stage 2) | I: Configuring login.defs...
+2026-09-05T18:04:17.1429320Z 2026/09/05 18:04:17 Debootstrap (stage 2) | I: Configuring debian-archive-keyring...
+2026-09-05T18:04:18.5887446Z 2026/09/05 18:04:18 Debootstrap (stage 2) | I: Configuring libaudit-common...
+2026-09-05T18:04:18.5924270Z 2026/09/05 18:04:18 Debootstrap (stage 2) | I: Configuring libsemanage-common...
+2026-09-05T18:04:18.5979781Z 2026/09/05 18:04:18 Debootstrap (stage 2) | I: Configuring debconf...
+2026-09-05T18:04:19.6465691Z 2026/09/05 18:04:19 Debootstrap (stage 2) | I: Configuring tzdata...
+2026-09-05T18:04:21.1856451Z 2026/09/05 18:04:21 Debootstrap (stage 2) | I: Configuring ncurses-base...
+2026-09-05T18:04:21.1880993Z 2026/09/05 18:04:21 Debootstrap (stage 2) | I: Configuring init-system-helpers...
+2026-09-05T18:04:21.2462790Z 2026/09/05 18:04:21 Debootstrap (stage 2) | I: Configuring libgcc-s1:arm64...
+2026-09-05T18:04:21.2567732Z 2026/09/05 18:04:21 Debootstrap (stage 2) | I: Configuring libc6:arm64...
+2026-09-05T18:04:22.3130146Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring libdb5.3t64:arm64...
+2026-09-05T18:04:22.3160506Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring libmd0:arm64...
+2026-09-05T18:04:22.3208033Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring libxxhash0:arm64...
+2026-09-05T18:04:22.3247197Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring libattr1:arm64...
+2026-09-05T18:04:22.3276033Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring sysvinit-utils...
+2026-09-05T18:04:22.3306130Z 2026/09/05 18:04:22 Debootstrap (stage 2) | I: Configuring debianutils...
+2026-09-05T18:04:23.3172251Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring mawk...
+2026-09-05T18:04:23.3985796Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring libdebconfclient0:arm64...
+2026-09-05T18:04:23.4078548Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring base-files...
+2026-09-05T18:04:23.7032839Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring libbz2-1.0:arm64...
+2026-09-05T18:04:23.7065942Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring libbsd0:arm64...
+2026-09-05T18:04:23.7104519Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring libblkid1:arm64...
+2026-09-05T18:04:23.7135008Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring libstdc++6:arm64...
+2026-09-05T18:04:23.7164853Z 2026/09/05 18:04:23 Debootstrap (stage 2) | I: Configuring dash...
+2026-09-05T18:04:24.3166547Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libtinfo6:arm64...
+2026-09-05T18:04:24.3234433Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring bash...
+2026-09-05T18:04:24.4516078Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libzstd1:arm64...
+2026-09-05T18:04:24.4560052Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring liblzma5:arm64...
+2026-09-05T18:04:24.4602575Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring liblz4-1:arm64...
+2026-09-05T18:04:24.4681668Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libc-bin...
+2026-09-05T18:04:24.5796464Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libsqlite3-0:arm64...
+2026-09-05T18:04:24.5827134Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring ncurses-bin...
+2026-09-05T18:04:24.5876001Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libacl1:arm64...
+2026-09-05T18:04:24.5912758Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libsmartcols1:arm64...
+2026-09-05T18:04:24.5951983Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring zlib1g:arm64...
+2026-09-05T18:04:24.5991513Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libcrypt1:arm64...
+2026-09-05T18:04:24.6018598Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring diffutils...
+2026-09-05T18:04:24.6054157Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libseccomp2:arm64...
+2026-09-05T18:04:24.6089683Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libcap2:arm64...
+2026-09-05T18:04:24.6122325Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring perl-base...
+2026-09-05T18:04:24.6158890Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring openssl-provider-legacy...
+2026-09-05T18:04:24.6187772Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring hostname...
+2026-09-05T18:04:24.6217417Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libcap-ng0:arm64...
+2026-09-05T18:04:24.6246558Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libnettle8t64:arm64...
+2026-09-05T18:04:24.6279526Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libgmp10:arm64...
+2026-09-05T18:04:24.6312884Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring libaudit1:arm64...
+2026-09-05T18:04:24.6342028Z 2026/09/05 18:04:24 Debootstrap (stage 2) | I: Configuring gzip...
+2026-09-05T18:04:25.0584232Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libuuid1:arm64...
+2026-09-05T18:04:25.0618201Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libsepol2:arm64...
+2026-09-05T18:04:25.0650224Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libpcre2-8-0:arm64...
+2026-09-05T18:04:25.0688815Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libudev1:arm64...
+2026-09-05T18:04:25.0728822Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libhogweed6t64:arm64...
+2026-09-05T18:04:25.0776428Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring sqv...
+2026-09-05T18:04:25.0831025Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring grep...
+2026-09-05T18:04:25.0872879Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libssl3t64:arm64...
+2026-09-05T18:04:25.0907072Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring liblastlog2-2:arm64...
+2026-09-05T18:04:25.0963653Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libsystemd0:arm64...
+2026-09-05T18:04:25.0999152Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libselinux1:arm64...
+2026-09-05T18:04:25.2035081Z 2026/09/05 18:04:25 Debootstrap (stage 2) | I: Configuring libpam0g:arm64...
+2026-09-05T18:04:26.0913597Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring sed...
+2026-09-05T18:04:26.0953833Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring findutils...
+2026-09-05T18:04:26.0990701Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring libmount1:arm64...
+2026-09-05T18:04:26.1021200Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring libsemanage2:arm64...
+2026-09-05T18:04:26.1052380Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring libapt-pkg7.0:arm64...
+2026-09-05T18:04:26.1084033Z 2026/09/05 18:04:26 Debootstrap (stage 2) | I: Configuring base-passwd...
+2026-09-05T18:04:27.2191980Z 2026/09/05 18:04:27 Debootstrap (stage 2) | I: Configuring apt...
+2026-09-05T18:04:30.9573792Z 2026/09/05 18:04:30 Debootstrap (stage 2) | I: Configuring bsdutils...
+2026-09-05T18:04:30.9604017Z 2026/09/05 18:04:30 Debootstrap (stage 2) | I: Configuring tar...
+2026-09-05T18:04:31.0371968Z 2026/09/05 18:04:31 Debootstrap (stage 2) | I: Configuring libpam-modules-bin...
+2026-09-05T18:04:31.0725848Z 2026/09/05 18:04:31 Debootstrap (stage 2) | I: Configuring coreutils...
+2026-09-05T18:04:31.0942345Z 2026/09/05 18:04:31 Debootstrap (stage 2) | I: Configuring dpkg...
+2026-09-05T18:04:32.7835582Z 2026/09/05 18:04:32 Debootstrap (stage 2) | I: Configuring mount...
+2026-09-05T18:04:32.7965947Z 2026/09/05 18:04:32 Debootstrap (stage 2) | I: Configuring libpam-modules:arm64...
+2026-09-05T18:04:32.9251019Z 2026/09/05 18:04:32 Debootstrap (stage 2) | I: Configuring passwd...
+2026-09-05T18:04:33.4676766Z 2026/09/05 18:04:33 Debootstrap (stage 2) | I: Configuring libpam-runtime...
+2026-09-05T18:04:34.7791621Z 2026/09/05 18:04:34 Debootstrap (stage 2) | I: Configuring login...
+2026-09-05T18:04:35.0471319Z 2026/09/05 18:04:35 Debootstrap (stage 2) | I: Configuring util-linux...
+2026-09-05T18:04:35.7060512Z ##[error]The operation was canceled.
+2026-09-05T18:04:35.7200248Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-05T18:04:35.7202256Z Post job cleanup.
+2026-09-05T18:04:35.8180427Z (node:10256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-05T18:04:35.8181756Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-05T18:04:35.8213315Z [command]/usr/bin/git version
+2026-09-05T18:04:35.8256079Z git version 2.55.0
+2026-09-05T18:04:35.8291380Z Temporarily overriding HOME='/home/runner/work/_temp/2fc6dd59-f88a-4686-8ed8-b68de5169b8d' before making global git config changes
+2026-09-05T18:04:35.8292745Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-05T18:04:35.8295102Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lindroid-rootfs/lindroid-rootfs
+2026-09-05T18:04:35.8333971Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-05T18:04:35.8368008Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-05T18:04:35.8611318Z Entering 'rootfs-templates'
+2026-09-05T18:04:35.8671207Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-05T18:04:35.8707515Z http.https://github.com/.extraheader
+2026-09-05T18:04:35.8715383Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-05T18:04:35.8749018Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-05T18:04:35.9005659Z Entering 'rootfs-templates'
+2026-09-05T18:04:35.9056451Z http.https://github.com/.extraheader
+2026-09-05T18:04:35.9348668Z Cleaning up orphan processes
+2026-09-05T18:04:35.9709009Z Terminate orphan process: pid (3101) (docker)
+2026-09-05T18:04:35.9825801Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v2, docker/setup-qemu-action@v1. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
