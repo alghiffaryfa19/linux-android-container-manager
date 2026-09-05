@@ -11,13 +11,20 @@ object DisplayManager {
 
     @JvmStatic external fun nativeCreate(): Long
     @JvmStatic external fun nativeDestroy(handle: Long)
+    @JvmStatic external fun nativeConfigure(
+        handle: Long, socketPath: String, useRoot: Boolean,
+        helperPath: String, bridgePath: String, topappEnable: Boolean, topappPath: String,
+        topappMode: Int, topappStops: String
+    )
     @JvmStatic external fun nativeStart(handle: Long, surface: Surface, clipboardTarget: Any?, activityTarget: Any?)
     @JvmStatic external fun nativeStop(handle: Long)
 
-    fun startDisplay(surface: Surface) {
+    fun startDisplay(surface: Surface, containerPath: String) {
         if (handle == 0L) {
             handle = nativeCreate()
         }
+        val socketPath = "$containerPath/tmp/display_daemon.sock"
+        nativeConfigure(handle, socketPath, false, "", "", false, "", 1, "")
         nativeStart(handle, surface, null, null)
     }
 

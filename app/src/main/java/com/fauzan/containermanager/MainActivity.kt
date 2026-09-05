@@ -245,7 +245,9 @@ fun ContainerManagerApp() {
 }
 
 @Composable
-fun ContainerDisplayScreen(onBack: () -> Unit) {
+fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
+    val coroutineScope = rememberCoroutineScope()
+    
     BackHandler(onBack = {
         DisplayManager.stopDisplay()
         onBack()
@@ -257,7 +259,13 @@ fun ContainerDisplayScreen(onBack: () -> Unit) {
                 SurfaceView(context).apply {
                     holder.addCallback(object : SurfaceHolder.Callback {
                         override fun surfaceCreated(holder: SurfaceHolder) {
-                            DisplayManager.startDisplay(holder.surface)
+                            coroutineScope.launch {
+                                // Ensure the Android app can access the root-owned daemon socket
+                                executeSuCommand("chmod 777 $containerPath/tmp/display_daemon.sock")
+                                withContext(Dispatchers.Main) {
+                                    DisplayManager.startDisplay(holder.surface, containerPath)
+                                }
+                            }
                         }
 
                         override fun surfaceChanged(
