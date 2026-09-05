@@ -26,7 +26,7 @@ object DisplayManager {
         val socketPath = "$containerPath/var/display_daemon.sock"
         val bridgePath = "$containerPath/var/bridge.sock"
         val helperPath = "${context.applicationInfo.nativeLibraryDir}/libfdhelper.so"
-        nativeConfigure(handle, socketPath, false, helperPath, bridgePath, false, "", 1, "")
+        nativeConfigure(handle, socketPath, true, helperPath, bridgePath, false, "", 1, "")
         nativeStart(handle, surface, null, null)
     }
 
