@@ -1,0 +1,933 @@
+root@lindroid:/# journalctl -u evdi-bridge                                                                                                                              Sep 05 18:54:02 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.                                                                       -- Boot a0413270501d4549867227e2e11b00e8 --
+Sep 05 19:01:15 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.                                                                       root@lindroid:/# journalctl | grep evdi-bridge
+Sep 05 18:54:02 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 05 19:01:15 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.                                                                       root@lindroid:/# dmesg | grep evdi
+[    0.243255] [    T1] [evdi-lindroid] Loading EVDI-Lindroid driver v1.0.0
+[    0.243357] [    T1] [evdi-lindroid] Event system initialized
+[    0.243501] [    T1] [evdi-lindroid] Sysfs interface created at /sys/devices/evdi-lindroid/
+[    0.243502] [    T1] [evdi-lindroid] Driver loaded successfully
+root@lindroid:/# cat /proc/meminfo | grep -i dma
+ShmemPmdMapped:        0 kB
+FilePmdMapped:         0 kB                                                                                                                                             root@lindroid:/# ls -la /sys/kernel/dma_buf/
+ls: cannot access '/sys/kernel/dma_buf/': No such file or directory                                                                                                     root@lindroid:/# mount -t debugfs none /sys/kernel/debug
+root@lindroid:/# ls -la /sys/kernel/dma_buf/                                                                                                                            ls: cannot access '/sys/kernel/dma_buf/': No such file or directory
+root@lindroid:/# ls /sys/kernel/debug
+1d84000.ufshc                                              cma                 ieee80211          p2p1                                         spmi1
+88e3000.hsphy                                              cmd-db              iio                pci-msm                                      sps                      88e8000.ssphy                                              cnss                interconnect       pinctrl                                      suspend_stats
+898000.qcom,qup_uart                                       cnss_utils          interconnect-test  pm_genpd                                     swiotlb
+adsprpc                                                    compute             iommu-test         pwm                                          synx_debug
+adspsleepmon                                               cpufreq_stats       ipa_usb            qcedev                                       sys_pm_violators
+aoss_send_message                                          debug_enabled       ipc_logging        qcom,mdss_dsi_n81a_36_02_0a_duledsi_dsc_vid  sysmon_subsystem_stats
+asoc                                                       devfreq             kfence             qcom_cpuss_sleep_stats                       tmecom_send_message
+at_usb0                                                    device_component    kgsl               qcom_dma_pools                               tp_debug
+at_usb1                                                    devices_deferred    kiwi_v2            qcom_sleep_stats                             tpg13                    at_usb2                                                    dma_buf             kprobes            qcom_socinfo                                 tpg14
+battery_charger                                            dma_pools           kunit              qcrypto                                      tpg15                    battery_debug                                              dmaengine           lru_gen            ramdisk_pages                                tracing
+battmngr-votable                                           dri                 lru_gen_full       ras                                          tsens
+bdi                                                        drm_dp              mbhc               regmap                                       ufshcd                   binder                                                     dynamic_debug       memblock           regulator                                    ufshcd0
+block                                                      energy_model        mhi_netdev         remoteproc                                   usb
+bluetooth                                                  error_injection     mi_display         rx_swr_ctrl                                  usb_diag
+btt                                                        extfrag             minidump           sched                                        usb_gsi
+c42d000.qcom,spmi:qcom,pm8550b@7:qcom,eusb2-repeater@fd00  f2fs                msm_cvp            sde_rsc0                                     va_swr_ctrl
+camera                                                     fault_around_bytes  msm_mmrm           slab                                         wakeup_sources
+cec                                                        gpi_dma             msm_vidc           sleep_time                                   wcd938x-slave.d01170223
+charger_ulog                                               gpio                mtd                soc:qcom,pmic_glink                          wcd938x-slave.d01170224
+cleancache                                                 gunyah              null               soc:qcom,pmic_glink_log                      wifi-aware0
+clear_warn_once                                            hid                 opp                split_huge_pages                             wlan0
+clk                                                        hwconf_check        p2p0               spmi0
+root@lindroid:/# ls /sys/kernel/debug/dma_buf
+bufinfo
+root@lindroid:/# ls /sys/kernel/debug/dma_buf/bufinfo
+/sys/kernel/debug/dma_buf/bufinfo
+root@lindroid:/# cat /sys/kernel/debug/dma_buf/bufinfo
+
+Dma-buf Objects:
+size            flags           mode            count           exp_name        ino
+00032768        00000002        00080007        00000004        qcom,system     00001717
+        Attached Devices:
+Total 0 devices attached
+
+00016384        00000002        00080007        00000004        qcom,system     00001716
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00001634
+        Attached Devices:
+Total 0 devices attached
+
+27049984        00000002        00080007        00000003        qcom,system     00001633
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00001632
+        Attached Devices:
+Total 0 devices attached
+
+24084480        00000002        00080007        00000001        qcom,system     00001631
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00001630
+        Attached Devices:
+Total 0 devices attached
+
+24084480        00000002        00080007        00000001        qcom,system     00001629
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00001628
+        Attached Devices:
+Total 0 devices attached
+
+24084480        00000002        00080007        00000001        qcom,system     00001627
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001626
+        Attached Devices:
+Total 0 devices attached
+
+24084480        00000002        00080007        00000007        qcom,system     00001625
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00001624
+        Attached Devices:
+Total 0 devices attached
+
+27049984        00000002        00080007        00000003        qcom,system     00001623
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001622
+        Attached Devices:
+Total 0 devices attached
+
+00053248        00000002        00080007        00000006        qcom,system     00001621
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001620
+        Attached Devices:
+Total 0 devices attached
+
+00053248        00000002        00080007        00000006        qcom,system     00001619
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001618
+        Attached Devices:
+Total 0 devices attached
+
+00053248        00000002        00080007        00000006        qcom,system     00001617
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001616
+        Attached Devices:
+Total 0 devices attached
+
+00008192        00000002        00080007        00000006        qcom,system     00001615
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001614
+        Attached Devices:
+Total 0 devices attached
+
+00008192        00000002        00080007        00000006        qcom,system     00001613
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001612
+        Attached Devices:
+Total 0 devices attached
+
+00053248        00000002        00080007        00000007        qcom,system     00001611
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001610
+        Attached Devices:
+Total 0 devices attached
+
+00008192        00000002        00080007        00000006        qcom,system     00001609
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001608
+        Attached Devices:
+Total 0 devices attached
+
+00008192        00000002        00080007        00000007        qcom,system     00001607
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001606
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000006        qcom,system     00001605
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001604
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000006        qcom,system     00001603
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001602
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000007        qcom,system     00001601
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001600
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000006        qcom,system     00001599
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001598
+        Attached Devices:
+Total 0 devices attached
+
+27262976        00000002        00080007        00000004        qcom,system     00001597
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00001596
+        Attached Devices:
+Total 0 devices attached
+
+27049984        00000002        00080007        00000003        qcom,system     00001595
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00001568
+        Attached Devices:
+Total 0 devices attached
+
+27049984        00000002        00080007        00000001        qcom,system     00001567
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00001532
+        Attached Devices:
+Total 0 devices attached
+
+27262976        00000002        00080007        00000005        qcom,system     00001531
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00001124
+        Attached Devices:
+Total 0 devices attached
+
+06082560        00000002        00080007        00000003        qcom,system     00001123
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000896
+        Attached Devices:
+Total 0 devices attached
+
+27262976        00000002        00080007        00000004        qcom,system     00000895
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000737
+        Attached Devices:
+Total 0 devices attached
+
+00446464        00000002        00080007        00000004        qcom,system     00000736
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000735
+        Attached Devices:
+Total 0 devices attached
+
+00446464        00000002        00080007        00000004        qcom,system     00000734
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000733
+        Attached Devices:
+Total 0 devices attached
+
+00446464        00000002        00080007        00000004        qcom,system     00000732
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000731
+        Attached Devices:
+Total 0 devices attached
+
+00446464        00000002        00080007        00000004        qcom,system     00000730
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00004096        00000002        00080007        00000002        system  00000670
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000003        system  00000667
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb12
+Total 1 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000655
+        Attached Devices:
+Total 0 devices attached
+
+00057344        00000002        00080007        00000002        qcom,system     00000654
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000643
+        Attached Devices:
+Total 0 devices attached
+
+01187840        00000002        00080007        00000006        qcom,system     00000642
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000641
+        Attached Devices:
+Total 0 devices attached
+
+01187840        00000002        00080007        00000006        qcom,system     00000640
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000542
+        Attached Devices:
+Total 0 devices attached
+
+00012288        00000002        00080007        00000002        qcom,system     00000541
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000536
+        Attached Devices:
+Total 0 devices attached
+
+00012288        00000002        00080007        00000003        qcom,system     00000535
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000515
+        Attached Devices:
+Total 0 devices attached
+
+05529600        00000002        00080007        00000004        qcom,system     00000514
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000513
+        Attached Devices:
+Total 0 devices attached
+
+02097152        00000002        00080007        00000006        qcom,system     00000512
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000509
+        Attached Devices:
+Total 0 devices attached
+
+02097152        00000002        00080007        00000006        qcom,system     00000508
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000507
+        Attached Devices:
+Total 0 devices attached
+
+01187840        00000002        00080007        00000007        qcom,system     00000506
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000503
+        Attached Devices:
+Total 0 devices attached
+
+01581056        00000002        00080007        00000004        qcom,system     00000502
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000501
+        Attached Devices:
+Total 0 devices attached
+
+02097152        00000002        00080007        00000007        qcom,system     00000500
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000499
+        Attached Devices:
+Total 0 devices attached
+
+01187840        00000002        00080007        00000006        qcom,system     00000498
+        Attached Devices:
+        kgsl-3d0
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000006        qcom,system     00000497
+        Attached Devices:
+Total 0 devices attached
+
+02097152        00000002        00080007        00000007        qcom,system     00000496
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+        kgsl-3d0
+Total 3 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000493
+        Attached Devices:
+Total 0 devices attached
+
+05529600        00000002        00080007        00000004        qcom,system     00000492
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000489
+        Attached Devices:
+Total 0 devices attached
+
+05529600        00000002        00080007        00000004        qcom,system     00000488
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000487
+        Attached Devices:
+Total 0 devices attached
+
+05529600        00000002        00080007        00000004        qcom,system     00000486
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000483
+        Attached Devices:
+Total 0 devices attached
+
+01581056        00000002        00080007        00000004        qcom,system     00000482
+        Attached Devices:
+        kgsl-3d0
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000473
+        Attached Devices:
+Total 0 devices attached
+
+00016384        00000002        00080007        00000002        qcom,system     00000472
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000471
+        Attached Devices:
+Total 0 devices attached
+
+00016384        00000002        00080007        00000002        qcom,system     00000470
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000393
+        Attached Devices:
+Total 0 devices attached
+
+37699584        00000002        00080007        00000003        qcom,system     00000392
+        Attached Devices:
+        kgsl-3d0
+Total 1 devices attached
+
+00020480        00000002        00080007        00000003        qcom,system     00000320
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+Total 1 devices attached
+
+00020480        00000002        00080007        00000003        qcom,system     00000319
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+Total 1 devices attached
+
+00020480        00000002        00080007        00000003        qcom,system     00000318
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+Total 1 devices attached
+
+00004096        00000002        00080007        00000002        qcom,qseecom    00000312
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000002        qcom,qseecom    00000311
+        Attached Devices:
+Total 0 devices attached
+
+00262144        00000002        00080007        00000003        system  00000309
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb2
+Total 1 devices attached
+
+00004096        00000002        00080007        00000003        system  00000308
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb2
+Total 1 devices attached
+
+00004096        00000002        00080007        00000003        system  00000307
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb2
+Total 1 devices attached
+
+00262144        00000002        00080007        00000003        system  00000306
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb11
+Total 1 devices attached
+
+00004096        00000002        00080007        00000002        system  00000305
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000003        system  00000304
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb11
+Total 1 devices attached
+
+00032768        00000002        00080007        00000003        system  00000303
+        Attached Devices:
+        soc:spf_core_platform:qcom,msm-audio-ion
+Total 1 devices attached
+
+00004096        00000002        00080007        00000002        system  00000285
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000002        system  00000207
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000003        system  00000206
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb12
+Total 1 devices attached
+
+00004096        00000002        00080007        00000002        system  00000205
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000003        system  00000204
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb10
+Total 1 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000202
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000005        qcom,system     00000201
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000200
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000004        qcom,system     00000199
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 2 devices attached
+
+00032768        00000002        00080007        00000004        qcom,system     00000198
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000004        qcom,system     00000197
+        Attached Devices:
+        soc:qcom,smmu_sde_unsec_cb
+        kgsl-3d0
+Total 2 devices attached
+
+00512000        00000002        00080007        00000003        qcom,qseecom    00000196
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00004096        00000002        00080007        00000002        qcom,qseecom    00000193
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000002        qcom,qseecom    00000192
+        Attached Devices:
+Total 0 devices attached
+
+00032768        00000002        00080007        00000002        qcom,system     00000190
+        Attached Devices:
+Total 0 devices attached
+
+25067520        00000002        00080007        00000001        qcom,system     00000189
+        Attached Devices:
+Total 0 devices attached
+
+07340032        00000002        00080007        00000001        qcom,system     00000168
+        Attached Devices:
+        soc:qcom,cam_smmu:msm_cam_smmu_icp
+Total 1 devices attached
+
+00008192        00000002        00080007        00000002        qcom,qseecom    00000092
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000003        system  00000069
+        Attached Devices:
+        soc:qcom,msm_fastrpc:qcom,msm_fastrpc_compute_cb1
+Total 1 devices attached
+
+00024576        00000002        00080007        00000002        qcom,qseecom    00000067
+        Attached Devices:
+Total 0 devices attached
+
+00008192        00000002        00080007        00000002        qcom,qseecom    00000037
+        Attached Devices:
+Total 0 devices attached
+
+00335872        00000002        00080007        00000001        qcom,qseecom-ta 00000023
+        Attached Devices:
+Total 0 devices attached
+
+00012288        00000002        00080007        00000002        qcom,qseecom    00000022
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000002        00080007        00000002        qcom,qseecom    00000020
+        Attached Devices:
+Total 0 devices attached
+
+00135168        00000002        00080007        00000002        qcom,qseecom    00000019
+        Attached Devices:
+Total 0 devices attached
+
+00004096        00000000        00080005        00000001        qcom,system     00000017
+        Attached Devices:
+        ab00000.qcom,cvp:cvp_non_secure_cb
+Total 1 devices attached
+
+03137536        00000000        00080005        00000001        qcom,system     00000016
+        Attached Devices:
+        ab00000.qcom,cvp:cvp_non_secure_cb
+Total 1 devices attached
+
+00040960        00000002        00080007        00000002        qcom,qseecom    00000015
+        Attached Devices:
+Total 0 devices attached
+
+00040960        00000002        00080007        00000002        qcom,qseecom    00000013
+        Attached Devices:
+Total 0 devices attached
+
+00028672        00000002        00080007        00000004        qcom,qseecom    00000012
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00004096        00000002        00080007        00000004        qcom,qseecom    00000011
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00020480        00000002        00080007        00000004        qcom,qseecom    00000010
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00004096        00000002        00080007        00000004        qcom,qseecom    00000009
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00516096        00000002        00080007        00000004        qcom,qseecom    00000008
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00020480        00000002        00080007        00000004        qcom,qseecom    00000007
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00020480        00000002        00080007        00000004        qcom,qseecom    00000006
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00020480        00000002        00080007        00000004        qcom,qseecom    00000005
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00528384        00000002        00080007        00000004        qcom,qseecom    00000004
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00028672        00000002        00080007        00000004        qcom,qseecom    00000003
+        Attached Devices:
+        firmware:qcom_smcinvoke
+Total 1 devices attached
+
+00004096        00000000        00080005        00000001        qcom,system     00000002
+        Attached Devices:
+        aa00000.qcom,vidc:non_secure_cb
+Total 1 devices attached
+
+03137536        00000000        00080005        00000001        qcom,system     00000001
+        Attached Devices:
+        aa00000.qcom,vidc:non_secure_cb
+Total 1 devices attached
+
+
+Total 153 objects, 589590528 bytes
+root@lindroid:/# find /sys/devices/evdi-lindroid -type f -o -type l
+/sys/devices/evdi-lindroid/uevent
+/sys/devices/evdi-lindroid/power/runtime_active_time
+/sys/devices/evdi-lindroid/power/runtime_status
+/sys/devices/evdi-lindroid/power/autosuspend_delay_ms
+/sys/devices/evdi-lindroid/power/runtime_suspended_time
+/sys/devices/evdi-lindroid/power/control
+/sys/devices/evdi-lindroid/debug/stats
+/sys/devices/evdi-lindroid/debug/enable_perf
+/sys/devices/evdi-lindroid/add
+root@lindroid:/# find /sys/devices/evdi-lindroid -type f -exec sh -c 'echo === $1; cat "$1" 2>/dev/null' _ {} \;
+=== /sys/devices/evdi-lindroid/uevent
+=== /sys/devices/evdi-lindroid/power/runtime_active_time
+0
+=== /sys/devices/evdi-lindroid/power/runtime_status
+unsupported
+=== /sys/devices/evdi-lindroid/power/autosuspend_delay_ms
+=== /sys/devices/evdi-lindroid/power/runtime_suspended_time
+0
+=== /sys/devices/evdi-lindroid/power/control
+auto
+=== /sys/devices/evdi-lindroid/debug/stats
+EVDI-Lindroid Performance Statistics
+=====================================
+IOCTL calls:
+  CONNECT: 0
+  POLL: 0
+  VSYNC: 0
+  GET_BUFF_CALLBACK: 0
+  DESTROY_BUFF_CALLBACK: 0
+  CREATE_BUFF_CALLBACK: 0
+  EVDI_GBM_GET_BUFF: 0
+
+Event system:
+  Wakeups: 0
+  Poll cycles: 0
+  Queue operations: 0
+  Dequeue operations: 0
+  Event allocations: 0
+  Swap updates: 0
+  Swap delivered: 0
+  Inflight per-CPU hits: 0
+  Inflight per-CPU misses: 0
+=====================================
+=== /sys/devices/evdi-lindroid/debug/enable_perf
+0
+=== /sys/devices/evdi-lindroid/add
+0
+root@lindroid:/# find /sys/devices/evdi-lindroid -iname '*dma*' -o -iname '*buf*' -o -iname '*frame*'
+root@lindroid:/# ls -lah /dev/dri/
+total 0
+drwxr-xr-x.  2 root root       80 Jan  8  1970 .
+drwxr-xr-x  11 root root      540 Sep  5 19:01 ..
+crw-rw-rw-.  1 root 1003 226,   0 Jan  8  1970 card0
+crw-rw-rw-.  1 root 1003 226, 128 Jan  8  1970 renderD128
+root@lindroid:/# ls -lah /sys/class/drm/
+total 0
+drwxr-xr-x   2 root root    0 Sep  5 19:06 .
+drwxr-xr-x 129 root root    0 Jan  8  1970 ..
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 card0 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 card0-DP-1 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DP-1
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 card0-DSI-1 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 card0-Virtual-1 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-Virtual-1
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 card0-Virtual-2 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-Virtual-2
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 renderD128 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/renderD128
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-0 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-0
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-1 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-1
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-2 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-2
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-3 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-3
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-4 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-4
+lrwxrwxrwx   1 root root    0 Sep  5 19:06 sde-crtc-5 -> ../../devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-5
+-r--r--r--   1 root root 4.0K Sep  5 19:06 version
+root@lindroid:/# grep -R . /sys/class/drm/*/status 2>/dev/null
+/sys/class/drm/card0-DP-1/status:disconnected
+/sys/class/drm/card0-DSI-1/status:connected
+/sys/class/drm/card0-Virtual-1/status:connected
+/sys/class/drm/card0-Virtual-2/status:connected
+root@lindroid:/# pidof evdi-bridge
+root@lindroid:/# ls -l /proc/$(pidof evdi-bridge)/fd | grep -i dma
+ls: cannot access '/proc//fd': No such file or directory
+root@lindroid:/# systemctl restart evdi-bridge
+root@lindroid:/# systemctl status evdi-bridge
+● evdi-bridge.service - EVDI to Anland Bridge Service
+     Loaded: loaded (/usr/lib/systemd/system/evdi-bridge.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-09-05 19:07:32 UTC; 4s ago
+ Invocation: 087a92f56eae4838a0c487b3dd0de860
+   Main PID: 165 (evdi_bridge)
+     Memory: 172K
+     CGroup: /system.slice/evdi-bridge.service
+             └─165 /usr/bin/evdi_bridge
+
+Sep 05 19:07:32 lindroid systemd[1]: evdi-bridge.service: Deactivated successfully.
+Sep 05 19:07:32 lindroid systemd[1]: Stopped evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 05 19:07:32 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+root@lindroid:/# ls /proc
+1                 config.gz       interrupts            loadavg            nvt_fw_version          slabinfo          uid_io                 xm_htc_ic_log_level
+102               consoles        iomem                 locks              nvt_pen_diff            softirqs          uid_procstat           xm_htc_idle_baseline_update
+109               cpuinfo         ioports               lowmemorykiller    nvt_pen_switch          stat              uptime                 xm_htc_idle_wake_th
+165               crypto          irq                   meminfo            nvt_raw                 swaps             usb_msflag             xm_htc_int_state
+168               debug_ext       kallsyms              mi_display         nvt_selftest            swinfo            version                xm_htc_op_mode
+22                debugdriver     kcompactd_pid         migt               package                 sys               vmallocinfo            xm_htc_pen_scan_rate
+59                device-tree     key-users             millet             pagetypeinfo            sysrq-trigger     vmstat                 xm_htc_raw_data_type
+94                devices         keys                  mimdlog            partitions              sysvipc           vote_priority          xm_htc_report_coordinate
+NVTSPI            diskstats       kmsg                  misc               perflock_records        thread-self       xm_htc_calibration     xm_htc_scan_freq
+apss_sleep_stats  driver          kpagecgroup           modem_sleep_stats  perfmgr                 timer_list        xm_htc_charger         xm_htc_scan_freq_no
+asound            dynamic_debug   kpagecount            modules            pressure                tp_data_dump      xm_htc_fh_enable       xm_htc_single_step
+bootconfig        enable_msflag   kpageflags            mounts             schedstat               tp_fw_version     xm_htc_filter_level    xm_htc_stylus_enable
+buddyinfo         execdomains     kswapd_c              mtd                self                    tp_lockdown_info  xm_htc_flg_buf         xm_htc_stylus_only
+bus               fas             last_keypad_events    mv                 show_mi_art_mutex_info  tp_selftest       xm_htc_game_mode       xm_htc_sw_reset
+cgroups           filesystems     last_mcrash           net                show_mi_freq_qos        tty               xm_htc_gesture_dbclk   zoneinfo
+cldkiwi_v2        fs              last_touch_events     nvt_baseline       show_mi_runtime_info    tzdbg             xm_htc_gesture_switch
+cmdline           global_reclaim  last_touchpad_events  nvt_diff           sla                     uid_cputime       xm_htc_hand_scan_rate
+root@lindroid:/# ls /proc/1*
+/proc/1:
+attr        cmdline          cwd      fdinfo   loginuid   mountinfo   ns             pagemap      sched      smaps         statm    time_in_state   wchan
+auxv        comm             environ  gid_map  map_files  mounts      oom_adj        personality  schedstat  smaps_rollup  status   timens_offsets
+cgroup      coredump_filter  exe      io       maps       mountstats  oom_score      projid_map   sessionid  stack         syscall  timerslack_ns
+clear_refs  cpuset           fd       limits   mem        net         oom_score_adj  root         setgroups  stat          task     uid_map
+
+/proc/102:
+attr        cmdline          cwd      fdinfo   loginuid   mountinfo   ns             pagemap      sched      smaps         statm    time_in_state   wchan
+auxv        comm             environ  gid_map  map_files  mounts      oom_adj        personality  schedstat  smaps_rollup  status   timens_offsets
+cgroup      coredump_filter  exe      io       maps       mountstats  oom_score      projid_map   sessionid  stack         syscall  timerslack_ns
+clear_refs  cpuset           fd       limits   mem        net         oom_score_adj  root         setgroups  stat          task     uid_map
+
+/proc/109:
+attr        cmdline          cwd      fdinfo   loginuid   mountinfo   ns             pagemap      sched      smaps         statm    time_in_state   wchan
+auxv        comm             environ  gid_map  map_files  mounts      oom_adj        personality  schedstat  smaps_rollup  status   timens_offsets
+cgroup      coredump_filter  exe      io       maps       mountstats  oom_score      projid_map   sessionid  stack         syscall  timerslack_ns
+clear_refs  cpuset           fd       limits   mem        net         oom_score_adj  root         setgroups  stat          task     uid_map
+
+/proc/165:
+attr        cmdline          cwd      fdinfo   loginuid   mountinfo   ns             pagemap      sched      smaps         statm    time_in_state   wchan
+auxv        comm             environ  gid_map  map_files  mounts      oom_adj        personality  schedstat  smaps_rollup  status   timens_offsets
+cgroup      coredump_filter  exe      io       maps       mountstats  oom_score      projid_map   sessionid  stack         syscall  timerslack_ns
+clear_refs  cpuset           fd       limits   mem        net         oom_score_adj  root         setgroups  stat          task     uid_map
+root@lindroid:/# ls /proc/1*/fd
+/proc/1/fd:
+0  10  12  14  16  18  2   21  23  25  3   31  33  35  37  39  40  42  44  46  48  50  54  57  6   61  8
+1  11  13  15  17  19  20  22  24  29  30  32  34  36  38  4   41  43  45  47  5   51  55  59  60  7   9
+
+/proc/102/fd:
+0  1  10  11  12  13  2  3  4  5  6  7  8  9
+
+/proc/109/fd:
+0  1  2  255
+
+/proc/165/fd:
+0  1  2  3
