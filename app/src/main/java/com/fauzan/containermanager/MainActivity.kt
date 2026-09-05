@@ -316,20 +316,16 @@ suspend fun extractTarball(context: Context, uri: Uri, containerName: String): C
 
 suspend fun executeSuCommand(command: String): String = withContext(Dispatchers.IO) {
     try {
-        val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-        val reader = BufferedReader(InputStreamReader(process.inputStream))
-        val errorReader = BufferedReader(InputStreamReader(process.errorStream))
-        
+        val result = com.topjohnwu.superuser.Shell.cmd(command).exec()
         val output = StringBuilder()
-        var line: String?
-        while (reader.readLine().also { line = it } != null) {
+        
+        for (line in result.out) {
             output.append(line).append("\n")
         }
-        while (errorReader.readLine().also { line = it } != null) {
+        for (line in result.err) {
             output.append("ERROR: ").append(line).append("\n")
         }
         
-        process.waitFor()
         output.toString()
     } catch (e: Exception) {
         "Exception: ${e.message}\n"
