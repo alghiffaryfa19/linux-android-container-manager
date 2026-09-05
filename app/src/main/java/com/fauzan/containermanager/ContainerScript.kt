@@ -1,69 +1,52 @@
 package com.fauzan.containermanager
 
+import android.content.Context
+import android.os.Build
+import java.io.File
+import java.io.FileOutputStream
+
 object ContainerScript {
     
+    // The boot binary path after it has been deployed
+    var bootBinaryPath: String = ""
+
+    fun deployBootBinary(context: Context) {
+        // Find the primary ABI for this device
+        val abi = Build.SUPPORTED_ABIS[0]
+        val assetPath = "${abi}/container_boot"
+        val outDir = File(context.filesDir, "bin")
+        if (!outDir.exists()) outDir.mkdirs()
+        
+        val outFile = File(outDir, "container_boot")
+        try {
+            context.assets.open(assetPath).use { input ->
+                FileOutputStream(outFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            outFile.setExecutable(true)
+            bootBinaryPath = outFile.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // In case the specific ABI folder isn't there, try falling back
+        }
+    }
+
     fun getStartScript(rootfsPath: String): String {
         return """
             #!/system/bin/sh
             
             MNT="$rootfsPath"
             
-            echo "[*] Preparing Container Environment (Droidspaces style)..."
-            
-            if [ ! -d "${'$'}MNT" ]; then
-                echo "[ERROR] RootFS directory not found at ${'$'}MNT"
+            if [ -z "$bootBinaryPath" ] || [ ! -f "$bootBinaryPath" ]; then
+                echo "[ERROR] Boot binary not deployed properly."
                 exit 1
             fi
             
-            # Start the container inside a new isolated mount namespace
-            # We run it in the background so the Android UI doesn't block forever
-            # Redirect output to prevent the pipe from hanging executeSuCommand
-            nohup unshare -m /system/bin/sh -c "
-                echo \"[*] Entering isolated mount namespace...\"
-                
-                # Prevent our mounts from leaking back to the Android host
-                mount --make-rprivate /
-                
-                # Bind-mount the rootfs to itself so it can be used for pivot_root
-                mount -o bind,rec \"${'$'}MNT\" \"${'$'}MNT\"
-                cd \"${'$'}MNT\"
-                
-                # Pre-create standard directories
-                echo \"[*] Creating standard directories...\"
-                mkdir -p .old_root proc sys dev tmp run
-                
-                # Mount virtual filesystems
-                echo \"[*] Mounting virtual filesystems...\"
-                mount -t proc proc proc
-                mount -t sysfs sysfs sys
-                mount -t tmpfs tmpfs tmp -o mode=1777
-                mount -t tmpfs tmpfs run -o mode=755
-                
-                # Safely bind-mount host /dev to container's /dev
-                mount -o bind /dev dev
-                
-                # Relocate the root filesystem
-                echo \"[*] Pivoting root...\"
-                pivot_root . .old_root || {
-                    echo \"[*] pivot_root failed, falling back to MS_MOVE + chroot\"
-                    mount --move . /
-                    echo \"[*] Container Started Successfully!\"
-                    exec chroot . /sbin/init
-                }
-                
-                cd /
-                
-                # Cleanup the old host root mount if pivot_root was successful
-                if [ -d \"/.old_root/sys\" ]; then
-                    umount -l /.old_root
-                    rmdir /.old_root
-                fi
-                
-                echo \"[*] Container Started Successfully!\"
-                
-                # Execute the native OS init system
-                exec /sbin/init
-            " > "${'$'}MNT/container.log" 2>&1 < /dev/null &
+            echo "[*] Preparing Container Environment via native boot.c..."
+            
+            # Execute the native standalone boot binary
+            $bootBinaryPath "${'$'}MNT"
             
             # Wait a moment for initialization and then output the log so UI can show it
             sleep 3

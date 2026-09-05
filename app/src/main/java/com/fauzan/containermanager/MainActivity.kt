@@ -60,6 +60,10 @@ fun loadContainers(context: Context): List<ContainerInfo> {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Extract native boot binary for container init
+        ContainerScript.deployBootBinary(this)
+        
         setContent {
             MaterialTheme {
                 Surface(
