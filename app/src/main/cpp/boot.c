@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
 
     log_msg("[*] Mounting virtual filesystems...");
     mount("proc", "proc", "proc", 0, NULL);
-    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
+    mount("sysfs", "sys", "sysfs", 0, NULL); // RW to allow creating virtual displays (evdi)
     mount("tmpfs", "tmp", "tmpfs", 0, "mode=1777");
     mount("tmpfs", "run", "tmpfs", 0, "mode=755");
 
@@ -203,6 +203,39 @@ int main(int argc, char *argv[]) {
             log_err("mount devpts failed");
         }
         symlink("pts/ptmx", "dev/ptmx");
+        
+        // Setup GPU and Hardware nodes from host
+        const char *gpu_nodes[] = {
+            "/dev/dri", "/dev/mali0", "/dev/kgsl-3d0", 
+            "/dev/ion", "/dev/dma_heap", "/dev/binder", "/dev/hwbinder", "/dev/vndbinder"
+        };
+        for (int i = 0; i < 8; i++) {
+            struct stat s;
+            if (stat(gpu_nodes[i], &s) == 0) {
+                char dest[256];
+                snprintf(dest, sizeof(dest), "dev/%s", gpu_nodes[i] + 5);
+                if (S_ISDIR(s.st_mode)) {
+                    mkdir(dest, 0755);
+                } else {
+                    int fd = open(dest, O_CREAT | O_WRONLY, 0666);
+                    if (fd >= 0) close(fd);
+                }
+                mount(gpu_nodes[i], dest, NULL, MS_BIND | MS_REC, NULL);
+            }
+        }
+    }
+
+    log_msg("[*] Mounting host Android partitions for libhybris...");
+    const char *host_parts[] = {"/system", "/vendor", "/apex", "/linkerconfig", "/bionic", "/odm"};
+    for (int i = 0; i < 6; i++) {
+        struct stat s;
+        if (stat(host_parts[i], &s) == 0) {
+            char dest[256];
+            snprintf(dest, sizeof(dest), "%s", host_parts[i] + 1); // skip leading '/'
+            mkdir(dest, 0755);
+            mount(host_parts[i], dest, NULL, MS_BIND | MS_REC, NULL);
+            mount(NULL, dest, NULL, MS_REMOUNT | MS_BIND | MS_RDONLY, NULL);
+        }
     }
 
     log_msg("[*] Pivoting root...");
