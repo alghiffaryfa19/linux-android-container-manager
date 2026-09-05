@@ -34,9 +34,9 @@ object ContainerScript {
                 # Mount virtual filesystems
                 echo \"[*] Mounting virtual filesystems...\"
                 mount -t proc proc proc
-                mount -t sysfs sys sys
-                mount -t tmpfs tmp tmp -o mode=1777
-                mount -t tmpfs run run -o mode=755
+                mount -t sysfs sysfs sys
+                mount -t tmpfs tmpfs tmp -o mode=1777
+                mount -t tmpfs tmpfs run -o mode=755
                 
                 # Safely bind-mount host /dev to container's /dev
                 mount -o bind /dev dev
