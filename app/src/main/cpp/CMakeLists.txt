@@ -25,7 +25,5 @@ target_link_libraries(
 # Add the standalone boot binary executable
 add_executable(container_boot boot.c)
 
-# Copy the executable to the assets folder so Gradle can package it into the APK
-add_custom_command(TARGET container_boot POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/../assets/${ANDROID_ABI}
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:container_boot> ${CMAKE_SOURCE_DIR}/../assets/${ANDROID_ABI}/container_boot)
+# Make the executable look like a shared library so Gradle packages it automatically
+set_target_properties(container_boot PROPERTIES PREFIX "lib" SUFFIX ".so")

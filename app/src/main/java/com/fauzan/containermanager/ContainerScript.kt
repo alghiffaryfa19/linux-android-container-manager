@@ -11,24 +11,29 @@ object ContainerScript {
     var bootBinaryPath: String = ""
 
     fun deployBootBinary(context: Context) {
-        // Find the primary ABI for this device
         val abi = Build.SUPPORTED_ABIS[0]
-        val assetPath = "${abi}/container_boot"
+        val entryName = "lib/${abi}/libcontainer_boot.so"
         val outDir = File(context.filesDir, "bin")
         if (!outDir.exists()) outDir.mkdirs()
         
         val outFile = File(outDir, "container_boot")
         try {
-            context.assets.open(assetPath).use { input ->
-                FileOutputStream(outFile).use { output ->
-                    input.copyTo(output)
+            val apkFile = java.util.zip.ZipFile(context.applicationInfo.sourceDir)
+            val entry = apkFile.getEntry(entryName)
+            if (entry != null) {
+                apkFile.getInputStream(entry).use { input ->
+                    FileOutputStream(outFile).use { output ->
+                        input.copyTo(output)
+                    }
                 }
+                outFile.setExecutable(true)
+                bootBinaryPath = outFile.absolutePath
+            } else {
+                System.err.println("Could not find boot binary for ABI $abi in APK")
             }
-            outFile.setExecutable(true)
-            bootBinaryPath = outFile.absolutePath
+            apkFile.close()
         } catch (e: Exception) {
             e.printStackTrace()
-            // In case the specific ABI folder isn't there, try falling back
         }
     }
 
