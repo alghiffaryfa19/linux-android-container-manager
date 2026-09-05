@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
         ContainerScript.deployBootBinary(this)
         
         // Extract Lindroid libraries (libc.so quirk and compat layers)
-        val libsToExtract = listOf("libc.so", "libui_compat_layer.so", "libhwc2_compat_layer.so", "vendor.lindroid.composer-ndk.so")
+        val libsToExtract = listOf("libc.so", "libui_compat_layer.so", "libhwc2_compat_layer.so", "vendor.lindroid.composer-ndk.so", "android.hardware.graphics.common-V7-ndk.so")
         for (lib in libsToExtract) {
             val libFile = File(filesDir, lib)
             if (!libFile.exists()) {
