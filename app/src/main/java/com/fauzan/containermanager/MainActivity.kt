@@ -205,10 +205,10 @@ suspend fun extractTarball(context: android.content.Context, uri: Uri): String =
         val destDir = ContainerScript.ROOTFS_DIR
         
         val cmd = """
-            echo "Creating target directory: ${'$'}destDir"
-            mkdir -p ${'$'}destDir
+            echo "Creating target directory: $destDir"
+            mkdir -p $destDir
             echo "Extracting tarball... This may take a while."
-            tar -xzpf ${cacheFile.absolutePath} -C ${'$'}destDir
+            tar -xzpf ${cacheFile.absolutePath} -C $destDir
             echo "Extraction complete!"
             rm -f ${cacheFile.absolutePath}
         """.trimIndent()
