@@ -184,7 +184,13 @@ int main(int argc, char *argv[]) {
 
     log_msg("[*] Mounting virtual filesystems...");
     mount("proc", "proc", "proc", 0, NULL);
-    mount("sysfs", "sys", "sysfs", 0, NULL); // RW to allow creating virtual displays (evdi)
+    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
+    
+    // Allow create-disp to write to LINDROID EVDI virtual display interface safely
+    struct stat evdi_st;
+    if (stat("/sys/devices/evdi-lindroid", &evdi_st) == 0) {
+        mount("/sys/devices/evdi-lindroid", "sys/devices/evdi-lindroid", NULL, MS_BIND, NULL);
+    }
     mount("tmpfs", "tmp", "tmpfs", 0, "mode=1777");
     mount("tmpfs", "run", "tmpfs", 0, "mode=755");
 
@@ -204,12 +210,13 @@ int main(int argc, char *argv[]) {
         }
         symlink("pts/ptmx", "dev/ptmx");
         
-        // Setup GPU and Hardware nodes from host
+        // Setup GPU, Binder, and LINDROID Hardware nodes from host safely
         const char *gpu_nodes[] = {
-            "/dev/dri", "/dev/mali0", "/dev/kgsl-3d0", 
-            "/dev/ion", "/dev/dma_heap", "/dev/binder", "/dev/hwbinder", "/dev/vndbinder"
+            "/dev/dri", "/dev/kgsl-3d0", "/dev/mali0", "/dev/pvr_sync", "/dev/ion", "/dev/dma_heap",
+            "/dev/socket", "/dev/__properties__", "/dev/binder", "/dev/hwbinder", "/dev/vndbinder",
+            "/dev/pmsg0", "/dev/ashmem", "/dev/input", "/dev/binderfs"
         };
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 15; i++) {
             struct stat s;
             if (stat(gpu_nodes[i], &s) == 0) {
                 char dest[256];
@@ -225,17 +232,38 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    log_msg("[*] Mounting host Android partitions for libhybris...");
-    const char *host_parts[] = {"/system", "/vendor", "/apex", "/linkerconfig", "/bionic", "/odm"};
-    for (int i = 0; i < 6; i++) {
+    log_msg("[*] Mounting host Android partitions for LINDROID libhybris...");
+    const char *host_parts[] = {
+        "/system", "/vendor", "/vendor_dlkm", "/system_dlkm", 
+        "/system_ext", "/product", "/odm", "/odm_dlkm", "/apex"
+    };
+    for (int i = 0; i < 9; i++) {
         struct stat s;
         if (stat(host_parts[i], &s) == 0) {
             char dest[256];
             snprintf(dest, sizeof(dest), "%s", host_parts[i] + 1); // skip leading '/'
             mkdir(dest, 0755);
+            // Just bind mount, avoid MS_REMOUNT to prevent kernel panic
             mount(host_parts[i], dest, NULL, MS_BIND | MS_REC, NULL);
-            mount(NULL, dest, NULL, MS_REMOUNT | MS_BIND | MS_RDONLY, NULL);
         }
+    }
+
+    // LINDROID Quirk: Bind mount patched libc inside container to avoid errors
+    const char *patched_libc = NULL;
+    struct stat libc_st;
+    if (stat("/system_ext/usr/share/lindroid/libc.so", &libc_st) == 0) {
+        patched_libc = "/system_ext/usr/share/lindroid/libc.so";
+    } else if (stat("/data/user/0/com.fauzan.containermanager/files/libc.so", &libc_st) == 0) { // Built-in from App
+        patched_libc = "/data/user/0/com.fauzan.containermanager/files/libc.so";
+    } else if (stat("usr/share/lindroid/libc.so", &libc_st) == 0) { // inside rootfs
+        patched_libc = "usr/share/lindroid/libc.so";
+    } else if (stat("opt/lindroid/libc.so", &libc_st) == 0) { // inside rootfs
+        patched_libc = "opt/lindroid/libc.so";
+    }
+
+    if (patched_libc) {
+        mount(patched_libc, "apex/com.android.runtime/lib64/bionic/libc.so", NULL, MS_BIND, NULL);
+        log_msg("[*] Applied LINDROID libc quirk for libhybris/vulkan-bridge");
     }
 
     log_msg("[*] Pivoting root...");

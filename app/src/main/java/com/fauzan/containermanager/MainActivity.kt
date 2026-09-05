@@ -64,6 +64,20 @@ class MainActivity : ComponentActivity() {
         // Extract native boot binary for container init
         ContainerScript.deployBootBinary(this)
         
+        // Extract Lindroid libc.so quirk for libhybris
+        val libcFile = File(filesDir, "libc.so")
+        if (!libcFile.exists()) {
+            try {
+                assets.open("libc.so").use { input ->
+                    FileOutputStream(libcFile).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            } catch (e: Exception) {
+                // Ignore if asset is not present
+            }
+        }
+        
         setContent {
             MaterialTheme {
                 Surface(
