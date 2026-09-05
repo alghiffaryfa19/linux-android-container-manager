@@ -268,8 +268,8 @@ int main(int argc, char *argv[]) {
 
     // LINDROID Quirk: Provide standalone compat layers if supplied by the app
     mkdir("dev/lindroid_libs", 0755);
-    const char *compat_libs[] = {"libui_compat_layer.so", "libhwc2_compat_layer.so"};
-    for (int i = 0; i < 2; i++) {
+    const char *compat_libs[] = {"libui_compat_layer.so", "libhwc2_compat_layer.so", "vendor.lindroid.composer-ndk.so"};
+    for (int i = 0; i < 3; i++) {
         char src[256];
         snprintf(src, sizeof(src), "/data/user/0/com.fauzan.containermanager/files/%s", compat_libs[i]);
         struct stat lib_st;
