@@ -47,7 +47,8 @@ object ContainerScript {
                 pivot_root . .old_root || {
                     echo \"[*] pivot_root failed, falling back to MS_MOVE + chroot\"
                     mount --move . /
-                    chroot .
+                    echo \"[*] Container Started Successfully!\"
+                    exec chroot . /sbin/init
                 }
                 
                 cd /
