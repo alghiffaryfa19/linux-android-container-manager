@@ -266,25 +266,6 @@ int main(int argc, char *argv[]) {
         log_msg("[*] Applied LINDROID libc quirk for libhybris/vulkan-bridge");
     }
 
-    // LINDROID Quirk: Provide standalone compat layers if supplied by the app
-    mkdir("dev/lindroid_libs", 0755);
-    const char *compat_libs[] = {"libui_compat_layer.so", "libhwc2_compat_layer.so", "vendor.lindroid.composer-ndk.so", "android.hardware.graphics.common-V7-ndk.so"};
-    for (int i = 0; i < 4; i++) {
-        char src[256];
-        snprintf(src, sizeof(src), "/data/user/0/com.fauzan.containermanager/files/%s", compat_libs[i]);
-        struct stat lib_st;
-        if (stat(src, &lib_st) == 0) {
-            char dest[256];
-            snprintf(dest, sizeof(dest), "dev/lindroid_libs/%s", compat_libs[i]);
-            int fd = open(dest, O_CREAT | O_WRONLY, 0666);
-            if (fd >= 0) close(fd);
-            mount(src, dest, NULL, MS_BIND, NULL);
-            char msg[256];
-            snprintf(msg, sizeof(msg), "[*] Injected standalone %s", compat_libs[i]);
-            log_msg(msg);
-        }
-    }
-
     log_msg("[*] Pivoting root...");
     if (syscall(SYS_pivot_root, ".", ".old_root") == 0) {
         if (chdir("/") != 0) log_err("chdir / failed");

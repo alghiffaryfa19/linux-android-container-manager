@@ -64,20 +64,17 @@ class MainActivity : ComponentActivity() {
         // Extract native boot binary for container init
         ContainerScript.deployBootBinary(this)
         
-        // Extract Lindroid libraries (libc.so quirk and compat layers)
-        val libsToExtract = listOf("libc.so", "libui_compat_layer.so", "libhwc2_compat_layer.so", "vendor.lindroid.composer-ndk.so", "android.hardware.graphics.common-V7-ndk.so")
-        for (lib in libsToExtract) {
-            val libFile = File(filesDir, lib)
-            if (!libFile.exists()) {
-                try {
-                    assets.open(lib).use { input ->
-                        FileOutputStream(libFile).use { output ->
-                            input.copyTo(output)
-                        }
+        // Extract Lindroid libc.so quirk
+        val libFile = File(filesDir, "libc.so")
+        if (!libFile.exists()) {
+            try {
+                assets.open("libc.so").use { input ->
+                    FileOutputStream(libFile).use { output ->
+                        input.copyTo(output)
                     }
-                } catch (e: Exception) {
-                    // Ignore if asset is not present
                 }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
         
