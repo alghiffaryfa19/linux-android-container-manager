@@ -1,505 +1,402 @@
-~ $ adb shell
 sheng:/ # logcat | grep -E "CMNative|CMFdHelper|CMDisplayMgr"
-09-06 14:57:27.861 15340 15340 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
-09-06 14:57:27.861 15340 15340 I CMNative: instance 0xb400006fff5b93a0 created
-09-06 14:57:27.862 15340 15340 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock root=1 helper= bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
-09-06 14:57:27.862 15340 18921 I CMNative: render thread started
-09-06 14:57:27.862 15340 18921 I CMNative: reconnecting...
-09-06 14:57:27.863 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:27.865 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5b83a0 fd=187 dup=165 1050x1726 stride=1088
-09-06 14:57:27.866 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff59f210 fd=192 dup=167 1050x1726 stride=1088
-09-06 14:57:27.866 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=216 dup=191 1050x1726 stride=1088
-09-06 14:57:27.866 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a0220 fd=219 dup=204 1050x1726 stride=1088
-09-06 14:57:27.866 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:27.866 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:27.866 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:27.866 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:27.866 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:28.367 15340 18921 I CMNative: reconnecting...
-09-06 14:57:28.367 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:28.368 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=167 dup=4 1050x1726 stride=1088
-09-06 14:57:28.372 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=185 dup=191 1050x1726 stride=1088
-09-06 14:57:28.372 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=202 dup=165 1050x1726 stride=1088
-09-06 14:57:28.373 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=212 dup=199 1050x1726 stride=1088
-09-06 14:57:28.373 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:28.373 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:28.373 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:28.373 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:28.373 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:28.874 15340 18921 I CMNative: reconnecting...
-09-06 14:57:28.874 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:28.875 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=167 dup=4 1050x1726 stride=1088
-09-06 14:57:28.876 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=185 dup=165 1050x1726 stride=1088
-09-06 14:57:28.876 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=199 dup=184 1050x1726 stride=1088
-09-06 14:57:28.877 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bb3d0 fd=202 dup=191 1050x1726 stride=1088
-09-06 14:57:28.877 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:28.877 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:28.877 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:28.877 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:28.877 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:29.377 15340 18921 I CMNative: reconnecting...
-09-06 14:57:29.378 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:29.379 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=167 dup=4 1050x1726 stride=1088
-09-06 14:57:29.380 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=185 dup=165 1050x1726 stride=1088
-09-06 14:57:29.380 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=199 dup=184 1050x1726 stride=1088
-09-06 14:57:29.381 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff591130 fd=212 dup=191 1050x1726 stride=1088
-09-06 14:57:29.381 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:29.381 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:29.381 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:29.381 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:29.381 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:29.881 15340 18921 I CMNative: reconnecting...
-09-06 14:57:29.882 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:29.883 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=167 dup=4 1050x1726 stride=1088
-09-06 14:57:29.884 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=185 dup=165 1050x1726 stride=1088
-09-06 14:57:29.884 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=199 dup=184 1050x1726 stride=1088
-09-06 14:57:29.885 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=202 dup=191 1050x1726 stride=1088
-09-06 14:57:29.885 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:29.885 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:29.885 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:29.885 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:29.885 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:30.385 15340 18921 I CMNative: reconnecting...
-09-06 14:57:30.386 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:30.387 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:30.388 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:30.389 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:30.390 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5e1630 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:30.390 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:30.390 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:30.390 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:30.390 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:30.390 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:30.890 15340 18921 I CMNative: reconnecting...
-09-06 14:57:30.890 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:30.891 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:30.892 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:30.892 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:30.892 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:30.892 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:30.892 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:30.892 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:30.892 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:30.892 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:31.392 15340 18921 I CMNative: reconnecting...
-09-06 14:57:31.395 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:31.396 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:31.398 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:31.399 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:31.399 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff591130 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:31.399 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:31.399 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:31.399 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:31.399 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:31.399 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:31.899 15340 18921 I CMNative: reconnecting...
-09-06 14:57:31.901 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:31.903 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:31.904 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:31.906 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:31.906 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5e1630 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:31.906 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:31.906 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:31.906 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:31.906 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:31.906 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:32.407 15340 18921 I CMNative: reconnecting...
-09-06 14:57:32.409 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:32.412 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:32.415 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:32.417 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:32.418 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:32.418 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:32.418 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:32.418 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:32.418 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:32.418 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:32.919 15340 18921 I CMNative: reconnecting...
-09-06 14:57:32.921 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:32.924 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:32.926 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:32.927 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:32.929 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:32.929 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:32.929 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:32.929 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:32.929 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:32.929 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:33.429 15340 18921 I CMNative: reconnecting...
-09-06 14:57:33.431 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:33.436 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:33.439 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:33.440 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:33.441 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:33.441 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:33.441 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:33.441 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:33.441 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:33.441 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:33.941 15340 18921 I CMNative: reconnecting...
-09-06 14:57:33.943 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:33.946 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:33.948 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:33.949 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:33.951 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:33.951 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:33.951 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:33.951 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:33.951 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:33.951 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:34.451 15340 18921 I CMNative: reconnecting...
-09-06 14:57:34.454 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:34.457 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:34.458 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:34.459 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:34.460 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:34.460 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:34.460 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:34.460 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:34.460 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:34.460 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:34.961 15340 18921 I CMNative: reconnecting...
-09-06 14:57:34.964 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:34.969 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:34.971 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:34.972 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:34.972 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:34.972 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:34.972 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:34.972 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:34.972 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:34.973 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:35.475 15340 18921 I CMNative: reconnecting...
-09-06 14:57:35.478 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:35.480 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:35.482 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:35.484 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:35.485 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:35.485 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:35.485 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:35.485 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:35.485 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:35.485 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:35.988 15340 18921 I CMNative: reconnecting...
-09-06 14:57:35.990 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:35.993 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:35.995 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:35.996 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:35.998 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:35.998 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:35.998 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:35.999 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:35.999 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:35.999 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:36.499 15340 18921 I CMNative: reconnecting...
-09-06 14:57:36.500 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:36.501 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:36.502 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:36.503 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:36.504 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:36.504 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:36.504 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:36.504 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:36.504 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:36.504 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:37.004 15340 18921 I CMNative: reconnecting...
-09-06 14:57:37.005 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:37.007 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:37.008 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:37.009 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:37.010 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:37.010 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:37.010 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:37.010 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:37.010 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:37.010 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:37.510 15340 18921 I CMNative: reconnecting...
-09-06 14:57:37.512 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:37.514 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:37.515 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:37.517 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:37.518 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:37.518 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:37.518 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:37.518 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:37.518 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:37.518 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:38.019 15340 18921 I CMNative: reconnecting...
-09-06 14:57:38.020 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:38.024 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:38.026 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:38.027 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:38.028 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:38.028 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:38.028 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:38.028 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:38.028 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:38.028 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:38.529 15340 18921 I CMNative: reconnecting...
-09-06 14:57:38.531 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:38.536 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:38.539 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:38.541 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:38.542 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:38.542 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:38.542 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:38.542 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:38.542 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:38.542 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:39.042 15340 18921 I CMNative: reconnecting...
-09-06 14:57:39.045 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:39.048 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:39.049 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:39.051 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:39.052 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:39.052 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:39.052 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:39.052 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:39.052 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:39.052 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:39.552 15340 18921 I CMNative: reconnecting...
-09-06 14:57:39.555 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:39.559 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:39.561 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:39.562 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:39.563 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:39.563 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:39.563 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:39.563 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:39.563 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:39.563 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:40.064 15340 18921 I CMNative: reconnecting...
-09-06 14:57:40.067 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:40.069 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:40.072 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:40.073 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:40.075 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:40.075 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:40.075 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:40.075 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:40.075 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:40.075 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:40.575 15340 18921 I CMNative: reconnecting...
-09-06 14:57:40.576 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:40.578 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:40.579 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:40.580 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:40.581 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:40.581 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:40.581 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:40.581 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:40.581 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:40.581 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:41.081 15340 18921 I CMNative: reconnecting...
-09-06 14:57:41.082 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:41.086 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:41.087 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:41.088 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:41.088 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:41.088 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:41.088 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:41.088 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:41.088 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:41.088 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:41.589 15340 18921 I CMNative: reconnecting...
-09-06 14:57:41.591 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:41.594 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:41.596 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:41.598 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:41.598 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:41.598 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:41.598 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:41.598 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:41.598 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:41.598 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:42.099 15340 18921 I CMNative: reconnecting...
-09-06 14:57:42.101 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:42.104 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:42.106 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:42.108 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:42.110 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:42.110 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:42.110 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:42.110 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:42.110 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:42.110 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:42.612 15340 18921 I CMNative: reconnecting...
-09-06 14:57:42.614 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:42.617 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:42.618 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:42.620 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:42.621 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:42.621 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:42.621 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:42.621 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:42.621 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:42.621 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:43.123 15340 18921 I CMNative: reconnecting...
-09-06 14:57:43.125 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:43.127 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:43.128 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:43.130 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:43.130 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5c2440 fd=202 dup=187 1050x1726 stride=1088
-09-06 14:57:43.130 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:43.130 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:43.130 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:43.130 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:43.130 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:43.633 15340 18921 I CMNative: reconnecting...
-09-06 14:57:43.637 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:43.639 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:43.642 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:43.643 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:43.644 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5a82a0 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:43.644 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:43.644 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:43.644 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:43.644 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:43.644 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:44.144 15340 18921 I CMNative: reconnecting...
-09-06 14:57:44.146 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:44.147 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff659db0 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:44.147 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:44.148 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff5a4260 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:44.148 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff5bc3e0 fd=204 dup=187 1050x1726 stride=1088
-09-06 14:57:44.148 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:44.148 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:44.148 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:44.148 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:44.148 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:44.648 15340 18921 I CMNative: reconnecting...
-09-06 14:57:44.649 15340 18921 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:44.652 15340 18921 I CMNative:   buf[0]: anb=0xb400006fff5a4260 fd=165 dup=4 1050x1726 stride=1088
-09-06 14:57:44.652 15340 18921 I CMNative:   buf[1]: anb=0xb400006fff5b83a0 fd=184 dup=164 1050x1726 stride=1088
-09-06 14:57:44.653 15340 18921 I CMNative:   buf[2]: anb=0xb400006fff659db0 fd=191 dup=177 1050x1726 stride=1088
-09-06 14:57:44.653 15340 18921 I CMNative:   buf[3]: anb=0xb400006fff591130 fd=201 dup=187 1050x1726 stride=1088
-09-06 14:57:44.653 15340 18921 I CMNative: collected 4 dma-bufs
-09-06 14:57:44.653 15340 18921 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:44.653 15340 18921 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:44.653 15340 18921 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:44.653 15340 18921 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:45.154 15340 18921 I CMNative: render thread stopped
-09-06 14:57:54.840 15340 15340 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock root=1 helper= bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
-09-06 14:57:54.841 15340 19022 I CMNative: render thread started
-09-06 14:57:54.841 15340 19022 I CMNative: reconnecting...
-09-06 14:57:54.841 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:54.841 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5bf410 fd=199 dup=176 1050x1875 stride=1088
-09-06 14:57:54.842 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5cd4f0 fd=204 dup=192 1050x1875 stride=1088
-09-06 14:57:54.842 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=207 dup=201 1050x1875 stride=1088
-09-06 14:57:54.842 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff583050 fd=210 dup=206 1050x1875 stride=1088
-09-06 14:57:54.842 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:54.843 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1875, 4 bufs, root=1)
-09-06 14:57:54.843 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:54.843 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:54.843 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:55.343 15340 19022 I CMNative: reconnecting...
-09-06 14:57:55.345 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:55.347 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a92b0 fd=190 dup=4 1050x1726 stride=1088
-09-06 14:57:55.348 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=204 dup=200 1050x1726 stride=1088
-09-06 14:57:55.348 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a82a0 fd=206 dup=176 1050x1726 stride=1088
-09-06 14:57:55.349 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5ce500 fd=208 dup=188 1050x1726 stride=1088
-09-06 14:57:55.349 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:55.349 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:55.349 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:55.349 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:55.349 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:55.849 15340 19022 I CMNative: reconnecting...
-09-06 14:57:55.851 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:55.853 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a82a0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:55.854 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:55.855 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:55.855 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5d6580 fd=206 dup=199 1050x1726 stride=1088
-09-06 14:57:55.855 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:55.855 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:55.855 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:55.855 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:55.855 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:56.355 15340 19022 I CMNative: reconnecting...
-09-06 14:57:56.356 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:56.357 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a92b0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:56.358 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:56.358 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a82a0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:56.359 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5ce500 fd=208 dup=199 1050x1726 stride=1088
-09-06 14:57:56.359 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:56.359 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:56.359 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:56.359 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:56.359 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:56.859 15340 19022 I CMNative: reconnecting...
-09-06 14:57:56.859 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:56.860 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a82a0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:56.861 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:56.861 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:56.862 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5d6580 fd=206 dup=199 1050x1726 stride=1088
-09-06 14:57:56.862 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:56.862 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:56.862 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:56.862 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:56.862 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:57.362 15340 19022 I CMNative: reconnecting...
-09-06 14:57:57.363 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:57.364 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a92b0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:57.365 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:57.366 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a82a0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:57.367 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5ce500 fd=208 dup=199 1050x1726 stride=1088
-09-06 14:57:57.367 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:57.367 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:57.367 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:57.367 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:57.367 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:57.867 15340 19022 I CMNative: reconnecting...
-09-06 14:57:57.868 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:57.869 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a82a0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:57.869 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:57.870 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:57.871 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5d6580 fd=206 dup=199 1050x1726 stride=1088
-09-06 14:57:57.871 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:57.871 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:57.871 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:57.871 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:57.871 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:58.372 15340 19022 I CMNative: reconnecting...
-09-06 14:57:58.372 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:58.373 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a92b0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:58.374 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:58.375 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a82a0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:58.375 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5bf410 fd=208 dup=199 1050x1726 stride=1088
-09-06 14:57:58.375 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:58.375 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:58.375 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:58.375 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:58.375 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:58.876 15340 19022 I CMNative: reconnecting...
-09-06 14:57:58.876 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:58.877 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a82a0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:58.878 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:58.878 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:58.879 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5d6580 fd=206 dup=199 1050x1726 stride=1088
-09-06 14:57:58.879 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:58.879 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:58.879 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:58.879 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:58.879 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:59.379 15340 19022 I CMNative: reconnecting...
-09-06 14:57:59.380 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:59.381 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a92b0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:59.382 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:59.383 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a82a0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:59.383 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5bf410 fd=208 dup=199 1050x1726 stride=1088
-09-06 14:57:59.383 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:59.383 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:59.383 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:59.383 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:59.383 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:57:59.883 15340 19022 I CMNative: reconnecting...
-09-06 14:57:59.884 15340 19022 I CMNative: collecting 4 dma-bufs via dequeue/queue
-09-06 14:57:59.885 15340 19022 I CMNative:   buf[0]: anb=0xb400006fff5a82a0 fd=176 dup=4 1050x1726 stride=1088
-09-06 14:57:59.885 15340 19022 I CMNative:   buf[1]: anb=0xb400006fff5ba3c0 fd=196 dup=163 1050x1726 stride=1088
-09-06 14:57:59.887 15340 19022 I CMNative:   buf[2]: anb=0xb400006fff5a92b0 fd=200 dup=190 1050x1726 stride=1088
-09-06 14:57:59.888 15340 19022 I CMNative:   buf[3]: anb=0xb400006fff5ce500 fd=236 dup=199 1050x1726 stride=1088
-09-06 14:57:59.888 15340 19022 I CMNative: collected 4 dma-bufs
-09-06 14:57:59.888 15340 19022 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_99ccc8ab-19d0-4925-9b48-7750e80f6ed7/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
-09-06 14:57:59.888 15340 19022 I CMNative: do_connect: attempting recv_fd_via_root_helper
-09-06 14:57:59.888 15340 19022 E CMNative: root helper: helper/bridge path not configured
-09-06 14:57:59.888 15340 19022 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
-09-06 14:58:00.389 15340 19022 I CMNative: render thread stopped
+09-06 15:16:13.836 15444 15444 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 15:16:13.836 15444 15444 I CMNative: instance 0xb40000706bd62430 created
+09-06 15:16:13.841 15444 15444 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock root=1 helper= bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 15:16:13.842 15444 19327 I CMNative: render thread started
+09-06 15:16:13.842 15444 19327 I CMNative: reconnecting...
+09-06 15:16:13.842 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:13.844 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcc8ab0 fd=188 dup=171 1050x1726 stride=1088
+09-06 15:16:13.844 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bd63450 fd=200 dup=176 1050x1726 stride=1088
+09-06 15:16:13.845 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=217 dup=199 1050x1726 stride=1088
+09-06 15:16:13.845 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd61430 fd=220 dup=216 1050x1726 stride=1088
+09-06 15:16:13.845 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:13.845 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:13.845 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:13.845 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:13.845 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:14.346 15444 19327 I CMNative: reconnecting...
+09-06 15:16:14.346 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:14.347 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=176 dup=3 1050x1726 stride=1088
+09-06 15:16:14.348 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=190 dup=171 1050x1726 stride=1088
+09-06 15:16:14.349 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd67490 fd=200 dup=189 1050x1726 stride=1088
+09-06 15:16:14.350 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bcb2950 fd=227 dup=217 1050x1726 stride=1088
+09-06 15:16:14.350 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:14.350 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:14.350 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:14.350 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:14.350 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:14.851 15444 19327 I CMNative: reconnecting...
+09-06 15:16:14.852 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:14.853 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd67490 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:14.854 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=188 dup=162 1050x1726 stride=1088
+09-06 15:16:14.855 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=196 dup=186 1050x1726 stride=1088
+09-06 15:16:14.855 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=216 dup=190 1050x1726 stride=1088
+09-06 15:16:14.855 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:14.855 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:14.855 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:14.855 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:14.855 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:15.355 15444 19327 I CMNative: reconnecting...
+09-06 15:16:15.356 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:15.358 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:15.358 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=188 dup=162 1050x1726 stride=1088
+09-06 15:16:15.359 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=196 dup=186 1050x1726 stride=1088
+09-06 15:16:15.359 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=227 dup=190 1050x1726 stride=1088
+09-06 15:16:15.359 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:15.359 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:15.359 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:15.359 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:15.359 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:15.859 15444 19327 I CMNative: reconnecting...
+09-06 15:16:15.860 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:15.860 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:15.861 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:15.861 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:15.862 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:15.862 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:15.862 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:15.862 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:15.862 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:15.862 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:16.362 15444 19327 I CMNative: reconnecting...
+09-06 15:16:16.364 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:16.367 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:16.369 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:16.370 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:16.371 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:16.371 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:16.371 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:16.371 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:16.371 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:16.371 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:16.871 15444 19327 I CMNative: reconnecting...
+09-06 15:16:16.871 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:16.872 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:16.874 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:16.875 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:16.875 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:16.875 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:16.875 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:16.875 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:16.875 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:16.875 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:17.376 15444 19327 I CMNative: reconnecting...
+09-06 15:16:17.376 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:17.378 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:17.379 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:17.380 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:17.381 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:17.381 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:17.381 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:17.381 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:17.381 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:17.381 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:17.881 15444 19327 I CMNative: reconnecting...
+09-06 15:16:17.882 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:17.884 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:17.885 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:17.886 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:17.887 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:17.887 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:17.887 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:17.887 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:17.887 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:17.887 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:18.387 15444 19327 I CMNative: reconnecting...
+09-06 15:16:18.388 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:18.389 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:18.390 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:18.391 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:18.392 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:18.392 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:18.392 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:18.392 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:18.392 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:18.392 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:18.893 15444 19327 I CMNative: reconnecting...
+09-06 15:16:18.893 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:18.895 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:18.896 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:18.896 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:18.897 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:18.897 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:18.897 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:18.897 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:18.897 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:18.897 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:19.398 15444 19327 I CMNative: reconnecting...
+09-06 15:16:19.398 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:19.400 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:19.400 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:19.401 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:19.402 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:19.402 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:19.402 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:19.402 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:19.402 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:19.402 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:19.902 15444 19327 I CMNative: reconnecting...
+09-06 15:16:19.903 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:19.908 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:19.909 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:19.911 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:19.912 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:19.912 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:19.912 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:19.912 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:19.912 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:19.912 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:20.412 15444 19327 I CMNative: reconnecting...
+09-06 15:16:20.413 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:20.415 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:20.416 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:20.416 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:20.417 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:20.417 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:20.417 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:20.417 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:20.417 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:20.417 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:20.917 15444 19327 I CMNative: reconnecting...
+09-06 15:16:20.920 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:20.921 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:20.922 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:20.924 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:20.925 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:20.925 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:20.925 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:20.925 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:20.925 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:20.925 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:21.426 15444 19327 I CMNative: reconnecting...
+09-06 15:16:21.430 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:21.435 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:21.438 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:21.439 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:21.440 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:21.441 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:21.441 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:21.441 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:21.441 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:21.441 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:21.941 15444 19327 I CMNative: reconnecting...
+09-06 15:16:21.944 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:21.947 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:21.950 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:21.951 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:21.953 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:21.953 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:21.953 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:21.953 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:21.953 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:21.953 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:22.453 15444 19327 I CMNative: reconnecting...
+09-06 15:16:22.454 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:22.456 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:22.457 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:22.459 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:22.459 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:22.459 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:22.459 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:22.459 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:22.459 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:22.459 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:22.960 15444 19327 I CMNative: reconnecting...
+09-06 15:16:22.963 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:22.966 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:22.967 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:22.968 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:22.969 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:22.969 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:22.969 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:22.969 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:22.969 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:22.969 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:23.470 15444 19327 I CMNative: reconnecting...
+09-06 15:16:23.472 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:23.476 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:23.478 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:23.479 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:23.480 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:23.480 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:23.480 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:23.480 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:23.480 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:23.480 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:23.980 15444 19327 I CMNative: reconnecting...
+09-06 15:16:23.981 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:23.983 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:23.984 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:23.987 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:23.988 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:23.988 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:23.988 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:23.988 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:23.988 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:23.988 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:24.490 15444 19327 I CMNative: reconnecting...
+09-06 15:16:24.493 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:24.497 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:24.499 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:24.500 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:24.501 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:24.501 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:24.501 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:24.501 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:24.501 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:24.501 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:25.002 15444 19327 I CMNative: reconnecting...
+09-06 15:16:25.003 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:25.004 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:25.005 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:25.006 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:25.007 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:25.007 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:25.007 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:25.007 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:25.007 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:25.007 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:25.507 15444 19327 I CMNative: reconnecting...
+09-06 15:16:25.510 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:25.512 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:25.513 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:25.515 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:25.516 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:25.516 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:25.516 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:25.516 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:25.516 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:25.516 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:26.017 15444 19327 I CMNative: reconnecting...
+09-06 15:16:26.018 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:26.021 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:26.023 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:26.025 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:26.026 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:26.026 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:26.026 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:26.026 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:26.026 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:26.026 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:26.530 15444 19327 I CMNative: reconnecting...
+09-06 15:16:26.532 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:26.538 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:26.539 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:26.540 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:26.541 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:26.541 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:26.541 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:26.541 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:26.541 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:26.541 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:27.041 15444 19327 I CMNative: reconnecting...
+09-06 15:16:27.043 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:27.045 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:27.046 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:27.048 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:27.048 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:27.049 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:27.049 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:27.049 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:27.049 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:27.049 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:27.549 15444 19327 I CMNative: reconnecting...
+09-06 15:16:27.551 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:27.554 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:27.556 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:27.557 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:27.557 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:27.557 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:27.557 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:27.557 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:27.557 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:27.557 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:28.058 15444 19327 I CMNative: reconnecting...
+09-06 15:16:28.060 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:28.063 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:28.065 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:28.066 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:28.067 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:28.067 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:28.067 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:28.067 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:28.067 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:28.067 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:28.568 15444 19327 I CMNative: reconnecting...
+09-06 15:16:28.570 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:28.573 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:28.574 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:28.576 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:28.578 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:28.578 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:28.578 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:28.578 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:28.578 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:28.578 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:29.078 15444 19327 I CMNative: reconnecting...
+09-06 15:16:29.079 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:29.080 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:29.082 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:29.083 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:29.083 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:29.084 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:29.084 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:29.084 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:29.084 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:29.084 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:29.584 15444 19327 I CMNative: reconnecting...
+09-06 15:16:29.586 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:29.589 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:29.591 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:29.592 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:29.593 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:29.593 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:29.593 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:29.593 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:29.593 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:29.593 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:30.093 15444 19327 I CMNative: reconnecting...
+09-06 15:16:30.095 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:30.098 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:30.099 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:30.101 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:30.102 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=205 dup=189 1050x1726 stride=1088
+09-06 15:16:30.102 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:30.102 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:30.102 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:30.102 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:30.102 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:30.603 15444 19327 I CMNative: reconnecting...
+09-06 15:16:30.604 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:30.608 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:30.609 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:30.609 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:30.610 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:30.610 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:30.610 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:30.610 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:30.610 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:30.610 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:31.110 15444 19327 I CMNative: reconnecting...
+09-06 15:16:31.110 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:31.111 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bcb2950 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:31.111 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:31.112 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bd64460 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:31.112 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd53350 fd=216 dup=189 1050x1726 stride=1088
+09-06 15:16:31.112 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:31.112 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:31.112 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:31.112 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:31.112 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:31.612 15444 19327 I CMNative: reconnecting...
+09-06 15:16:31.613 15444 19327 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:16:31.614 15444 19327 I CMNative:   buf[0]: anb=0xb40000706bd64460 fd=171 dup=3 1050x1726 stride=1088
+09-06 15:16:31.615 15444 19327 I CMNative:   buf[1]: anb=0xb40000706bcc8ab0 fd=186 dup=162 1050x1726 stride=1088
+09-06 15:16:31.615 15444 19327 I CMNative:   buf[2]: anb=0xb40000706bcb2950 fd=190 dup=178 1050x1726 stride=1088
+09-06 15:16:31.616 15444 19327 I CMNative:   buf[3]: anb=0xb40000706bd67490 fd=217 dup=189 1050x1726 stride=1088
+09-06 15:16:31.616 15444 19327 I CMNative: collected 4 dma-bufs
+09-06 15:16:31.616 15444 19327 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_4b2ab575-2e83-4e79-b40a-0b5ad1227a96/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:16:31.616 15444 19327 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:16:31.616 15444 19327 E CMNative: root helper: helper/bridge path not configured
+09-06 15:16:31.616 15444 19327 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 15:16:32.116 15444 19327 I CMNative: render thread stopped
