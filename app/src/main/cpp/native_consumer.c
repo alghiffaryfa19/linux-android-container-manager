@@ -906,18 +906,22 @@ static void on_exit_fallback(void *userdata)
         return;
     }
 
-    // Enable clip listener on Java side
-    jclass cls = (*env)->GetObjectClass(env, s->clipboard_obj);
-    jmethodID listenMid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
-    if (listenMid)
-        (*env)->CallVoidMethod(env, s->clipboard_obj, listenMid, JNI_TRUE);
+    if (s->clipboard_obj) {
+        // Enable clip listener on Java side
+        jclass cls = (*env)->GetObjectClass(env, s->clipboard_obj);
+        jmethodID listenMid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
+        if (listenMid)
+            (*env)->CallVoidMethod(env, s->clipboard_obj, listenMid, JNI_TRUE);
 
-    start_event_thread(s);
+        start_event_thread(s);
 
-    // Initial clipboard sync: read current system clipboard and send to producer
-    jmethodID syncMethod = (*env)->GetMethodID(env, cls, "nativeClipboardSync", "()V");
-    if (syncMethod)
-        (*env)->CallVoidMethod(env, s->clipboard_obj, syncMethod);
+        // Initial clipboard sync: read current system clipboard and send to producer
+        jmethodID syncMethod = (*env)->GetMethodID(env, cls, "nativeClipboardSync", "()V");
+        if (syncMethod)
+            (*env)->CallVoidMethod(env, s->clipboard_obj, syncMethod);
+    } else {
+        start_event_thread(s);
+    }
 
     (*g_jvm)->DetachCurrentThread(g_jvm);
 }
