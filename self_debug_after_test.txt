@@ -1,0 +1,119 @@
+Hasil self-debug mendalam telah dilakukan langsung
+  pada environment kontainer yang berjalan beserta
+  source code linux-android-container-manager dan
+  rootfs-templates.
+  Laporan lengkap telah disimpan di artefak:
+  self_debug_kdep_plasma_blank_fix.md.
+  ──────
+  ### Penyebab Utama Layar Masih Blank (Root Causes)
+
+  1. Kehilangan DMA-BUF FD pada evdi_bridge.c (Baris
+  252):
+      • Pada baris 252, digunakan recv(data_fd,
+      &msg_buf, ...) alih-alih recv_fds(...).
+      • Kernel Linux membuang ancillary data
+      (SCM_RIGHTS), sehingga descriptor DMA-BUF dari
+      Android tidak pernah tersimpan (dma_fds_received
+      = 0).
+      • Ketika KWin meminta buffer melalui ioctl EVDI
+      (create_buf / get_buf), terjadi crash SIGFPE
+      (Division by zero) atau SIGBUS (Signal 7) saat
+      KWin merender wallpaper/background.
+  2. Infinite CPU Spin (83% CPU) & Desinkronisasi
+  Protokol di evdi_bridge.c:
+      • Android mengirim pesan resolusi layar
+      CTRL_MSG_SCREEN_INFO segera setelah koneksi,
+      tetapi evdi_bridge tidak pernah membacanya.
+      • Panggilan recv(client_sock, &dummy, 1,
+      MSG_PEEK) di dalam select() tidak mengonsumsi
+      pesan tersebut, sehingga client_sock selalu
+      memicu POLLIN. Akibatnya, select() berputar
+      seketika tanpa henti (100% CPU core).
+      • Driver loopback kernel tidak
+      mengimplementasikan poll kustom untuk event EVDI,
+      sehingga select(evdi_fd) tidak pernah memicu
+      penerimaan event EVDI.
+  3. systemd-udevd Mati Karena /sys Di-mount Read-Only
+  (MS_RDONLY) di boot.c:
+      • Di app/src/main/cpp/boot.c:202, /sys di-mount
+      dengan flag MS_RDONLY.
+      • Service systemd-udevd memiliki syarat
+      ConditionPathIsReadWrite=/sys. Karena /sys read-
+      only, udevd tidak pernah berjalan.
+      • Dampaknya:
+          1. Symlink /dev/dri/by-path/platform-evdi-
+          lindroid.0-card tidak pernah dibuat,
+          sehingga KWin langsung keluar dengan error
+          failed to open drm device: ENOENT.
+          2. systemd-logind tidak menerima tag master-
+          of-seat pada kartu DRM, sehingga properti
+          Seat CanGraphical bernilai false.
+          3. SDDM melihat seat tidak memiliki
+          kemampuan grafis, sehingga SDDM sama sekali
+          tidak memulai session/greeter.
+
+  4. Crash Greeter SDDM (Inkompatibilitas Tema Qt 6) &
+  Hilangnya Autologin:
+      • Tema Debian Breeze bawaan KDE 6 memerlukan
+      sddm-greeter-qt6, sedangkan Debian Trixie pada
+      kontainer saat ini hanya memiliki binary
+      /usr/bin/sddm-greeter (Qt 5).
+      • Tanpa konfigurasi autologin langsung ke user
+      lindroid, SDDM langsung menutup proses display
+      server.
+
+  ──────
+  ### Solusi & Perbaikan yang Telah Diterapkan
+
+  #### 1. Perbaikan evdi_bridge.c
+
+  • Menggunakan recv_fds() untuk menerima array DMA-
+  BUF dan membaca CTRL_MSG_SCREEN_INFO secara tuntas.
+  • Mengganti loop select() yang boros daya dengan
+  blocking ioctl DRM_IOCTL_EVDI_POLL dan menambahkan
+  thread watchdog untuk memantau pemutusan koneksi
+  aplikasi Android (penggunaan CPU kini 0% saat idle).
+  • Menambahkan auto-trigger udev dan auto-restart
+  SDDM setelah display EVDI terkoneksi.
+  • Binary telah dikompilasi ulang dan langsung aktif
+  di /usr/bin/evdi_bridge.
+
+  #### 2. Perbaikan boot.c
+
+  • Mengubah mount sysfs dari MS_RDONLY menjadi 0
+  (read-write).
+  • Menambahkan pembuatan symlink direktori
+  /dev/dri/by-path/ secara otomatis saat inisialisasi
+  /dev.
+
+  #### 3. Perbaikan native_consumer.c
+
+  • Menambahkan pengecekan pointer null dan pelepasan
+  local reference (DeleteLocalRef) pada on_fallback
+  dan on_exit_fallback untuk mencegah Android crash
+  JNI DETECTED ERROR: java_object == null.
+
+  #### 4. Konfigurasi SDDM & Environment
+
+  • Autologin: Ditambahkan autologin.conf ke
+  /etc/sddm.conf.d/autologin.conf agar SDDM langsung
+  menjalankan session plasma.desktop untuk user
+  lindroid.
+  • DRM Devices & Compositor: Memperbarui
+  plasma-wayland.conf dengan --drm dan device
+  /dev/dri/card1:/dev/dri/card0.
+  • Systemd udevd Override: Ditambahkan override.conf
+  sehingga systemd-udevd tetap aktif di lingkungan
+  kontainer.
+  ──────
+  ### Status Sistem Saat Ini (Live Test)
+
+  Semua service pada kontainer saat ini berstatus
+  Active (running):
+
+  • evdi-bridge.service: Berjalan di PID 1910, siap
+  menerima koneksi Android di /var/display_daemon.sock.
+  • systemd-udevd.service: Berjalan di PID 1420.
+  • sddm.service: Berjalan dan siap melakukan auto-
+  login ke sesi KDE Plasma segera setelah Android
+  terhubung ke socket display.
