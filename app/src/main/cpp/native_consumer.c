@@ -247,12 +247,15 @@ static void *event_thread_func(void *arg)
     }
 
     /* Find classes/methods once */
-    jclass ctxClass = (*env)->GetObjectClass(env, s->clipboard_obj);
-    jmethodID setClipMethod = (*env)->GetMethodID(env, ctxClass, "nativeSetClipboardText", "(Ljava/lang/String;)V");
-    if (!setClipMethod) {
-        LOGE("event thread: nativeSetClipboardText not found");
-        (*g_jvm)->DetachCurrentThread(g_jvm);
-        return NULL;
+    jclass ctxClass = NULL;
+    jmethodID setClipMethod = NULL;
+    
+    if (s->clipboard_obj) {
+        ctxClass = (*env)->GetObjectClass(env, s->clipboard_obj);
+        setClipMethod = (*env)->GetMethodID(env, ctxClass, "nativeSetClipboardText", "(Ljava/lang/String;)V");
+        if (!setClipMethod) {
+            LOGE("event thread: nativeSetClipboardText not found");
+        }
     }
 
     /* CONSUMER_VAR_* callbacks land on the owning MainActivity (var, value). */
@@ -292,7 +295,9 @@ static void *event_thread_func(void *arg)
                 buf[ev.clipboard.size] = '\0';
                 jstring jstr = (*env)->NewStringUTF(env, buf);
                 if (jstr) {
-                    (*env)->CallVoidMethod(env, s->clipboard_obj, setClipMethod, jstr);
+                    if (setClipMethod && s->clipboard_obj) {
+                        (*env)->CallVoidMethod(env, s->clipboard_obj, setClipMethod, jstr);
+                    }
                     (*env)->DeleteLocalRef(env, jstr);
                 }
             }
