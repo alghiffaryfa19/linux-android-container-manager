@@ -1,7 +1,9 @@
 #include "socket_utils.h"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/un.h>
