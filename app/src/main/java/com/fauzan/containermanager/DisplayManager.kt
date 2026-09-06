@@ -1,10 +1,12 @@
 package com.fauzan.containermanager
 
+import android.util.Log
 import android.view.Surface
 
 object DisplayManager {
     init {
         System.loadLibrary("containermanager")
+        Log.i("CMDisplayMgr", "DisplayManager: starting display (Build Version: 2026-09-06 v2)")
     }
 
     private var handle: Long = 0
