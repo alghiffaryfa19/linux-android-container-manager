@@ -1,0 +1,26 @@
+~ $ adb shell
+sheng:/ # logcat | grep -E "CMNative|CMFdHelper|CMDisplayMgr"
+09-06 15:28:00.947 16678 16678 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 15:28:00.947 16678 16678 I CMNative: instance 0xb4000071bc1e53b0 created
+09-06 15:28:00.948 16678 16678 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock root=1 helper=/data/user/0/com.fauzan.containermanager/files/bin/fdhelper bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 15:28:00.950 16678 20238 I CMNative: render thread started
+09-06 15:28:00.950 16678 20238 I CMNative: reconnecting...
+09-06 15:28:00.951 16678 20238 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 15:28:00.952 16678 20238 I CMNative:   buf[0]: anb=0xb4000071bc0b40c0 fd=197 dup=183 1050x1726 stride=1088
+09-06 15:28:00.954 16678 20238 I CMNative:   buf[1]: anb=0xb4000071bc1e43b0 fd=222 dup=193 1050x1726 stride=1088
+09-06 15:28:00.954 16678 20238 I CMNative:   buf[2]: anb=0xb4000071bc1e2390 fd=225 dup=220 1050x1726 stride=1088
+09-06 15:28:00.954 16678 20238 I CMNative:   buf[3]: anb=0xb4000071bc1e63d0 fd=228 dup=224 1050x1726 stride=1088
+09-06 15:28:00.954 16678 20238 I CMNative: collected 4 dma-bufs
+09-06 15:28:00.954 16678 20238 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 15:28:00.954 16678 20238 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:28:00.955 16678 20238 I CMNative: root helper: waiting for connection on lfd=227
+09-06 15:28:00.969 20240 20240 I CMFdHelper: passed daemon fd to app
+09-06 15:28:00.969 16678 20238 I CMNative: root helper: poll success, accepting connection
+09-06 15:28:00.969 16678 20238 I CMNative: root helper: accepted connection cfd=180, receiving fds...
+09-06 15:28:00.970 16678 20238 I CMNative: root helper: successfully received fd=184 from helper
+09-06 15:28:00.970 16678 20238 I CMNative: do_connect: recv_fd_via_root_helper succeeded, ctrl_fd=184
+09-06 15:28:00.970 16678 20238 I CMNative: do_connect: connected successfully! ctx=0xb40000717c0cf050
+09-06 15:28:00.970 16678 20238 I CMNative: do_connect: pushing 4 dmabufs (refresh=120000)
+09-06 15:28:00.970 16678 20238 I CMNative: do_connect: pushed dmabufs successfully
+09-06 15:28:00.970 16678 20238 I CMNative: connected
+09-06 15:28:19.209 16678 20238 I CMNative: render thread stopped
