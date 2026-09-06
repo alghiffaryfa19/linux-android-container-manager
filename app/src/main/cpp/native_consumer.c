@@ -36,6 +36,7 @@
  * the per-thread env is attached as needed. The activity callback target is
  * per-instance -> consumer_state.clipboard_obj. */
 static JavaVM *g_jvm = NULL;
+static jclass g_displayManagerClass = NULL;
 
 /* ANativeWindow hidden-API function pointers: loaded once, read-only afterwards, so
  * safe to share across instances. */
@@ -1017,8 +1018,6 @@ static void copy_jstring(JNIEnv *env, jstring js, char *dst, size_t dstsz)
 /* Every JNI entry point below takes a jlong handle -- the consumer_state* returned
  * by nativeCreate -- so multiple instances (windows) coexist in one process. */
 #define STATE(h) ((struct consumer_state *)(uintptr_t)(h))
-
-static jclass g_displayManagerClass = NULL;
 
 JNIEXPORT jlong JNICALL
 Java_com_fauzan_containermanager_DisplayManager_nativeCreate(JNIEnv *env, jclass clazz)
