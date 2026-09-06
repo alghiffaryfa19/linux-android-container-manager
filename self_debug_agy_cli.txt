@@ -1,0 +1,245 @@
+Investigating Service Startup Order
+  Berdasarkan analisis mendalam terhadap source code
+  dan log di seluruh repository Anda (linux-android-
+  container-manager, rootfs-templates, evdi, dan
+  lindroid-drm-loopback), berikut adalah diagnosis
+  menyeluruh mengenai mengapa biasanya menggunakan
+  /dev/dri/card1, tetapi kadang hanya muncul card0,
+  serta solusi untuk menampilkan UI Linux ke Android.
+  ### 1. Mengapa Ada card0 dan card1? Apa
+  ──────
+  Perbedaannya?
+  1. /dev/dri/card0 (Hardware DRM Host Qualcomm
+  Snapdragon):
+      • Device ini berasal dari driver kernel bawaan
+      SoC Android Anda (msm_drm Qualcomm Kalama /
+      Snapdragon Adreno).
+      • Driver ini terdaftar paling pertama saat
+      smartphone boot, sehingga mengambil minor number
+      DRM 0 (card0 dan renderD128).
+      • /dev/dri/card0 bukan EVDI, melainkan display
+      controller fisik Android yang dikendalikan oleh
+      Android SurfaceFlinger.
+      • Saat evdi_bridge atau libevdi mencoba
+      memeriksa card0, fungsi is_evdi() di
+      evdi_lib.c:203-221 memeriksa nama driver via
+      DRM_IOCTL_VERSION. Karena namanya "msm_drm"
+      (bukan "evdi-lindroid"), card0 langsung
+      diabaikan.
+  2. /dev/dri/card1 (Virtual DRM Loopback dari evdi-
+  lindroid):
+      • Device ini berasal dari kernel module
+      lindroid-drm-loopback (evdi-lindroid).
+      • Modul ini dimuat saat boot ([evdi-lindroid]
+      Loading EVDI-Lindroid driver v1.0.0), tetapi
+      belum membuat virtual display apapun secara
+      default (evdi_device_count awal adalah 0).
+      • Ketika ada perintah penambahan display
+      (menulis 1 ke /sys/devices/evdi-lindroid/add),
+      kernel mendaftarkan DRM device baru
+      (drm_dev_register). Karena minor 0 sudah dipakai
+      oleh msm_drm, device baru ini otomatis
+      mendapatkan minor 1, yaitu /dev/dri/card1 (dan
+      renderD129).
+      • Inilah node yang menjadi target evdi-bridge
+      dan Compositor Wayland/KWin Linux.
+  ──────
+  ### 2. Mengapa Kadang Hanya Muncul card0 dan card1
+  Hilang?
+  Dari penelusuran log di Confuse.txt dan
+  confuse_2.txt, ada 4 akar masalah utama:
+  #### A. Tidak Ada udev di Dalam Container (Device
+  Node Tidak Dibuat Otomatis)
+  Di Linux desktop biasa, saat kernel me-register
+  device baru, kernel mengirim netlink uevent ke
+  systemd-udevd. udevd kemudian membuat file
+  /dev/dri/card1 dengan mknod.
+  Namun, di dalam container Android Anda:
+
+  • Di boot.c:198, /dev di-mount sebagai tmpfs
+  terisolasi agar systemd-udevd tidak berjalan dan
+  tidak mengganggu hardware Android.
+  • Di evdi_bridge.c:301:
+    fwrite("1\n", 1, 2, f);
+    fclose(f);
+    sleep(1); // Wait for udev to create the device
+  node
+
+  • Masalahnya: Di dalam container tidak ada udev!
+  Menunggu 1 detik tidak akan membuat file
+  /dev/dri/card1 muncul di /dev/ jika node tersebut
+  belum dibuat secara manual (mknod).
+
+  #### B. Mount Namespace Isolation & Race Condition
+  di boot.c
+
+  Perhatikan alur booting di boot.c:214-232:
+    mount(gpu_nodes[i], dest, NULL, MS_BIND | MS_REC,
+  NULL);
+
+  1. container_boot dijalankan sebelum ada yang
+  membuat virtual card EVDI di sisi Android host.
+  2. Saat container pertama kali boot, di host Android
+  /dev/dri hanya ada card0 dan renderD128.
+  3. boot.c melakukan bind-mount folder /dev/dri host
+  ke container dengan MS_PRIVATE namespace.
+  4. Jika di kemudian hari device EVDI baru dibuat
+  dari dalam container, Android host ueventd tidak
+  membuat file node di host (atau diblokir SELinux,
+  lihat log dmesg: avc: denied { write } for
+  comm="kdevtmpfs"), sehingga file /dev/dri/card1
+  tidak pernah muncul di filesystem /dev/dri.
+  #### C. create-disp.service Dimatikan (masked)
+
+  Pada log awal Confuse.txt:1-3, card1 sempat muncul
+  karena service bawaan Lindroid yaitu create-
+  disp.service sempat berjalan sebelum Anda me-mask-
+  nya:
+    systemctl stop create-disp
+    systemctl mask create-disp
+  Service create-disp inilah yang sebelumnya bertugas
+  memicu pembuatan device EVDI ke sysfs dan membuat
+  nodenya. Setelah di-mask dan container di-reboot,
+  tidak ada service yang membuat device tersebut di
+  awal.
+  #### D. /sys Di-Mount Read-Only (MS_RDONLY)
+
+  Di boot.c:187:
+    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
+  Meskipun ada bind mount /sys/devices/evdi-lindroid
+  di bawahnya, jika superblock induknya MS_RDONLY,
+  proses di dalam container bisa mengalami EROFS
+  (Read-only file system) saat mencoba
+  fopen("/sys/devices/evdi-lindroid/add", "w").
+  ──────
+  ### 3. Solusi & Perbaikan Komprehensif
+
+  Agar card1 selalu ada secara konsisten dan UI Linux
+  berhasil ditampilkan ke Android, lakukan langkah-
+  langkah berikut:
+
+  #### Solusi 1: Buat Device Node EVDI di Host Android
+  Sebelum Container Boot (Sangat Direkomendasikan)
+
+  Cara paling aman dan bersih adalah memastikan EVDI
+  sudah dibuat di sisi host Android sebelum container
+  melakukan bind-mount /dev/dri.
+
+  Ubah di boot.c pada inisialisasi host (sebelum
+  unshare mount namespace):
+
+    // Pastikan EVDI device sudah dibuat di host
+  Android sebelum mount namespace di-unshare
+    FILE *f_evdi = fopen("/sys/devices/evdi-
+  lindroid/add", "w");
+    if (f_evdi) {
+        fwrite("1\n", 1, 2, f_evdi);
+        fclose(f_evdi);
+        usleep(100000); // 100ms
+    }
+
+    // Pastikan node card1 dan renderD129 tersedia di
+  host /dev/dri
+    mkdir("/dev/dri", 0755);
+    mknod("/dev/dri/card1", S_IFCHR | 0666,
+  makedev(226, 1));
+    mknod("/dev/dri/renderD129", S_IFCHR | 0666,
+  makedev(226, 129));
+    chmod("/dev/dri/card1", 0666);
+    chmod("/dev/dri/renderD129", 0666);
+
+  Dengan cara ini, saat boot.c melakukan bind mount
+  /dev/dri ke dalam container, baik card0 maupun card1
+  sudah ada sejak detik pertama container berjalan.
+  ──────
+  #### Solusi 2: Perbaiki Auto-Creation di
+  evdi_bridge.c (Self-Healing Tanpa Bergantung pada
+  udev)
+
+  Di dalam evdi_bridge.c:295-315, ganti logika
+  pembuatan device agar tidak menunggu udev, melainkan
+  langsung membuat device node dengan mknod:
+
+        // Periksa apakah /dev/dri/card1 sudah ada
+        if (access("/dev/dri/card1", F_OK) != 0) {
+            printf("[evdi-bridge] /dev/dri/card1 not
+  found. Triggering sysfs & mknod...\n");
+            FILE *f = fopen("/sys/devices/evdi-
+  lindroid/add", "w");
+            if (f) {
+                fwrite("1\n", 1, 2, f);
+                fclose(f);
+                usleep(100000); // tunggu 100ms agar
+  driver mengalokasikan minor DRM
+            } else {
+                perror("[evdi-bridge] Failed to write
+  to /sys/devices/evdi-lindroid/add");
+            }
+
+            // Jangan tunggu udev! Buat node secara
+  manual
+            mkdir("/dev/dri", 0755);
+            mknod("/dev/dri/card1", S_IFCHR | 0666,
+  makedev(226, 1));
+            mknod("/dev/dri/renderD129", S_IFCHR |
+  0666, makedev(226, 129));
+            chmod("/dev/dri/card1", 0666);
+            chmod("/dev/dri/renderD129", 0666);
+        }
+
+        // Buka EVDI device
+        evdi_handle evdi = EVDI_INVALID_HANDLE;
+        int evdi_idx = -1;
+        for (int i = 1; i < 10; i++) { // Mulai dari 1
+  untuk menghindari card0 (msm_drm)
+            evdi = evdi_open(i);
+            if (evdi != EVDI_INVALID_HANDLE) {
+                evdi_idx = i;
+                break;
+            }
+        }
+
+  │ Catatan: Major number untuk DRM di kernel Linux
+  │ selalu 226. Minor card0 = 0, card1 = 1, renderD128
+  │ = 128, renderD129 = 129.
+  ──────
+  #### Solusi 3: Urutan Service Systemd (evdi-bridge
+  vs sddm)
+
+  Pada log Anda di Confuse.txt:213-233, SDDM sempat
+  exit (Greeter stopped) karena SDDM dan KWin Wayland
+  start sebelum evdi-bridge selesai menghubungkan
+  display (DRM_IOCTL_EVDI_CONNECT).
+
+  Perbarui unit file evdi-bridge.service:
+
+    [Unit]
+    Description=EVDI to Anland Bridge Service
+    After=network.target
+    Before=display-manager.service sddm.service
+    Wants=display-manager.service
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/evdi_bridge
+    Restart=always
+    RestartSec=2
+
+    [Install]
+    WantedBy=multi-user.target
+  ──────
+  #### Solusi 4: Paksa KWin / SDDM Menggunakan card1
+
+  Agar Compositor Wayland di Linux (KWin) tidak salah
+  memilih card0 (karena card0 tidak memiliki monitor
+  fisik yang terpasang di Linux):
+  Tambahkan environment variable di /etc/environment
+  di dalam rootfs:
+
+    KWIN_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
+
+  Ini memastikan KWin memprioritaskan virtual output
+  card1 yang di-drive oleh evdi-bridge.
+
+ How's the CLI experience so far? Help us improve:
+ [1] Good  [2] Fine  [3] Bad  [0] Skip
