@@ -1,0 +1,184 @@
+$ su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_75c255a9-928b-4191-b3eb-e80b9c642197 enter"
+[*] Entering container namespaces (PID 14497)...
+root@lindroid:/# cd /rootfs-templates
+git pull
+./scripts/build-evdi.sh
+systemctl restart evdi-bridge
+chmod 666 /dev/null
+systemctl restart dbus.socket
+systemctl restart dbus
+journalctl -u evdi-bridge -f
+remote: Enumerating objects: 13, done.
+remote: Counting objects: 100% (13/13), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 7 (delta 2), reused 7 (delta 2), pack-reused 0 (from 0)
+Unpacking objects: 100% (7/7), 537 bytes | 67.00 KiB/s, done.
+From https://github.com/alghiffaryfa19/rootfs-templates
+   b01544c..70ef268  lindroid   -> origin/lindroid
+Updating b01544c..70ef268
+Fast-forward
+ overlay/usr/src/evdi_bridge/evdi_bridge.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+Building evdi_bridge...
+Hit:1 http://deb.debian.org/debian trixie InRelease
+Get:2 https://repo.lindroid.org/repository/lindroid trixie InRelease [2955 B]
+Ign:2 https://repo.lindroid.org/repository/lindroid trixie InRelease
+Fetched 2955 B in 1s (2498 B/s)
+All packages are up to date.
+Warning: OpenPGP signature verification failed: https://repo.lindroid.org/repository/lindroid trixie InRelease: Sub-process /usr/bin/sqv returned an error code (1), error message is: Missing key 945AAD347A9A4148, which is needed to verify signature.
+git is already the newest version (1:2.47.3-0+deb13u1).
+build-essential is already the newest version (12.12).
+libdrm-dev is already the newest version (2.4.124-2).
+python3 is already the newest version (3.13.5-1).
+pkg-config is already the newest version (1.8.1-4).
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 0
+Detected manual build from cloned repository...
+evdi_bridge built successfully!
+Sep 06 17:51:53 lindroid systemd[1]: evdi-bridge.service: Deactivated successfully.
+Sep 06 17:51:53 lindroid systemd[1]: Stopped evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:51:53 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:51:53 lindroid evdi_bridge[159]: [evdi-bridge] Starting EVDI bridge...
+Sep 06 17:51:53 lindroid systemd[1]: Stopping evdi-bridge.service - EVDI to Anland Bridge Service...
+Sep 06 17:51:53 lindroid systemd[1]: evdi-bridge.service: Deactivated successfully.
+Sep 06 17:51:53 lindroid systemd[1]: Stopped evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:51:53 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:51:53 lindroid evdi_bridge[163]: [evdi-bridge] Starting EVDI bridge...
+Sep 06 17:51:53 lindroid evdi_bridge[163]: [evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+Sep 06 17:52:03 lindroid evdi_bridge[163]: [evdi-bridge] Connected to Android app!
+Sep 06 17:52:03 lindroid evdi_bridge[163]: [evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+Sep 06 17:52:03 lindroid evdi_bridge[163]: [evdi-bridge] Waiting for DMA-BUFs on data_fd...
+Sep 06 17:52:03 lindroid evdi_bridge[163]: [evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+Sep 06 17:52:03 lindroid evdi_bridge[163]: [libevdi] Opened /dev/dri/card0 as slave drm device
+Sep 06 17:52:08 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:13 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:18 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:23 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:28 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:33 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:38 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+~ $ su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_75c255a9-928b-4191-b3eb-e80b9c642197 enter"
+[*] Entering container namespaces (PID 16228)...
+root@lindroid:/# ls /dev/dri
+card0  renderD128
+root@lindroid:/# systemctl --failed
+  UNIT         LOAD   ACTIVE SUB    DESCRIPTION         >
+● dbus.service loaded failed failed D-Bus System Message>
+● dbus.socket  loaded failed failed D-Bus System Message>
+
+Legend: LOAD   → Reflects whether the unit definition wa>
+        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+
+2 loaded units listed.
+
+root@lindroid:/# chmod 666 /dev/null
+root@lindroid:/# systemctl restart dbus.socket
+root@lindroid:/# systemctl restart dbus
+root@lindroid:/# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/# ls /dev/dri
+card0  renderD128
+root@lindroid:/# journalctl -u evdi-bridge -f
+Sep 06 17:52:08 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:13 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:18 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:23 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:28 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:33 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:38 lindroid evdi_bridge[163]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:52:53 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:52:53 lindroid evdi_bridge[63]: [evdi-bridge] Starting EVDI bridge...
+Sep 06 17:52:53 lindroid evdi_bridge[63]: [evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+Sep 06 17:53:52 lindroid evdi_bridge[63]: [evdi-bridge] Connected to Android app!
+Sep 06 17:53:52 lindroid evdi_bridge[63]: [evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+Sep 06 17:53:52 lindroid evdi_bridge[63]: [evdi-bridge] Waiting for DMA-BUFs on data_fd...
+Sep 06 17:53:52 lindroid evdi_bridge[63]: [evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+Sep 06 17:53:52 lindroid evdi_bridge[63]: [libevdi] Opened /dev/dri/card0 as slave drm device
+Sep 06 17:53:58 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:03 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:08 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:13 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:18 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:23 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:28 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:33 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:38 lindroid evdi_bridge[63]: [libevdi] Failed to open a device: No such file or directory
+Sep 06 17:54:38 lindroid evdi_bridge[63]: [evdi-bridge] EVDI device not found. Attempting to add one...
+Sep 06 17:54:38 lindroid evdi_bridge[63]: [evdi-bridge] FATAL: Failed to open EVDI device.
+Sep 06 17:54:38 lindroid systemd[1]: evdi-bridge.service: Main process exited, code=exited, status=1/FAILURE
+Sep 06 17:54:38 lindroid systemd[1]: evdi-bridge.service: Failed with result 'exit-code'.
+Sep 06 17:54:41 lindroid systemd[1]: evdi-bridge.service: Scheduled restart job, restart counter is at 1.
+Sep 06 17:54:41 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:54:41 lindroid evdi_bridge[128]: [evdi-bridge] Starting EVDI bridge...
+Sep 06 17:54:41 lindroid evdi_bridge[128]: [evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+^C
+root@lindroid:/# exit
+exit
+~ $ su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_75c255a9-928b-4191-b3eb-e80b9c642197 enter"
+[*] Entering container namespaces (PID 17878)...
+root@lindroid:/# systemctl --failed
+  UNIT         LOAD   ACTIVE SUB    DESCRIPTION         >
+● dbus.service loaded failed failed D-Bus System Message>
+● dbus.socket  loaded failed failed D-Bus System Message>
+
+Legend: LOAD   → Reflects whether the unit definition wa>
+        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+
+2 loaded units listed.
+
+root@lindroid:/# systemctl restart dbus.socket
+root@lindroid:/# systemctl restart dbus
+Job for dbus.service failed because the control process exited with error code.
+See "systemctl status dbus.service" and "journalctl -xeu dbus.service" for details.
+root@lindroid:/# chmod 666 /dev/null
+root@lindroid:/# systemctl restart dbus
+root@lindroid:/# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/# ls /dev/dri
+card0  renderD128
+root@lindroid:/# systemctl status sddm
+● sddm.service - Simple Desktop Display Manager
+     Loaded: loaded (/usr/lib/systemd/system/sddm.servic>
+     Active: active (running) since Sun 2026-09-06 17:55>
+ Invocation: f2f7c906696047fd9f35b62f9a47a921
+       Docs: man:sddm(1)
+             man:sddm.conf(5)
+   Main PID: 86 (sddm)
+     Memory: 37.6M
+     CGroup: /system.slice/sddm.service
+             └─86 /usr/bin/sddm
+
+Sep 06 17:55:57 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:55:57 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:55:57 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:55:57 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:55:57 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:55:57 lindroid sddm-helper[94]: [PAM] Closing >
+Sep 06 17:55:57 lindroid sddm-helper[94]: pam_unix(sddm->
+Sep 06 17:55:57 lindroid sddm-helper[94]: [PAM] Ended.
+Sep 06 17:55:57 lindroid sddm[86]: Auth: sddm-helper exi>
+Sep 06 17:55:57 lindroid sddm[86]: Greeter stopped. SDDM>
+
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Failed to open a device: No such file or directory
+[libevdi] Failed to open a device: No such file or directory
+^C
+root@lindroid:/# systemctl status create-disp
+○ create-disp.service
+     Loaded: masked (Reason: Unit create-disp.service is>
+     Active: inactive (dead)
+
+root@lindroid:/#
