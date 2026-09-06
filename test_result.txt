@@ -1498,7 +1498,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-build-evdi.sh saya ubah ke in
+build-evdi.sh saya ubah ke ini
 echo "Detected manual build from cloned repository..."
     cd overlay/usr/src/evdi_bridge
     gcc evdi_bridge.c -o /usr/bin/evdi_bridge -I/usr/include/libdrm -I/usr/local/include -L/usr/local/lib -ldrm -levdi

@@ -104,6 +104,21 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Ensure EVDI device is created on the host before unsharing
+    FILE *f_evdi = fopen("/sys/devices/evdi-lindroid/add", "w");
+    if (f_evdi) {
+        fwrite("1\n", 1, 2, f_evdi);
+        fclose(f_evdi);
+        usleep(100000); // 100ms
+    }
+
+    // Create the device nodes on the host if they don't exist
+    mkdir("/dev/dri", 0755);
+    mknod("/dev/dri/card1", S_IFCHR | 0666, makedev(226, 1));
+    mknod("/dev/dri/renderD129", S_IFCHR | 0666, makedev(226, 129));
+    chmod("/dev/dri/card1", 0666);
+    chmod("/dev/dri/renderD129", 0666);
+
     // Unshare mount, PID, and UTS (hostname) namespaces
     if (unshare(CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS) != 0) {
         perror("unshare failed");
@@ -199,9 +214,11 @@ int main(int argc, char *argv[]) {
         log_err("mount tmpfs on /dev failed");
     } else {
         // Create basic device nodes for systemd
+        mode_t old_mask = umask(0);
         mknod("dev/null", S_IFCHR | 0666, makedev(1, 3));
         mknod("dev/zero", S_IFCHR | 0666, makedev(1, 5));
         mknod("dev/urandom", S_IFCHR | 0666, makedev(1, 9));
+        umask(old_mask);
         
         // Setup devpts for terminal emulators and apt
         mkdir("dev/pts", 0755);
