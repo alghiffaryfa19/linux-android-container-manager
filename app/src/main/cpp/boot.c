@@ -218,6 +218,7 @@ int main(int argc, char *argv[]) {
         mknod("dev/null", S_IFCHR | 0666, makedev(1, 3));
         mknod("dev/zero", S_IFCHR | 0666, makedev(1, 5));
         mknod("dev/urandom", S_IFCHR | 0666, makedev(1, 9));
+        mknod("dev/uinput", S_IFCHR | 0666, makedev(10, 223));
         umask(old_mask);
         
         // Setup devpts for terminal emulators and apt
