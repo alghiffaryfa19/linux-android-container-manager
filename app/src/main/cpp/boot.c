@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
 
     log_msg("[*] Mounting virtual filesystems...");
     mount("proc", "proc", "proc", 0, NULL);
-    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
+    mount("sysfs", "sys", "sysfs", 0, NULL);
     
     // Allow create-disp to write to LINDROID EVDI virtual display interface safely
     struct stat evdi_st;
@@ -248,6 +248,13 @@ int main(int argc, char *argv[]) {
                 mount(gpu_nodes[i], dest, NULL, MS_BIND | MS_REC, NULL);
             }
         }
+
+        // Ensure by-path symlinks exist inside container for KWin DRM device resolution
+        mkdir("dev/dri/by-path", 0755);
+        symlink("../card1", "dev/dri/by-path/platform-evdi-lindroid.0-card");
+        symlink("../renderD129", "dev/dri/by-path/platform-evdi-lindroid.0-render");
+        symlink("../card0", "dev/dri/by-path/platform-ae00000.qcom_mdss_mdp-card");
+        symlink("../renderD128", "dev/dri/by-path/platform-ae00000.qcom_mdss_mdp-render");
     }
 
     log_msg("[*] Mounting host Android partitions for LINDROID libhybris...");
