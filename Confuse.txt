@@ -175,3 +175,139 @@ root@lindroid:/rootfs-templates# /usr/bin/evdi_bridge
 [evdi-bridge] Bridge loop started. Waiting for EVDI_POLL events...
 ^C
 root@lindroid:/rootfs-templates# ~ $
+
+
+
+root@lindroid:/# systemctl --failed
+  UNIT         LOAD   ACTIVE SUB    DESCRIPTION         >
+● dbus.service loaded failed failed D-Bus System Message>
+● dbus.socket  loaded failed failed D-Bus System Message>
+
+Legend: LOAD   → Reflects whether the unit definition wa>
+        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+
+2 loaded units listed.
+
+root@lindroid:/# ls /dev/dri
+card0  card1  renderD128  renderD129
+root@lindroid:/# chmod 666 /dev/null
+root@lindroid:/# systemctl start dbus.socket
+root@lindroid:/# systemctl start dbus
+root@lindroid:/# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/# ls /dev/dri
+card0  card1  renderD128  renderD129                     root@lindroid:/# systemctl status evdi-bridge            ● evdi-bridge.service - EVDI to Anland Bridge Service         Loaded: loaded (/usr/lib/systemd/system/evdi-bridge>
+     Active: active (running) since Sun 2026-09-06 17:40>
+ Invocation: b8b9f68b14b64f3291940e73c0ae3aa1
+   Main PID: 63 (evdi_bridge)
+     Memory: 224K
+     CGroup: /system.slice/evdi-bridge.service
+             └─63 /usr/bin/evdi_bridge
+
+Sep 06 17:40:29 lindroid systemd[1]: Started evdi-bridge>
+
+root@lindroid:/# systemctl status sddm
+● sddm.service - Simple Desktop Display Manager
+     Loaded: loaded (/usr/lib/systemd/system/sddm.servic>
+     Active: active (running) since Sun 2026-09-06 17:40>
+ Invocation: 3b5a29155c1c453cbd644e18a4fd7a11
+       Docs: man:sddm(1)
+             man:sddm.conf(5)
+   Main PID: 86 (sddm)
+     Memory: 105M
+     CGroup: /system.slice/sddm.service
+             └─86 /usr/bin/sddm
+
+Sep 06 17:40:29 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:40:29 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:40:29 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:40:29 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:40:29 lindroid sddm-helper-start-wayland[96]: >
+Sep 06 17:40:29 lindroid sddm-helper[93]: [PAM] Closing >
+Sep 06 17:40:29 lindroid sddm-helper[93]: pam_unix(sddm->
+Sep 06 17:40:29 lindroid sddm-helper[93]: [PAM] Ended.
+Sep 06 17:40:29 lindroid sddm[86]: Auth: sddm-helper exi>
+Sep 06 17:40:29 lindroid sddm[86]: Greeter stopped. SDDM>
+
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Process has master on /dev/dri/card1, err: Invalid argument
+[libevdi] Opened /dev/dri/card1 as slave drm device
+[libevdi] LibEvdi version (1.15.0)
+[libevdi] Evdi version (1.0.0)
+[libevdi] Using /dev/dri/card1
+[evdi-bridge] EVDI device 1 opened successfully!
+[evdi-bridge] Connected display 3048x1906
+[evdi-bridge] Bridge loop started. Waiting for EVDI_POLL events...
+^C
+root@lindroid:/# startplasma-wayland
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+startplasmacompositor: Could not start D-Bus. Can you call qdbus?
+root@lindroid:/# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/# startplasma-xqq
+bash: startplasma-xqq: command not found
+root@lindroid:/# startplasma-x11
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+$DISPLAY is not set or cannot connect to the X server.
+root@lindroid:/# echo $DISPLAY
+
+root@lindroid:/# fastfetch --logo none
+root@lindroid
+-------------
+OS: Debian GNU/Linux 13 (trixie) aarch64
+Host: Qualcomm Technologies, Inc. 8550 sheng
+Kernel: Linux 5.15.178-android13-8-g6f2f96be86b9
+Uptime: 14 mins
+Packages: 1677 (dpkg)
+Shell: bash 5.2.37
+Display (QCM0001): 3048x2032 @ 120 Hz in 125"
+Cursor: Adwaita
+Terminal: xterm
+Terminal Font: fixed (8.0pt)
+CPU: kalama (8) @ 3.19 GHz
+GPU: Mesa llvmpipe (LLVM 19.1.7, 128 bits)
+Memory: 4.57 GiB / 7.29 GiB (63%)
+Swap: 1.80 GiB / 6.00 GiB (30%)
+Disk (/): 38.74 GiB / 59.62 GiB (65%) - f2fs
+Battery (N81A_10000mah_120w): 37% [Discharging]
+Locale: C
+
+
+
+root@lindroid:/# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/# ls /dev/dri
+card0  card1  renderD128  renderD129
+root@lindroid:/# journalctl -u evdi-bridge -f
+Sep 06 17:30:41 lindroid systemd[1]: Stopping evdi-bridge.service - EVDI to Anland Bridge Service...
+Sep 06 17:30:41 lindroid systemd[1]: evdi-bridge.service: Deactivated successfully.
+Sep 06 17:30:41 lindroid systemd[1]: Stopped evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:30:41 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:37:25 lindroid systemd[1]: Stopping evdi-bridge.service - EVDI to Anland Bridge Service...
+Sep 06 17:37:25 lindroid systemd[1]: evdi-bridge.service: Deactivated successfully.
+Sep 06 17:37:25 lindroid systemd[1]: Stopped evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:37:25 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:39:19 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+Sep 06 17:40:29 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+^C
+root@lindroid:/#
