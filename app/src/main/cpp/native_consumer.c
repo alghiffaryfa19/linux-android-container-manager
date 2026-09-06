@@ -850,11 +850,14 @@ static void on_fallback(void *userdata)
             if ((*g_jvm)->AttachCurrentThread(g_jvm, &env, NULL) == 0)
                 attached = true;
         }
-        if (env) {
+        if (env && s->activity_obj) {
             jclass cls = (*env)->GetObjectClass(env, s->activity_obj);
-            jmethodID mid = (*env)->GetMethodID(env, cls, "onFallback", "()V");
-            if (mid)
-                (*env)->CallVoidMethod(env, s->activity_obj, mid);
+            if (cls) {
+                jmethodID mid = (*env)->GetMethodID(env, cls, "onFallback", "()V");
+                if (mid)
+                    (*env)->CallVoidMethod(env, s->activity_obj, mid);
+                (*env)->DeleteLocalRef(env, cls);
+            }
         }
         if (attached)
             (*g_jvm)->DetachCurrentThread(g_jvm);
@@ -868,11 +871,14 @@ static void on_fallback(void *userdata)
             if ((*g_jvm)->AttachCurrentThread(g_jvm, &env, NULL) == 0)
                 attached = true;
         }
-        if (env) {
+        if (env && s->clipboard_obj) {
             jclass cls = (*env)->GetObjectClass(env, s->clipboard_obj);
-            jmethodID mid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
-            if (mid)
-                (*env)->CallVoidMethod(env, s->clipboard_obj, mid, JNI_FALSE);
+            if (cls) {
+                jmethodID mid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
+                if (mid)
+                    (*env)->CallVoidMethod(env, s->clipboard_obj, mid, JNI_FALSE);
+                (*env)->DeleteLocalRef(env, cls);
+            }
         }
         if (attached)
             (*g_jvm)->DetachCurrentThread(g_jvm);
@@ -914,16 +920,21 @@ static void on_exit_fallback(void *userdata)
     if (s->clipboard_obj) {
         // Enable clip listener on Java side
         jclass cls = (*env)->GetObjectClass(env, s->clipboard_obj);
-        jmethodID listenMid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
-        if (listenMid)
-            (*env)->CallVoidMethod(env, s->clipboard_obj, listenMid, JNI_TRUE);
+        if (cls) {
+            jmethodID listenMid = (*env)->GetMethodID(env, cls, "nativeClipListening", "(Z)V");
+            if (listenMid)
+                (*env)->CallVoidMethod(env, s->clipboard_obj, listenMid, JNI_TRUE);
 
-        start_event_thread(s);
+            start_event_thread(s);
 
-        // Initial clipboard sync: read current system clipboard and send to producer
-        jmethodID syncMethod = (*env)->GetMethodID(env, cls, "nativeClipboardSync", "()V");
-        if (syncMethod)
-            (*env)->CallVoidMethod(env, s->clipboard_obj, syncMethod);
+            // Initial clipboard sync: read current system clipboard and send to producer
+            jmethodID syncMethod = (*env)->GetMethodID(env, cls, "nativeClipboardSync", "()V");
+            if (syncMethod)
+                (*env)->CallVoidMethod(env, s->clipboard_obj, syncMethod);
+            (*env)->DeleteLocalRef(env, cls);
+        } else {
+            start_event_thread(s);
+        }
     } else {
         start_event_thread(s);
     }
