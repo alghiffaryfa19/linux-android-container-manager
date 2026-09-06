@@ -1,0 +1,44 @@
+adb shell
+sheng:/ # logcat | grep -E "CMNative|CMFdHelper|CMDisplayMgr"
+09-06 13:58:05.076 16070 16070 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 13:58:05.076 16070 16070 I CMNative: instance 0xb400007a16eef2e0 created
+09-06 13:58:05.076 16070 16070 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock root=1 helper=/data/app/~~e64Vg1cD-_ZcWJnWxIC7MA==/com.fauzan.containermanager-9QVi7Dyi__YVYzxSOPz1jg==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 13:58:05.076 16070 19139 I CMNative: render thread started
+09-06 13:58:05.077 16070 19139 I CMNative: reconnecting...
+09-06 13:58:05.077 16070 19139 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 13:58:05.080 16070 19139 I CMNative:   buf[0]: anb=0xb400007a16eadee0 fd=187 dup=178 1050x1726 stride=1088
+09-06 13:58:05.082 16070 19139 I CMNative:   buf[1]: anb=0xb400007a16eec2c0 fd=194 dup=180 1050x1726 stride=1088
+09-06 13:58:05.082 16070 19139 I CMNative:   buf[2]: anb=0xb400007a16ee4240 fd=217 dup=197 1050x1726 stride=1088
+09-06 13:58:05.083 16070 19139 I CMNative:   buf[3]: anb=0xb400007a16ef8380 fd=224 dup=222 1050x1726 stride=1088
+09-06 13:58:05.083 16070 19139 I CMNative: collected 4 dma-bufs
+09-06 13:58:05.083 16070 19139 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 13:58:05.083 16070 19139 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 13:58:05.083 16070 19139 E CMNative: root helper: class DisplayManager not found
+09-06 13:58:12.609 17246 17246 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 13:58:12.609 17246 17246 I CMNative: instance 0xb400007a16e4a8a0 created
+09-06 13:58:12.609 17246 17246 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock root=1 helper=/data/app/~~e64Vg1cD-_ZcWJnWxIC7MA==/com.fauzan.containermanager-9QVi7Dyi__YVYzxSOPz1jg==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 13:58:12.610 17246 19330 I CMNative: render thread started
+09-06 13:58:12.610 17246 19330 I CMNative: reconnecting...
+09-06 13:58:12.610 17246 19330 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 13:58:12.611 17246 19330 I CMNative:   buf[0]: anb=0xb400007a16e0b4c0 fd=171 dup=166 3048x1906 stride=3328
+09-06 13:58:12.612 17246 19330 I CMNative:   buf[1]: anb=0xb400007a16e4d8e0 fd=174 dup=167 3048x1906 stride=3328
+09-06 13:58:12.612 17246 19330 I CMNative:   buf[2]: anb=0xb400007a16e4e8f0 fd=177 dup=173 3048x1906 stride=3328
+09-06 13:58:12.613 17246 19330 I CMNative:   buf[3]: anb=0xb400007a16e4c8d0 fd=180 dup=176 3048x1906 stride=3328
+09-06 13:58:12.613 17246 19330 I CMNative: collected 4 dma-bufs
+09-06 13:58:12.613 17246 19330 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock (3048x1906, 4 bufs, root=1)
+09-06 13:58:12.613 17246 19330 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 13:58:12.614 17246 19330 E CMNative: root helper: class DisplayManager not found
+09-06 13:58:44.654 17816 17816 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 13:58:44.654 17816 17816 I CMNative: instance 0xb400007a16eec2b0 created
+09-06 13:58:44.654 17816 17816 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock root=1 helper=/data/app/~~e64Vg1cD-_ZcWJnWxIC7MA==/com.fauzan.containermanager-9QVi7Dyi__YVYzxSOPz1jg==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 13:58:44.655 17816 19650 I CMNative: render thread started
+09-06 13:58:44.655 17816 19650 I CMNative: reconnecting...
+09-06 13:58:44.655 17816 19650 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 13:58:44.658 17816 19650 I CMNative:   buf[0]: anb=0xb400007a16e57980 fd=180 dup=171 1050x1726 stride=1088
+09-06 13:58:44.658 17816 19650 I CMNative:   buf[1]: anb=0xb400007a16ee7270 fd=190 dup=176 1050x1726 stride=1088
+09-06 13:58:44.659 17816 19650 I CMNative:   buf[2]: anb=0xb400007a16e47880 fd=211 dup=185 1050x1726 stride=1088
+09-06 13:58:44.660 17816 19650 I CMNative:   buf[3]: anb=0xb400007a16eea2a0 fd=214 dup=205 1050x1726 stride=1088
+09-06 13:58:44.660 17816 19650 I CMNative: collected 4 dma-bufs
+09-06 13:58:44.660 17816 19650 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_94523347-9467-4b0a-8f0b-ed4bff720113/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 13:58:44.660 17816 19650 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 13:58:44.660 17816 19650 E CMNative: root helper: class DisplayManager not found
