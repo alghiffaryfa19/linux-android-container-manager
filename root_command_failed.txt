@@ -1,0 +1,54 @@
+sheng:/ # logcat | grep -E "CMNative|CMFdHelper|CMDisplayMgr"
+09-06 14:43:45.963 16346 16346 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 14:43:45.963 16346 16346 I CMNative: instance 0xb400007da814f400 created
+09-06 14:43:45.964 16346 16346 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock root=1 helper=/data/app/~~6nXsoyAz-wbt9tFiyZBZHw==/com.fauzan.containermanager-luQs5-GiZP5xXlyBcaEfEA==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 14:43:45.965 16346 19053 I CMNative: render thread started
+09-06 14:43:45.966 16346 19053 I CMNative: reconnecting...
+09-06 14:43:45.966 16346 19053 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 14:43:45.973 16346 19053 I CMNative:   buf[0]: anb=0xb400007da8126180 fd=202 dup=197 1050x1726 stride=1088
+09-06 14:43:45.978 16346 19053 I CMNative:   buf[1]: anb=0xb400007da8191830 fd=198 dup=168 1050x1726 stride=1088
+09-06 14:43:45.978 16346 19053 I CMNative:   buf[2]: anb=0xb400007da81584a0 fd=220 dup=205 1050x1726 stride=1088
+09-06 14:43:45.978 16346 19053 I CMNative:   buf[3]: anb=0xb400007da815c4e0 fd=227 dup=206 1050x1726 stride=1088
+09-06 14:43:45.978 16346 19053 I CMNative: collected 4 dma-bufs
+09-06 14:43:45.978 16346 19053 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 14:43:45.978 16346 19053 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 14:43:45.979 16346 19053 I CMNative: root helper: waiting for connection on lfd=225
+09-06 14:43:45.982 16346 19054 E CMDisplayMgr: Root command failed. code=127
+09-06 14:44:02.725 16346 19053 E CMNative: root helper: timed out waiting for helper connection
+09-06 14:44:02.725 16346 19053 E CMNative: root helper: did not receive daemon fd
+09-06 14:44:02.726 16346 19053 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 14:44:03.226 16346 19053 I CMNative: render thread stopped
+09-06 14:44:03.368 16346 16346 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock root=1 helper=/data/app/~~6nXsoyAz-wbt9tFiyZBZHw==/com.fauzan.containermanager-luQs5-GiZP5xXlyBcaEfEA==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 14:44:03.369 16346 19108 I CMNative: render thread started
+09-06 14:44:03.369 16346 19108 I CMNative: reconnecting...
+09-06 14:44:03.369 16346 19108 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 14:44:03.371 16346 19108 I CMNative:   buf[0]: anb=0xb400007da815d4f0 fd=197 dup=188 1050x1875 stride=1088
+09-06 14:44:03.372 16346 19108 I CMNative:   buf[1]: anb=0xb400007da8164560 fd=206 dup=174 1050x1875 stride=1088
+09-06 14:44:03.374 16346 19108 I CMNative:   buf[2]: anb=0xb400007da8155470 fd=210 dup=192 1050x1875 stride=1088
+09-06 14:44:03.374 16346 19108 I CMNative:   buf[3]: anb=0xb400007da815a4c0 fd=212 dup=185 1050x1875 stride=1088
+09-06 14:44:03.374 16346 19108 I CMNative: collected 4 dma-bufs
+09-06 14:44:03.374 16346 19108 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock (1050x1875, 4 bufs, root=1)
+09-06 14:44:03.374 16346 19108 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 14:44:03.375 16346 19108 I CMNative: root helper: waiting for connection on lfd=204
+09-06 14:44:03.390 16346 19109 E CMDisplayMgr: Root command failed. code=127
+09-06 14:44:10.652 16346 19108 E CMNative: root helper: timed out waiting for helper connection
+09-06 14:44:10.652 16346 19108 E CMNative: root helper: did not receive daemon fd
+09-06 14:44:10.652 16346 19108 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 14:44:11.153 16346 19108 I CMNative: render thread stopped
+09-06 14:44:11.259 16346 16346 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock root=1 helper=/data/app/~~6nXsoyAz-wbt9tFiyZBZHw==/com.fauzan.containermanager-luQs5-GiZP5xXlyBcaEfEA==/lib/arm64/libfdhelper.so bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 14:44:11.259 16346 19141 I CMNative: render thread started
+09-06 14:44:11.259 16346 19141 I CMNative: reconnecting...
+09-06 14:44:11.259 16346 19141 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 14:44:11.260 16346 19141 I CMNative:   buf[0]: anb=0xb400007da812a1c0 fd=205 dup=200 1050x1875 stride=1088
+09-06 14:44:11.260 16346 19141 I CMNative:   buf[1]: anb=0xb400007da81b6a80 fd=209 dup=202 1050x1875 stride=1088
+09-06 14:44:11.261 16346 19141 I CMNative:   buf[2]: anb=0xb400007da8142340 fd=212 dup=207 1050x1875 stride=1088
+09-06 14:44:11.261 16346 19141 I CMNative:   buf[3]: anb=0xb400007da814e400 fd=216 dup=211 1050x1875 stride=1088
+09-06 14:44:11.261 16346 19141 I CMNative: collected 4 dma-bufs
+09-06 14:44:11.261 16346 19141 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_671ffefc-3d9c-43ee-b366-70bcfd368e3e/var/display_daemon.sock (1050x1875, 4 bufs, root=1)
+09-06 14:44:11.261 16346 19141 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 14:44:11.262 16346 19141 I CMNative: root helper: waiting for connection on lfd=214
+09-06 14:44:11.266 16346 19142 E CMDisplayMgr: Root command failed. code=127
+09-06 14:44:16.731 16346 19141 E CMNative: root helper: timed out waiting for helper connection
+09-06 14:44:16.732 16346 19141 E CMNative: root helper: did not receive daemon fd
+09-06 14:44:16.732 16346 19141 E CMNative: do_connect: recv_fd_via_root_helper failed (ctrl_fd=-1)
+09-06 14:44:17.232 16346 19141 I CMNative: render thread stopped
