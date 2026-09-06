@@ -1,0 +1,177 @@
+root@lindroid:/rootfs-templates# systemctl stop create-disp
+root@lindroid:/rootfs-templates# systemctl disable create-disp
+Removed '/etc/systemd/system/display-manager.service.wants/create-disp.service'.
+root@lindroid:/rootfs-templates# systemctl --failed        UNIT                LOAD   ACTIVE SUB    DESCRIPTION  >
+● create-disp.service loaded failed failed Lindroid crea>
+Legend: LOAD   → Reflects whether the unit definition wa>        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+1 loaded units listed.
+root@lindroid:/rootfs-templates# /usr/bin/evdi_bridge    [evdi-bridge] Starting EVDI bridge...                    [evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Process has master on /dev/dri/card1, err: Invalid argument
+[libevdi] Opened /dev/dri/card1 as slave drm device
+[libevdi] LibEvdi version (1.15.0)
+[libevdi] Evdi version (1.0.0)
+[libevdi] Using /dev/dri/card1
+[evdi-bridge] EVDI device 1 opened successfully!
+[evdi-bridge] Connected display 3048x1906
+[evdi-bridge] Bridge loop started. Waiting for EVDI_POLL events...
+^C
+root@lindroid:/rootfs-templates# systemctl --failed
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION  >
+● create-disp.service loaded failed failed Lindroid crea>
+
+Legend: LOAD   → Reflects whether the unit definition wa>
+        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+
+1 loaded units listed.
+...skipping...
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION  >
+● create-disp.service loaded failed failed Lindroid crea>
+
+Legend: LOAD   → Reflects whether the unit definition wa>
+        ACTIVE → The high-level unit activation state, i>
+        SUB    → The low-level unit activation state, va>
+
+1 loaded units listed.
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+root@lindroid:/rootfs-templates# systemctl stop create-disp
+root@lindroid:/rootfs-templates# systemctl disable create-disp
+root@lindroid:/rootfs-templates# systemctl status create-disp
+× create-disp.service - Lindroid create disp service
+     Loaded: loaded (/usr/lib/systemd/system/create-disp>
+     Active: failed (Result: signal) since Sun 2026-09-0>
+ Invocation: 3cbfbbfebcdb4252ba3d5a978dbfccdd
+   Main PID: 223 (code=killed, signal=SEGV)
+     Status: "Initializing create-disp…"
+
+Sep 06 17:32:46 lindroid systemd[1]: create-disp.service>
+Sep 06 17:32:46 lindroid systemd[1]: Failed to start cre>
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service>
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service>
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service>
+Sep 06 17:32:47 lindroid systemd[1]: Failed to start cre>
+
+× create-disp.service - Lindroid create disp service
+     Loaded: loaded (/usr/lib/systemd/system/create-disp.service; disable>     Active: failed (Result: signal) since Sun 2026-09-06 17:32:47 UTC; 3>
+ Invocation: 3cbfbbfebcdb4252ba3d5a978dbfccdd
+   Main PID: 223 (code=killed, signal=SEGV)
+     Status: "Initializing create-disp…"
+
+Sep 06 17:32:46 lindroid systemd[1]: create-disp.service: Failed with res>
+Sep 06 17:32:46 lindroid systemd[1]: Failed to start create-disp.service >
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service: Scheduled resta>
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service: Start request r>
+Sep 06 17:32:47 lindroid systemd[1]: create-disp.service: Failed with res>
+Sep 06 17:32:47 lindroid systemd[1]: Failed to start create-disp.service >
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+root@lindroid:/rootfs-templates# ls /dev/dri
+card0  card1  renderD128  renderD129
+root@lindroid:/rootfs-templates# systemctl restart evdi-bridge
+root@lindroid:/rootfs-templates# systemctl restart sddm
+root@lindroid:/rootfs-templates# systemctl --failed
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION
+● create-disp.service loaded failed failed Lindroid create disp service
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalizatio>
+        SUB    → The low-level unit activation state, values depend on un>
+
+1 loaded units listed.
+
+root@lindroid:/rootfs-templates# systemctl mask create-disp
+Created symlink '/etc/systemd/system/create-disp.service' → '/dev/null'.
+root@lindroid:/rootfs-templates# systemctl --failed
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION
+● create-disp.service masked failed failed create-disp.service
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalizatio>
+        SUB    → The low-level unit activation state, values depend on un>
+
+1 loaded units listed.
+
+root@lindroid:/rootfs-templates# ls /dev/dri
+card0  card1  renderD128  renderD129
+root@lindroid:/rootfs-templates# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Process has master on /dev/dri/card1, err: Invalid argument
+[libevdi] Opened /dev/dri/card1 as slave drm device
+[libevdi] LibEvdi version (1.15.0)
+[libevdi] Evdi version (1.0.0)
+[libevdi] Using /dev/dri/card1
+[evdi-bridge] EVDI device 1 opened successfully!
+[evdi-bridge] Connected display 3048x1906
+[evdi-bridge] Bridge loop started. Waiting for EVDI_POLL events...
+^C
+root@lindroid:/rootfs-templates# ~ $
