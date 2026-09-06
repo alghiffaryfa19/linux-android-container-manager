@@ -1,0 +1,171 @@
+root@lindroid:/# cd rootfs*
+root@lindroid:/rootfs-templates# ./scripts/build-evdi.sh
+Building evdi_bridge...
+Hit:1 http://deb.debian.org/debian trixie InRelease      Get:2 https://repo.lindroid.org/repository/lindroid trixie InRelease [2955 B]
+Ign:2 https://repo.lindroid.org/repository/lindroid trixie InRelease                                              Fetched 2955 B in 1s (2073 B/s)
+All packages are up to date.
+Warning: OpenPGP signature verification failed: https://repo.lindroid.org/repository/lindroid trixie InRelease: Sub-process /usr/bin/sqv returned an error code (1), error message is: Missing key 945AAD347A9A4148, which is needed to verify signature.
+git is already the newest version (1:2.47.3-0+deb13u1).  build-essential is already the newest version (12.12).
+libdrm-dev is already the newest version (2.4.124-2).
+python3 is already the newest version (3.13.5-1).
+python3 set to manually installed.
+Installing:
+  pkg-config
+
+Installing dependencies:
+  libpkgconf3  pkgconf  pkgconf-bin                                                                               Summary:
+  Upgrading: 0, Installing: 4, Removing: 0, Not Upgrading: 0
+  Download size: 105 kB                                    Space needed: 308 kB / 22.6 GB available
+
+Get:1 http://deb.debian.org/debian trixie/main arm64 libpkgconf3 arm64 1.8.1-4 [35.3 kB]
+Get:2 http://deb.debian.org/debian trixie/main arm64 pkgconf-bin arm64 1.8.1-4 [29.6 kB]                          Get:3 http://deb.debian.org/debian trixie/main arm64 pkgconf arm64 1.8.1-4 [26.1 kB]                              Get:4 http://deb.debian.org/debian trixie/main arm64 pkg-config arm64 1.8.1-4 [14.0 kB]
+Fetched 105 kB in 0s (549 kB/s)
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 4.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+debconf: unable to initialize frontend: Teletype
+debconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Noninteractive
+Selecting previously unselected package libpkgconf3:arm64.
+(Reading database ... 152077 files and directories currently installed.)
+Preparing to unpack .../libpkgconf3_1.8.1-4_arm64.deb ...
+Unpacking libpkgconf3:arm64 (1.8.1-4) ...
+Selecting previously unselected package pkgconf-bin.
+Preparing to unpack .../pkgconf-bin_1.8.1-4_arm64.deb ...
+Unpacking pkgconf-bin (1.8.1-4) ...
+Selecting previously unselected package pkgconf:arm64.
+Preparing to unpack .../pkgconf_1.8.1-4_arm64.deb ...
+Unpacking pkgconf:arm64 (1.8.1-4) ...
+Selecting previously unselected package pkg-config:arm64.
+Preparing to unpack .../pkg-config_1.8.1-4_arm64.deb ...
+Unpacking pkg-config:arm64 (1.8.1-4) ...
+Setting up libpkgconf3:arm64 (1.8.1-4) ...
+Setting up pkgconf-bin (1.8.1-4) ...
+Setting up pkgconf:arm64 (1.8.1-4) ...
+Setting up pkg-config:arm64 (1.8.1-4) ...
+Processing triggers for libc-bin (2.41-12+deb13u3) ...
+Building custom libevdi...
+Cloning into '/tmp/evdi-src'...
+remote: Enumerating objects: 3914, done.
+remote: Counting objects: 100% (1734/1734), done.
+remote: Compressing objects: 100% (325/325), done.
+remote: Total 3914 (delta 1493), reused 1417 (delta 1409), pack-reused 2180 (from 3)
+Receiving objects: 100% (3914/3914), 875.84 KiB | 5.34 MiB/s, done.
+Resolving deltas: 100% (2810/2810), done.
+cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64  $(pkg-config --cflags-only-I libdrm)   -c -o evdi_lib.o evdi_lib.c
+cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64  $(pkg-config --cflags-only-I libdrm)   -c -o evdi_procfs.o evdi_procfs.c
+cc evdi_lib.o evdi_procfs.o -shared -Wl,-soname,libevdi.so.1 -o libevdi.so.1.15.0 -lc -lgcc
+cp libevdi.so.1.15.0 libevdi.so
+ln -sf libevdi.so.1.15.0 libevdi.so.1
+ldconfig: /usr/local/lib/libevdi.so.1 is not a symbolic link
+
+/rootfs-templates
+Detected manual build from cloned repository...
+evdi_bridge.c: In function 'main':
+evdi_bridge.c:409:16: warning: passing argument 1 of 'munmap' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  409 |         munmap(shm_ptr, sizeof(uint32_t));
+      |                ^~~~~~~
+In file included from evdi_bridge.c:8:
+/usr/include/aarch64-linux-gnu/sys/mman.h:76:26: note: expected 'void *' but argument is of type 'volatile uint32_t *' {aka 'volatile unsigned int *'}
+   76 | extern int munmap (void *__addr, size_t __len) __THROW;
+      |                    ~~~~~~^~~~~~
+evdi_bridge built successfully!
+root@lindroid:/rootfs-templates# chmod 666 /dev/null
+systemctl restart dbus
+root@lindroid:/rootfs-templates# systemctl restart evdi-bridge
+root@lindroid:/rootfs-templates# systemctl --failure     systemctl: unrecognized option '--failure'
+root@lindroid:/rootfs-templates# systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/rootfs-templates# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 0 DMA-BUFs! Real Size: 3048x1906 (Stride: 13312 bytes)
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Process has master on /dev/dri/card1, err: Invalid argument
+[libevdi] Opened /dev/dri/card1 as slave drm device
+[libevdi] LibEvdi version (1.15.0)
+[libevdi] Evdi version (1.0.0)
+[libevdi] Using /dev/dri/card1
+[evdi-bridge] EVDI device 1 opened successfully!
+[evdi-bridge] Connected display 3048x1906
+[evdi-bridge] Bridge loop started. Waiting for EVDI_POLL events...
+^C
+root@lindroid:/rootfs-templates# journalctl -e evdi-bridge -f
+Failed to add match 'evdi-bridge': Invalid argument
+root@lindroid:/rootfs-templates# journalctl -e evdi_bridge -f
+Failed to add match 'evdi_bridge': Invalid argument
+root@lindroid:/rootfs-templates# systemctl --failed        UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/rootfs-templates# systemctl status evdi-bridge
+● evdi-bridge.service - EVDI to Anland Bridge Service
+     Loaded: loaded (/usr/lib/systemd/system/evdi-bridge>
+     Active: active (running) since Sun 2026-09-06 18:45>
+ Invocation: a13caec882724a68ab9278e69a5ce454
+   Main PID: 447 (evdi_bridge)
+     Memory: 4K
+     CGroup: /system.slice/evdi-bridge.service
+             └─447 /usr/bin/evdi_bridge
+
+Sep 06 18:45:39 lindroid systemd[1]: Started evdi-bridge>
+Sep 06 18:45:39 lindroid evdi_bridge[447]: [evdi-bridge]>
+Sep 06 18:45:39 lindroid evdi_bridge[447]: [evdi-bridge]>
+
+root@lindroid:/rootfs-templates# systemctl status sddm   ● sddm.service - Simple Desktop Display Manager
+     Loaded: loaded (/usr/lib/systemd/system/sddm.servic>
+     Active: active (running) since Sun 2026-09-06 18:43>
+ Invocation: bfb2b1a7d9184c55ae10d560d1033ce1
+       Docs: man:sddm(1)
+             man:sddm.conf(5)
+   Main PID: 89 (sddm)
+     Memory: 200K
+     CGroup: /system.slice/sddm.service
+             └─89 /usr/bin/sddm
+
+Sep 06 18:43:43 lindroid systemd[1]: Started sddm.servic>
+Sep 06 18:43:43 lindroid sddm[89]: Initializing...
+Sep 06 18:43:43 lindroid sddm[89]: Starting...
+Sep 06 18:43:43 lindroid sddm[89]: Logind interface found
+
+root@lindroid:/rootfs-templates# startplasma-wayland
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+startplasmacompositor: Could not start D-Bus. Can you call qdbus?
+root@lindroid:/rootfs-templates# systemctl --failed        UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+root@lindroid:/rootfs-templates# ls /dev/dri
+card0  card1  renderD128  renderD129
+root@lindroid:/rootfs-templates# dmesg | grep evdi
+[    0.237858] [    T1] [evdi-lindroid] Loading EVDI-Lindroid driver v1.0.0
+[    0.237956] [    T1] [evdi-lindroid] Event system initialized
+[    0.238105] [    T1] [evdi-lindroid] Sysfs interface created at /sys/devices/evdi-lindroid/
+[    0.238106] [    T1] [evdi-lindroid] Driver loaded successfully
+[  167.749694] [T17196] [evdi-lindroid] Device 0 initialized
+[  167.751994] [T17196] [evdi-lindroid] Modeset initialized for device 0
+[  167.755504] [T17196] [drm] Initialized evdi-lindroid 1.0.0 NEVER for evdi-lindroid.0 on minor 1
+[  167.755510] [T17196] [evdi-lindroid] Platform device probed successfully, DRM device registered
+[  167.755768] [T17196] [evdi-lindroid] Created new device via sysfs (total: 1)
+[  317.469952] [T18758] [evdi-lindroid] Device 0 connected: 3048x1906@60Hz id:0
+[  345.083395] [    T6] PowerDet:Cpu usage:6% user + 83% kernel, comm:evdi_bridge, pid:18758, cpu_mask:ff, pcomm:evdi_bridge, ppid:18758
+root@lindroid:/rootfs-templates# dmesg | grep lindroid
+[    0.237858] [    T1] [evdi-lindroid] Loading EVDI-Lindroid driver v1.0.0
+[    0.237956] [    T1] [evdi-lindroid] Event system initialized
+[    0.238105] [    T1] [evdi-lindroid] Sysfs interface created at /sys/devices/evdi-lindroid/
+[    0.238106] [    T1] [evdi-lindroid] Driver loaded successfully
+[  167.749694] [T17196] [evdi-lindroid] Device 0 initialized
+[  167.751994] [T17196] [evdi-lindroid] Modeset initialized for device 0
+[  167.755504] [T17196] [drm] Initialized evdi-lindroid 1.0.0 NEVER for evdi-lindroid.0 on minor 1
+[  167.755510] [T17196] [evdi-lindroid] Platform device probed successfully, DRM device registered
+[  167.755768] [T17196] [evdi-lindroid] Created new device via sysfs (total: 1)
+[  317.469952] [T18758] [evdi-lindroid] Device 0 connected: 3048x1906@60Hz id:0
