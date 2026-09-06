@@ -1,0 +1,89 @@
+logcat
+adb shell
+sheng:/ # logcat | grep -E "CMNative|CMFdHelper|CMDisplayMgr"
+09-06 17:40:55.878 13841 13841 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 17:40:55.879 13841 13841 I CMNative: instance 0xb400007a19ec48e0 created
+09-06 17:40:55.884 13841 13841 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock root=1 helper=/data/user/0/com.fauzan.containermanager/files/bin/fdhelper bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 17:40:55.884 13841 14937 I CMNative: render thread started
+09-06 17:40:55.884 13841 14937 I CMNative: reconnecting...
+09-06 17:40:55.885 13841 14937 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 17:40:55.887 13841 14937 I CMNative:   buf[0]: anb=0xb400007a19ebe890 fd=168 dup=166 3048x1906 stride=3328
+09-06 17:40:55.888 13841 14937 I CMNative:   buf[1]: anb=0xb400007a19ec5900 fd=175 dup=167 3048x1906 stride=3328
+09-06 17:40:55.889 13841 14937 I CMNative:   buf[2]: anb=0xb400007a19ec8930 fd=178 dup=174 3048x1906 stride=3328
+09-06 17:40:55.889 13841 14937 I CMNative:   buf[3]: anb=0xb400007a19ec9940 fd=181 dup=177 3048x1906 stride=3328
+09-06 17:40:55.889 13841 14937 I CMNative: collected 4 dma-bufs
+09-06 17:40:55.889 13841 14937 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock (3048x1906, 4 bufs, root=1)
+09-06 17:40:55.889 13841 14937 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 17:40:55.890 13841 14937 I CMNative: root helper: waiting for connection on lfd=180
+09-06 17:40:55.925 13841 14937 I CMNative: root helper: poll success, accepting connection
+09-06 17:40:55.926 13841 14937 I CMNative: root helper: accepted connection cfd=183, receiving fds...
+09-06 17:40:55.926 13841 14937 I CMNative: root helper: successfully received fd=188 from helper
+09-06 17:40:55.926 14946 14946 I CMFdHelper: passed daemon fd to app
+09-06 17:40:55.926 13841 14937 I CMNative: do_connect: recv_fd_via_root_helper succeeded, ctrl_fd=188
+09-06 17:40:55.926 13841 14937 I CMNative: do_connect: connected successfully! ctx=0xb400007979e69850
+09-06 17:40:55.926 13841 14937 I CMNative: do_connect: pushing 4 dmabufs (refresh=120000)
+09-06 17:40:55.926 13841 14937 I CMNative: do_connect: pushed dmabufs successfully
+09-06 17:40:55.926 13841 14937 I CMNative: connected
+09-06 17:40:59.446 13841 14937 I CMNative: render thread stopped
+09-06 17:43:36.440 15073 15073 I CMDisplayMgr: DisplayManager: starting display (Build Version: 2026-09-06 v2)
+09-06 17:43:36.440 15073 15073 I CMNative: instance 0xb400007a19eb17b0 created
+09-06 17:43:36.440 15073 15073 I CMNative: configured: socket=/data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock root=1 helper=/data/user/0/com.fauzan.containermanager/files/bin/fdhelper bridge=/data/user/0/com.fauzan.containermanager/cache/bridge.sock topapp=0 mode=1 stops=
+09-06 17:43:36.441 15073 17224 I CMNative: render thread started
+09-06 17:43:36.441 15073 17224 I CMNative: reconnecting...
+09-06 17:43:36.441 15073 17224 I CMNative: collecting 4 dma-bufs via dequeue/queue
+09-06 17:43:36.445 15073 17224 I CMNative:   buf[0]: anb=0xb400007a19ec6910 fd=182 dup=176 1050x1726 stride=1088
+09-06 17:43:36.446 15073 17224 I CMNative:   buf[1]: anb=0xb400007a19f551f0 fd=190 dup=171 1050x1726 stride=1088
+09-06 17:43:36.446 15073 17224 I CMNative:   buf[2]: anb=0xb400007a19f5e280 fd=213 dup=179 1050x1726 stride=1088
+09-06 17:43:36.447 15073 17224 I CMNative:   buf[3]: anb=0xb400007a19f642e0 fd=216 dup=187 1050x1726 stride=1088
+09-06 17:43:36.447 15073 17224 I CMNative: collected 4 dma-bufs
+09-06 17:43:36.447 15073 17224 I CMNative: connecting to /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400/var/display_daemon.sock (1050x1726, 4 bufs, root=1)
+09-06 17:43:36.447 15073 17224 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 17:43:36.448 15073 17224 I CMNative: root helper: waiting for connection on lfd=215
+09-06 17:43:36.487 15073 17224 I CMNative: root helper: poll success, accepting connection
+09-06 17:43:36.487 15073 17224 I CMNative: root helper: accepted connection cfd=3, receiving fds...
+09-06 17:43:36.488 15073 17224 I CMNative: root helper: successfully received fd=4 from helper
+09-06 17:43:36.488 17226 17226 I CMFdHelper: passed daemon fd to app
+09-06 17:43:36.488 15073 17224 I CMNative: do_connect: recv_fd_via_root_helper succeeded, ctrl_fd=4
+09-06 17:43:36.488 15073 17224 I CMNative: do_connect: connected successfully! ctx=0xb400007979e5a580
+09-06 17:43:36.489 15073 17224 I CMNative: do_connect: pushing 4 dmabufs (refresh=120000)
+09-06 17:43:36.489 15073 17224 I CMNative: do_connect: pushed dmabufs successfully
+09-06 17:43:36.489 15073 17224 I CMNative: connected
+09-06 17:43:36.512 15073 17224 I CMNative: exit fallback triggered
+
+Linux cli
+su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400 enter"
+[*] Entering container namespaces (PID 14469)...
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting test renderer bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs!
+[evdi-bridge] Mapped buffer 0 (fd=10, map_size=8216576, stride=4352, w=1050, h=1875)
+[evdi-bridge] Mapped buffer 1 (fd=11, map_size=8216576, stride=4352, w=1050, h=1875)
+[evdi-bridge] Mapped buffer 2 (fd=12, map_size=8216576, stride=4352, w=1050, h=1875)
+[evdi-bridge] Mapped buffer 3 (fd=13, map_size=8216576, stride=4352, w=1050, h=1875)
+[evdi-bridge] Starting test render loop...
+^C
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting test renderer bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+^C                                                                                                                                                                      root@lindroid:/# exit
+exit
+~ $ su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400 enter"
+[*] Entering container namespaces (PID 17055)...
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting test renderer bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs!
+[evdi-bridge] Mapped buffer 0 (fd=10, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 1 (fd=11, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 2 (fd=12, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 3 (fd=13, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Starting test render loop...
+
+
