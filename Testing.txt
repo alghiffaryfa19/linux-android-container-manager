@@ -1,0 +1,73 @@
+logcat
+09-06 15:56:25.611  9343 18395 I CMNative: do_connect: attempting recv_fd_via_root_helper
+09-06 15:56:25.613  9343 18395 I CMNative: root helper: waiting for connection on lfd=211
+09-06 15:56:25.626  9343 18395 I CMNative: root helper: poll success, accepting connection
+09-06 15:56:25.626 18397 18397 I CMFdHelper: passed daemon fd to app
+09-06 15:56:25.626  9343 18395 I CMNative: root helper: accepted connection cfd=205, receiving fds...
+09-06 15:56:25.626  9343 18395 I CMNative: root helper: successfully received fd=206 from helper
+09-06 15:56:25.626  9343 18395 I CMNative: do_connect: recv_fd_via_root_helper succeeded, ctrl_fd=206
+09-06 15:56:25.626  9343 18395 I CMNative: do_connect: connected successfully! ctx=0xb4000072f63facb0
+09-06 15:56:25.626  9343 18395 I CMNative: do_connect: pushing 4 dmabufs (refresh=120000)
+09-06 15:56:25.626  9343 18395 I CMNative: do_connect: pushed dmabufs successfully
+09-06 15:56:25.626  9343 18395 I CMNative: connected
+09-06 15:56:33.769  9343 18395 I CMNative: render thread stopped
+
+
+Linux cli
+[*] Entering container namespaces (PID 16487)...
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI to Anland bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app via display_daemon.sock!
+[evdi-bridge] Handshake sent. Waiting for DMA-BUF FDs from Android...
+[evdi-bridge] Received message type: 1, FDs received: 5
+[evdi-bridge] Got DMA-BUF fd: 5
+[evdi-bridge] Got DMA-BUF fd: 6
+[evdi-bridge] Got DMA-BUF fd: 7                                                                                                                                         [evdi-bridge] Got DMA-BUF fd: 8
+[evdi-bridge] Got DMA-BUF fd: 9
+[evdi-bridge] Received message type: 7, FDs received: 0
+[evdi-bridge] Received message type: 1050, FDs received: 0
+[evdi-bridge] Received message type: 1, FDs received: 0
+[evdi-bridge] Client disconnected or error: Success
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI to Anland bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app via display_daemon.sock!
+[evdi-bridge] Handshake sent. Waiting for DMA-BUF FDs from Android...
+[evdi-bridge] Received message type: 1, FDs received: 5
+[evdi-bridge] Got DMA-BUF fd: 5
+[evdi-bridge] Got DMA-BUF fd: 6
+[evdi-bridge] Got DMA-BUF fd: 7
+[evdi-bridge] Got DMA-BUF fd: 8
+[evdi-bridge] Got DMA-BUF fd: 9
+[evdi-bridge] Received message type: 7, FDs received: 0
+[evdi-bridge] Received message type: 1050, FDs received: 0
+[evdi-bridge] Received message type: 1, FDs received: 0
+[evdi-bridge] Client disconnected or error: Success
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI to Anland bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app via display_daemon.sock!
+[evdi-bridge] Handshake sent. Waiting for DMA-BUF FDs from Android...
+[evdi-bridge] Received message type: 1, FDs received: 5
+[evdi-bridge] Got DMA-BUF fd: 5
+[evdi-bridge] Got DMA-BUF fd: 6
+[evdi-bridge] Got DMA-BUF fd: 7
+[evdi-bridge] Got DMA-BUF fd: 8
+[evdi-bridge] Got DMA-BUF fd: 9
+[evdi-bridge] Received message type: 7, FDs received: 0
+[evdi-bridge] Received message type: 1050, FDs received: 0
+[evdi-bridge] Received message type: 1, FDs received: 0
+[evdi-bridge] Client disconnected or error: Success
+root@lindroid:/# systemctl status evdi-bridge
+● evdi-bridge.service - EVDI to Anland Bridge Service
+     Loaded: loaded (/usr/lib/systemd/system/evdi-bridge.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-09-06 08:52:07 UTC; 4min 5s ago
+ Invocation: b66168b6816a423daf042fd20c3987d1
+   Main PID: 63 (evdi_bridge)
+     Memory: 24K
+     CGroup: /system.slice/evdi-bridge.service
+             └─63 /usr/bin/evdi_bridge
+
+Sep 06 08:52:07 lindroid systemd[1]: Started evdi-bridge.service - EVDI to Anland Bridge Service.
+root@lindroid:/# systemctl restart evdi-bridge
