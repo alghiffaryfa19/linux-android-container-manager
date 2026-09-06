@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
 
     log_msg("[*] Mounting virtual filesystems...");
     mount("proc", "proc", "proc", 0, NULL);
-    mount("sysfs", "sys", "sysfs", 0, NULL);
+    mount("sysfs", "sys", "sysfs", MS_RDONLY, NULL);
     
     // Allow create-disp to write to LINDROID EVDI virtual display interface safely
     struct stat evdi_st;
