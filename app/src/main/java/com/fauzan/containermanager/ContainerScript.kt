@@ -68,9 +68,15 @@ object ContainerScript {
             
             echo "[*] Stopping Container..."
             
-            # Kill the container processes (targeting the init system if we started it)
-            pkill -f '/sbin/init'
-            
+            # Kill the container init process using the stored PID
+            if [ -f "${'$'}MNT/container.pid" ]; then
+                CPID=${'$'}(cat "${'$'}MNT/container.pid")
+                if [ -n "${'$'}CPID" ]; then
+                    kill -9 ${'$'}CPID 2>/dev/null
+                fi
+            else
+                pkill -f '/sbin/init'
+            fi
             # Clean up PID file
             rm -f ${'$'}MNT/container.pid
             
