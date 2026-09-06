@@ -23,6 +23,7 @@ android {
                 cppFlags += "-std=c++17"
                 targets += "containermanager"
                 targets += "container_boot"
+                targets += "fdhelper"
             }
         }
     }
