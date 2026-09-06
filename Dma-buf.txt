@@ -1,0 +1,17 @@
+su -c "/data/user/0/com.fauzan.containermanager/files/bin/container_boot /data/user/0/com.fauzan.containermanager/files/containers/container_9f3fd430-c05d-47e3-ba29-ae1d05685400 enter"
+[*] Entering container namespaces (PID 19827)...
+root@lindroid:/# sed -i 's|/tmp/display_daemon.sock|/var/display_daemon.sock|g' /usr/bin/evdi_bridge
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI to Anland bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app via display_daemon.sock!
+[evdi-bridge] Handshake sent. Waiting for DMA-BUF FDs from Android...
+[evdi-bridge] Received message type: 1, FDs received: 5
+[evdi-bridge] Got DMA-BUF fd: 5
+[evdi-bridge] Got DMA-BUF fd: 6
+[evdi-bridge] Got DMA-BUF fd: 7
+[evdi-bridge] Got DMA-BUF fd: 8
+[evdi-bridge] Got DMA-BUF fd: 9
+[evdi-bridge] Received message type: 7, FDs received: 0
+[evdi-bridge] Received message type: 1050, FDs received: 0
+[evdi-bridge] Received message type: 1, FDs received: 0
