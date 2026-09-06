@@ -409,7 +409,7 @@ static int recv_fd_via_root_helper(const char *daemon_sock,
                 attached = true;
         }
         if (env) {
-            jclass cls = (*env)->FindClass(env, "com/fauzan/containermanager/DisplayManager");
+            jclass cls = g_displayManagerClass;
             if (cls) {
                 jmethodID mid = (*env)->GetStaticMethodID(env, cls, "runRootCommandAsync", "(Ljava/lang/String;)V");
                 if (mid) {
@@ -419,7 +419,6 @@ static int recv_fd_via_root_helper(const char *daemon_sock,
                 } else {
                     LOGE("root helper: method runRootCommandAsync not found");
                 }
-                (*env)->DeleteLocalRef(env, cls);
             } else {
                 LOGE("root helper: class DisplayManager not found");
             }
@@ -1019,6 +1018,8 @@ static void copy_jstring(JNIEnv *env, jstring js, char *dst, size_t dstsz)
  * by nativeCreate -- so multiple instances (windows) coexist in one process. */
 #define STATE(h) ((struct consumer_state *)(uintptr_t)(h))
 
+static jclass g_displayManagerClass = NULL;
+
 JNIEXPORT jlong JNICALL
 Java_com_fauzan_containermanager_DisplayManager_nativeCreate(JNIEnv *env, jclass clazz)
 {
@@ -1026,6 +1027,14 @@ Java_com_fauzan_containermanager_DisplayManager_nativeCreate(JNIEnv *env, jclass
     struct consumer_state *s = calloc(1, sizeof(*s));
     if (!s)
         return 0;
+    
+    if (!g_jvm) {
+        (*env)->GetJavaVM(env, &g_jvm);
+    }
+    if (!g_displayManagerClass) {
+        g_displayManagerClass = (*env)->NewGlobalRef(env, clazz);
+    }
+    
     pthread_mutex_init(&s->lock, NULL);
     pthread_mutex_init(&s->cfg_lock, NULL);
     pthread_mutex_init(&s->topapp_lock, NULL);
