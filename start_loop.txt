@@ -1,0 +1,13 @@
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting test renderer bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs. data_fd=7, shm_fd=8, fence_fd=6
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs!
+[evdi-bridge] Mapped buffer 0 (fd=10, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 1 (fd=11, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 2 (fd=12, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Mapped buffer 3 (fd=13, map_size=7520256, stride=4352, w=1050, h=1726)
+[evdi-bridge] Starting test render loop...
+Segmentation fault
