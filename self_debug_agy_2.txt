@@ -1,0 +1,174 @@
+Investigating Socketpair Usage
+  Selain masalah card0 vs card1, dari hasil
+  penelusuran mendalam terhadap seluruh source code
+  dan file log (crash.txt, test_result.txt,
+  display_consumer.c, evdi_ioctl.c, dll.), ada 8
+  concern kritis yang saat ini sedang atau akan
+  menghalangi UI Linux tampil di Android:
+  ──────
+  ### 1. Bug Nilai IOCTL: Typo
+  DRM_EVDI_GBM_CREATE_BUFF_CALLBACK (Paling Kritis!)
+  Di dalam evdi_bridge.c:24:
+    #define DRM_EVDI_GBM_CREATE_BUFF_CALLBACK 0x0A  //
+  <-- SALAH!
+  Namun di header kernel driver asli evdi_drm.h:102:
+    #define DRM_EVDI_GBM_DEL_BUFF             0x0B
+    #define DRM_EVDI_GBM_CREATE_BUFF          0x0C
+    #define DRM_EVDI_GBM_CREATE_BUFF_CALLBACK 0x0D  //
+  <-- ASLI DARI KERNEL
+  • Dampaknya: Saat KWin/Mesa memanggil pembuatan GBM
+  buffer, kernel menunggu respon dari evdi_bridge.
+  Namun karena evdi_bridge mengirim ioctl dengan nomor
+  0x0A, kernel mengembalikan -EINVAL (Inappropriate
+  ioctl for device). Kernel thread akan timeout (-
+  ETIMEDOUT) dan alokasi buffer grafis KWin/SDDM akan
+  gagal.
+  • Solusi: Ganti 0x0A menjadi 0x0D di evdi_bridge.c,
+  atau sebaiknya langsung #include "uapi/evdi_drm.h".
+  ──────
+  ### 2. D-Bus Daemon Crash karena Permission
+  /dev/null
+
+  Di log confuse_2.txt:64-67, unit D-Bus berulang kali
+  gagal:
+    ● dbus.service loaded failed failed D-Bus System
+  Message Bus
+    ● dbus.socket  loaded failed failed D-Bus System
+  Message Bus
+  • Penyebab: Di boot.c:202, pembuatan
+  mknod("dev/null", S_IFCHR | 0666, ...) dipengaruhi
+  oleh umask proses Android/su saat itu. Akibatnya
+  /dev/null terbuat dengan izin 0644 (tidak bisa
+  ditulis oleh user messagebus).
+  • Dampaknya: Tanpa D-Bus yang aktif, SDDM dan KWin
+  Wayland tidak bisa berkomunikasi dengan systemd-
+  logind / session manager dan greeter SDDM langsung
+  mati (sddm-helper: [PAM] Closing... Greeter stopped).
+  • Solusi: Di boot.c, panggil umask(0); sebelum mknod,
+  atau pasang chmod eksplisit:
+    chmod("dev/null", 0666);
+    chmod("dev/zero", 0666);
+    chmod("dev/urandom", 0666);
+  ──────
+  ### 3. Pemilihan Connector: display_id = 1 vs
+  display_id = 0
+  Di evdi_bridge.c:329:
+    struct drm_evdi_connect cmd = {
+        .connected = 1,
+        .dev_index = 0,
+        ...
+        .display_id = 1  // <-- Menghubungkan
+  connector index 1
+    };
+  • Driver lindroid-drm-loopback mendukung 5 connector
+  (LINDROID_MAX_CONNECTORS 5, slot 0 sampai 4).
+  • Jika Anda memilih display_id = 1, maka slot 0
+  dianggap DISCONNECTED dan slot 1 CONNECTED.
+  • Sebagian compositors/DM (terutama SDDM mode KMS)
+  mengasumsikan display utama berada di output pertama
+  (Virtual-1 / slot 0). Jika slot 0 disconnect, SDDM
+  bisa mengira tidak ada layar yang tersambung.
+  • Saran: Gunakan .display_id = 0 jika Anda hanya
+  memiliki satu layar virtual.
+  ──────
+  ### 4. Format Piksel Terbalik (Red vs Blue
+  Inversion)
+  • Android native_consumer.c:762 mengalokasikan
+  AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM (di memori
+  little-endian berurutan R, G, B, A = DRM ABGR8888).
+  • Namun di evdi_modeset.c:22:
+    static const uint32_t evdi_formats[] = {
+        DRM_FORMAT_XRGB8888,
+        DRM_FORMAT_ARGB8888,
+    };
+
+  • Jika Linux Compositor merender dengan ARGB8888
+  sementara Android membaca sebagai RGBA8888, warna
+  tampilan akan mengalami color swapping (merah
+  menjadi biru, wajah orang menjadi biru).
+  • Solusi: Tambahkan format BGR ke evdi_formats[] di
+  kernel driver:
+    static const uint32_t evdi_formats[] = {
+        DRM_FORMAT_XRGB8888,
+        DRM_FORMAT_ARGB8888,
+        DRM_FORMAT_XBGR8888,
+        DRM_FORMAT_ABGR8888,
+    };
+
+  ──────
+  ### 5. Stride Padding GPU Qualcomm Snapdragon
+
+  Dari log Confuse.txt dan crash.txt:
+
+  • Resolusi: 3048 x 1906.
+  • Lebar piksel normal: 3048 * 4 = 12,192 bytes.
+  • Namun Android mengembalikan Stride: 13,312 bytes
+  (alignment 3328 piksel).
+  • Perhatian: Adreno GPU selalu mewajibkan alignment
+  stride (biasanya kelipatan 64/128 piksel). Pastikan
+  di callback DRM_IOCTL_EVDI_GBM_CREATE_BUFF_CALLBACK
+  Anda selalu meneruskan infos[assigned_id].stride
+  yang asli dari Android, bukan menghitung width * 4.
+  Jika stride dihitung manual tanpa padding, tampilan
+  akan miring/robek (diagonal tearing).
+  ──────
+  ### 6. Pacing fence_fd Mismatch (1 Byte vs 8 Bytes)
+
+  Di consumer Android display_consumer.c:440-457:
+
+    char b;
+    struct iovec iov = { .iov_base = &b, .iov_len = 1
+  }; // Membaca 1 byte saja
+    ...
+    recvmsg(ctx->fence_fd, &msg, MSG_DONTWAIT);
+
+  Namun di evdi_bridge.c:L413:
+
+    uint64_t val = 1;
+    write(fence_fd, &val, sizeof(val)); // Menulis 8
+  bytes
+
+  Karena fence_fd dibuat dengan socketpair(AF_UNIX,
+  SOCK_SEQPACKET, ...):
+
+  • Menulis 8 bytes pada SOCK_SEQPACKET saat receiver
+  hanya membaca buffer 1 byte akan memicu MSG_TRUNC
+  atau buffer tersisa di queue socket.
+  • Solusi: Kirimkan 1 byte saja:
+    char dummy = 1;
+    write(fence_fd, &dummy, 1);
+
+  ──────
+  ### 7. Siklus Hidup Reconnect & Rotasi Layar
+  (Display Lifecycle)
+
+  Di evdi_bridge.c:207:
+
+  • Hanya ada satu panggilan accept() di main().
+  • Saat pengguna merotasi layar tablet, membuka
+  split-screen, atau meminimalkan aplikasi, Android
+  Activity akan menghancurkan SurfaceView lama dan
+  membuat koneksi socket baru dengan resolusi baru
+  (misal berubah dari 3048x1906 ke 1050x1726, terlihat
+  di log crash.txt:34).
+  • evdi_bridge saat ini belum memiliki loop
+  while(running) untuk accept() ulang saat socket
+  client putus (read() == 0). Akibatnya, begitu
+  Android app di-minimize/rotate, evdi-bridge akan
+  hang atau crash (EPIPE).
+  • Solusi: Bungkus alur komunikasi Android di dalam
+  reconnect loop: jika socket Android terputus, tutup
+  FD buffer lama, panggil accept() baru, dan kirimkan
+  update resolusi ke DRM EVDI.
+  ──────
+  ### 8. Input Bridge (/dev/uinput)
+
+  • Android menangkap touch screen hardware secara
+  eksklusif lewat framework Android.
+  • Bind-mount /dev/input dari host Android tidak akan
+  menerima touch event pengguna saat aplikasi
+  Container Manager aktif.
+  • Perhatian: Pastikan /dev/uinput sudah diizinkan di
+  dalam container (mknod /dev/uinput c 10 223)
+  sehingga Anda bisa menginjeksi input mouse/touch
+  virtual dari Android app ke Linux session.
