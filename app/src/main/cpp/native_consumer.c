@@ -400,16 +400,34 @@ static int recv_fd_via_root_helper(const char *daemon_sock,
     snprintf(inner, sizeof(inner), "%s %s %s",
              helper_path, daemon_sock, bridge_path);
 
-    pid_t pid = fork();
-    if (pid < 0) {
-        LOGE("root helper: fork() failed: %s", strerror(errno));
-        close(lfd);
-        unlink(bridge_path);
-        return -1;
-    }
-    if (pid == 0) {
-        execlp("su", "su", "-c", inner, (char *)NULL);
-        _exit(127);   /* su not found / exec failed */
+    /* Call DisplayManager.runRootCommandAsync to execute the helper via libsu */
+    if (g_jvm) {
+        JNIEnv *env = NULL;
+        bool attached = false;
+        if ((*g_jvm)->GetEnv(g_jvm, (void **)&env, JNI_VERSION_1_6) == JNI_EDETACHED) {
+            if ((*g_jvm)->AttachCurrentThread(g_jvm, &env, NULL) == 0)
+                attached = true;
+        }
+        if (env) {
+            jclass cls = (*env)->FindClass(env, "com/fauzan/containermanager/DisplayManager");
+            if (cls) {
+                jmethodID mid = (*env)->GetStaticMethodID(env, cls, "runRootCommandAsync", "(Ljava/lang/String;)V");
+                if (mid) {
+                    jstring jcmd = (*env)->NewStringUTF(env, inner);
+                    (*env)->CallStaticVoidMethod(env, cls, mid, jcmd);
+                    (*env)->DeleteLocalRef(env, jcmd);
+                } else {
+                    LOGE("root helper: method runRootCommandAsync not found");
+                }
+                (*env)->DeleteLocalRef(env, cls);
+            } else {
+                LOGE("root helper: class DisplayManager not found");
+            }
+        }
+        if (attached)
+            (*g_jvm)->DetachCurrentThread(g_jvm);
+    } else {
+        LOGE("root helper: g_jvm is NULL");
     }
 
     /* Wait for the helper to connect (root prompt may take a while). */
@@ -437,13 +455,12 @@ static int recv_fd_via_root_helper(const char *daemon_sock,
         LOGE("root helper: timed out waiting for helper connection");
     }
 
-    int status = 0;
-    waitpid(pid, &status, 0);
+    if (fd < 0) {
+        LOGE("root helper: did not receive daemon fd");
+    }
+    
     close(lfd);
     unlink(bridge_path);
-
-    if (fd < 0)
-        LOGE("root helper: did not receive daemon fd (su status=%d)", status);
     return fd;
 }
 

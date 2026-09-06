@@ -22,6 +22,17 @@ object DisplayManager {
     @JvmStatic external fun nativeStart(handle: Long, surface: Surface, clipboardTarget: Any?, activityTarget: Any?)
     @JvmStatic external fun nativeStop(handle: Long)
 
+    @JvmStatic
+    fun runRootCommandAsync(command: String) {
+        Thread {
+            try {
+                com.topjohnwu.superuser.Shell.cmd(command).exec()
+            } catch (e: Exception) {
+                Log.e("CMDisplayMgr", "Error executing root command", e)
+            }
+        }.start()
+    }
+
     fun startDisplay(context: android.content.Context, surface: Surface, containerPath: String) {
         if (handle == 0L) {
             handle = nativeCreate()
