@@ -9,14 +9,15 @@ object ContainerScript {
     
     // The boot binary path after it has been deployed
     var bootBinaryPath: String = ""
+    var fdHelperPath: String = ""
 
-    fun deployBootBinary(context: Context) {
+    fun deployNativeExecutable(context: Context, libName: String, outName: String): String {
         val abi = Build.SUPPORTED_ABIS[0]
-        val entryName = "lib/${abi}/libcontainer_boot.so"
+        val entryName = "lib/${abi}/$libName"
         val outDir = File(context.filesDir, "bin")
         if (!outDir.exists()) outDir.mkdirs()
         
-        val outFile = File(outDir, "container_boot")
+        val outFile = File(outDir, outName)
         try {
             val apkFile = java.util.zip.ZipFile(context.applicationInfo.sourceDir)
             val entry = apkFile.getEntry(entryName)
@@ -27,14 +28,21 @@ object ContainerScript {
                     }
                 }
                 outFile.setExecutable(true)
-                bootBinaryPath = outFile.absolutePath
+                apkFile.close()
+                return outFile.absolutePath
             } else {
-                System.err.println("Could not find boot binary for ABI $abi in APK")
+                System.err.println("Could not find binary $libName for ABI $abi in APK")
             }
             apkFile.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        return ""
+    }
+
+    fun deployBinaries(context: Context) {
+        bootBinaryPath = deployNativeExecutable(context, "libcontainer_boot.so", "container_boot")
+        fdHelperPath = deployNativeExecutable(context, "libfdhelper.so", "fdhelper")
     }
 
     fun getStartScript(rootfsPath: String): String {

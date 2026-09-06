@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         // Extract native boot binary for container init
-        ContainerScript.deployBootBinary(this)
+        ContainerScript.deployBinaries(this)
         
         // Extract Lindroid libc.so quirk
         val libFile = File(filesDir, "libc.so")
