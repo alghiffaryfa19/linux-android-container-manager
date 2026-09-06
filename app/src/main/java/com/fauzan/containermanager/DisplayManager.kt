@@ -26,7 +26,16 @@ object DisplayManager {
     fun runRootCommandAsync(command: String) {
         Thread {
             try {
-                com.topjohnwu.superuser.Shell.cmd(command).exec()
+                val result = com.topjohnwu.superuser.Shell.cmd(command).exec()
+                if (!result.isSuccess) {
+                    Log.e("CMDisplayMgr", "Root command failed. code=${result.code}")
+                    for (err in result.err) {
+                        Log.e("CMDisplayMgr", "stderr: $err")
+                    }
+                }
+                for (out in result.out) {
+                    Log.i("CMDisplayMgr", "stdout: $out")
+                }
             } catch (e: Exception) {
                 Log.e("CMDisplayMgr", "Error executing root command", e)
             }
