@@ -6,8 +6,8 @@
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
 #include <android/native_window_jni.h>
-#include <utils/Log.h>
-#include <utils/StrongPointer.h>
+#include "aosp_compat.h"
+#include <memory>
 #include <android_runtime/android_view_Surface.h>
 
 #include "ComposerImpl.h"
@@ -17,7 +17,7 @@ using aidl::vendor::lindroid::composer::ComposerImpl;
 using namespace android;
 
 static std::shared_ptr<ComposerImpl> composer = nullptr;
-static sp<InputDevice> inputDevice = nullptr;
+static std::shared_ptr<InputDevice> inputDevice = nullptr;
 
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
@@ -36,42 +36,33 @@ extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceCreated(
     JNIEnv *env, jclass /* clazz */,
     jlong displayId, jobject surface) {
-    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
-    if (sf == nullptr) {
-        ALOGE("Get Surface ERROR!");
-        return;
-    }
     ANativeWindow* nativeWindow = ANativeWindow_fromSurface(env, surface);
     if (nativeWindow == nullptr) {
         ALOGE("Get ANativeWindow ERROR!");
         return;
     }
     if (composer == nullptr) return;
-    composer->onSurfaceCreated(displayId, sf, nativeWindow);
+    composer->onSurfaceCreated(displayId, nativeWindow);
 }
 
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceChanged(
     JNIEnv *env, jclass /* clazz */,
     jlong displayId, jobject surface, jint dpi, jfloat refresh) {
-    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
-    if (sf == nullptr) return;
     ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
     if (nativeWindow == nullptr) return;
     if (composer == nullptr) return;
-    composer->onSurfaceChanged(displayId, sf, nativeWindow, dpi, refresh);
+    composer->onSurfaceChanged(displayId, nativeWindow, dpi, refresh);
 }
 
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceDestroyed(
     JNIEnv *env, jclass /* clazz */,
     jlong displayId, jobject surface) {
-    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
-    if (sf == nullptr) return;
     ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
     if (nativeWindow == nullptr) return;
     if (composer == nullptr) return;
-    composer->onSurfaceDestroyed(displayId, sf, nativeWindow);
+    composer->onSurfaceDestroyed(displayId, nativeWindow);
 }
 
 extern "C" void
@@ -102,7 +93,7 @@ Java_com_fauzan_containermanager_DisplayManager_nativeSetAppForeground(
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeInitInputDevice(
     JNIEnv *env, jclass /* clazz */) {
-    inputDevice = new InputDevice();
+    inputDevice = std::make_shared<InputDevice>();
 }
 
 extern "C" void

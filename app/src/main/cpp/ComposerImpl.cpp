@@ -1,18 +1,13 @@
 #define ALOG_TAG "LindroidComposer"
 
-#include <aidlcommonsupport/NativeHandle.h>
-#include <cutils/native_handle.h>
+#include "aosp_compat.h"
 #include <android/hardware_buffer.h>
 #include <android/native_window.h>
-#include <private/android/AHardwareBufferHelpers.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
 #include <sys/prctl.h>
 #include <type_traits>
-#include <utils/Log.h>
-#include <vndk/hardware_buffer.h>
-#include <vndk/window.h>
 
 #include "ComposerImpl.h"
 
@@ -82,7 +77,7 @@ ndk::ScopedAStatus ComposerImpl::registerCallback(const std::shared_ptr<ICompose
     ALOGI("%s: sequenceId: %d", __FUNCTION__, sequenceId);
     std::vector<int64_t> hotplugDisplays;
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         mSequenceId = sequenceId;
         mCallbacks = in_cb;
         hotplugDisplays.reserve(mDisplays.size());
@@ -114,7 +109,7 @@ ndk::ScopedAStatus ComposerImpl::requestDisplay(int64_t in_displayId) {
 
 ndk::ScopedAStatus ComposerImpl::getActiveConfig(int64_t in_displayId, DisplayConfiguration *_aidl_return) {
     ALOGI("%s: Display: %" PRId64 "", __FUNCTION__, in_displayId);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto display = mDisplays.find(in_displayId);
     if (display != mDisplays.end() && display->second != nullptr) {
         *_aidl_return = display->second->displayConfig;
@@ -134,7 +129,7 @@ ndk::ScopedAStatus ComposerImpl::getReleaseFence(int64_t in_displayId, ndk::Scop
 }
 
 ndk::ScopedAStatus ComposerImpl::present(int64_t in_displayId, ndk::ScopedFileDescriptor *_aidl_return) {
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto it = mDisplays.find(in_displayId);
     if (it == mDisplays.end() || it->second == nullptr) {
         *_aidl_return = ndk::ScopedFileDescriptor();
@@ -181,7 +176,7 @@ ndk::ScopedAStatus ComposerImpl::setBuffer(int64_t in_displayId, const HardwareB
     int acquireFd = in_acquireFence.get() >= 0 ? ::dup(in_acquireFence.get()) : -1;
     ComposerDisplay* display = nullptr;
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         if (!m_ui_running)
             m_ui_running = true;
         auto it = mDisplays.find(in_displayId);
@@ -222,7 +217,7 @@ ndk::ScopedAStatus ComposerImpl::setBuffer(int64_t in_displayId, const HardwareB
     }
 
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         auto it = mDisplays.find(in_displayId);
         if (it == mDisplays.end() || it->second == nullptr || it->second->surfaceControl == nullptr) {
             close_if_valid(acquireFd);
@@ -325,7 +320,7 @@ void ComposerImpl::onSurfaceChanged(int64_t displayId, sp<Surface> surface, ANat
     int32_t sequenceId = 0;
 
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
 
         ANativeWindow* previousNativeWindow = nullptr;
         ComposerDisplay* targetDisplay = nullptr;
@@ -388,16 +383,15 @@ void ComposerImpl::onSurfaceChanged(int64_t displayId, sp<Surface> surface, ANat
     }
 }
 
-void ComposerImpl::onSurfaceDestroyed(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow) {
+void ComposerImpl::onSurfaceDestroyed(int64_t displayId, ANativeWindow *nativeWindow) {
     ALOGI("%s", __FUNCTION__);
     ComposerDisplay* display = nullptr;
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         auto it = mDisplays.find(displayId);
         if (it == mDisplays.end()) return;
         display = it->second;
         display->nativeWindow = nullptr;
-        display->surface = nullptr;
         if (display->surfaceControl) {
             ASurfaceControl_release(display->surfaceControl);
             display->surfaceControl = nullptr;
@@ -416,12 +410,11 @@ void ComposerImpl::onDisplayDestroyed(int64_t displayId) {
     ALOGI("%s", __FUNCTION__);
     ComposerDisplay* display = nullptr;
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         auto it = mDisplays.find(displayId);
         if (it == mDisplays.end()) return;
         display = it->second;
         display->nativeWindow = nullptr;
-        display->surface = nullptr;
         if (display->surfaceControl) {
             ASurfaceControl_release(display->surfaceControl);
             display->surfaceControl = nullptr;
@@ -441,7 +434,7 @@ void ComposerImpl::onDisplayDestroyed(int64_t displayId) {
         mCallbacks->onHotplugReceived(mSequenceId, displayId, false, displayId == 0);
 
     {
-        Mutex::Autolock _l(mLock);
+        std::lock_guard<std::mutex> _l(mLock);
         mDisplays.erase(displayId);
     }
 }
@@ -450,14 +443,7 @@ void VsyncThread::start(int64_t firstVsync, int64_t period) {
     (void)firstVsync;
     (void)period;
 
-    const status_t st = mReceiver.initCheck();
-    LOG_ALWAYS_FATAL_IF(st != ::android::OK,
-                        "DisplayEventReceiver initCheck failed (%d); no fallback permitted", st);
-    mReceiverReady = true;
     mStarted = true;
-
-    (void)mReceiver.setVsyncRate(0u);
-    (void)mReceiver.requestNextVsync();
     mThread = std::thread(&VsyncThread::vsyncLoop, this);
 }
 
@@ -478,56 +464,19 @@ void VsyncThread::setCallback(const vsync_callback_t &callback) {
 void VsyncThread::vsyncLoop() {
     prctl(PR_SET_NAME, "VsyncThread", 0, 0, 0);
 
-    std::unique_lock<std::mutex> lock(mMutex);
-    if (!mStarted) return;
-    LOG_ALWAYS_FATAL_IF(!mReceiverReady, "VsyncThread started without DisplayEventReceiver");
-
-    (void)mReceiver.setVsyncRate(0u);
-    (void)mReceiver.requestNextVsync();
-
     while (true) {
+        std::unique_lock<std::mutex> lock(mMutex);
+        if (!mStarted) break;
         auto cb = mCallback;
         lock.unlock();
 
-        const int fd = mReceiver.getFd();
-        LOG_ALWAYS_FATAL_IF(fd < 0, "DisplayEventReceiver fd invalid: %d", fd);
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
 
-        struct pollfd pfd;
-        pfd.fd = fd;
-        pfd.events = POLLIN;
-        pfd.revents = 0;
-
-        const int pr = ::poll(&pfd, 1, 50 /*ms*/);
-        if (pr < 0 && errno == EINTR) {
-            lock.lock();
-            if (!mStarted) break;
-            continue;
+        if (cb) {
+            auto now = std::chrono::steady_clock::now().time_since_epoch();
+            int64_t lastTs = std::chrono::duration_cast<std::chrono::nanoseconds>(now).count();
+            cb(lastTs, 1);
         }
-        if (pr > 0 && (pfd.revents & POLLIN)) {
-            ::android::DisplayEventReceiver::Event evs[16];
-            int64_t lastTs = 0;
-            uint32_t lastCount32 = 0;
-
-            for (;;) {
-                const ssize_t n = mReceiver.getEvents(evs, std::size(evs));
-                if (n <= 0) break;
-                for (ssize_t i = 0; i < n; i++) {
-                    if (is_vsync_event_type(evs[i].header.type)) {
-                        lastTs = static_cast<int64_t>(evs[i].header.timestamp);
-                        lastCount32 = evs[i].vsync.count;
-                    }
-                }
-            }
-
-            if (cb && lastTs != 0) {
-                cb(lastTs, lastCount32);
-            }
-        }
-
-        (void)mReceiver.requestNextVsync();
-
-        lock.lock();
-        if (!mStarted) break;
     }
 }
 

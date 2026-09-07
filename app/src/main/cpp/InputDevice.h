@@ -1,9 +1,7 @@
 #pragma once
 
 #include <unordered_map>
-#include <utils/Errors.h>
-#include <utils/Mutex.h>
-#include <utils/RefBase.h>
+#include <mutex>
 
 #include <linux/uinput.h>
 
@@ -14,9 +12,7 @@
 #define DEVICE_TABLET 2
 #define DEVICE_TOUCH_STYLUS 3
 
-using android::Mutex;
-using android::RefBase;
-using android::status_t;
+using status_t = int32_t;
 
 struct UInputDevice {
     void getFD(int32_t device, int32_t *fd);
@@ -32,7 +28,7 @@ struct UInputDevice {
     int32_t mFDTablet = -1;
 };
 
-class InputDevice : public RefBase {
+class InputDevice {
 public:
     virtual status_t reconfigure(int64_t displayId, uint32_t width, uint32_t height);
     virtual status_t stop(int64_t displayId);
@@ -50,6 +46,6 @@ private:
     status_t start(int64_t displayId, uint32_t width, uint32_t height);
     status_t start_async(int64_t displayId, uint32_t width, uint32_t height);
 
-    Mutex mLock;
+    std::mutex mLock;
     std::unordered_map<int64_t, UInputDevice *> mInputs;
 };

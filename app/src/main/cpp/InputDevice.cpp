@@ -8,7 +8,7 @@
 #include <linux/input.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
-#include <utils/Log.h>
+#include "aosp_compat.h"
 
 #include "InputDevice.h"
 
@@ -278,7 +278,7 @@ status_t InputDevice::start_async(int64_t displayId, uint32_t width, uint32_t he
 }
 
 status_t InputDevice::start(int64_t displayId, uint32_t width, uint32_t height) {
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
 
     status_t err = 0;
     auto input = mInputs.find(displayId);
@@ -308,7 +308,7 @@ status_t InputDevice::reconfigure(int64_t displayId, uint32_t width, uint32_t he
 }
 
 status_t InputDevice::stop(int64_t displayId) {
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
 
     status_t err = 0;
     auto input = mInputs.find(displayId);
@@ -333,7 +333,7 @@ status_t InputDevice::stop(int64_t displayId) {
 
 void InputDevice::keyEvent(int64_t displayId, uint32_t keyCode, bool isDown) {
     // ALOGE("Key event: %d, %d", keyCode, isDown);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         input->second->inject(DEVICE_KEYBOARD, EV_KEY, keyCode, isDown ? 1 : 0);
@@ -343,7 +343,7 @@ void InputDevice::keyEvent(int64_t displayId, uint32_t keyCode, bool isDown) {
 
 void InputDevice::touchEvent(int64_t displayId, int64_t pointerId, int32_t action, int32_t pressure, int32_t x, int32_t y) {
     // ALOGE("Touch event: %d, %d, %d, %d, %d", (int)pointerId, action, pressure, x, y);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         if (action == AMOTION_EVENT_ACTION_MOVE || action == AMOTION_EVENT_ACTION_DOWN) {
@@ -365,7 +365,7 @@ void InputDevice::touchEvent(int64_t displayId, int64_t pointerId, int32_t actio
 
 void InputDevice::touchStylusButtonEvent(int64_t displayId, uint32_t button, bool isDown) {
     // ALOGE("Stylus button event: %d, %d, %d, %d, %d", (int)pointerId, action, pressure, x, y);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         input->second->inject(DEVICE_TOUCH_STYLUS, EV_KEY, button, isDown ? 1 : 0);
@@ -375,7 +375,7 @@ void InputDevice::touchStylusButtonEvent(int64_t displayId, uint32_t button, boo
 
 void InputDevice::touchStylusHoverEvent(int64_t displayId, int32_t action, int32_t x, int32_t y, int32_t distance, int32_t tilt_x, int32_t tilt_y) {
     // ALOGE("Stylus hover event: %d, %d, %d, %d, %d", (int)pointerId, action, pressure, x, y);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         if(action == AMOTION_EVENT_ACTION_HOVER_ENTER) {
@@ -395,7 +395,7 @@ void InputDevice::touchStylusHoverEvent(int64_t displayId, int32_t action, int32
 
 void InputDevice::touchStylusEvent(int64_t displayId, int32_t action, int32_t pressure, int32_t x, int32_t y, int32_t tilt_x, int32_t tilt_y) {
     // ALOGE("Stylus touch event: %d, %d, %d, %d, %d", (int)pointerId, action, pressure, x, y);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         if (action == AMOTION_EVENT_ACTION_DOWN) {
@@ -420,7 +420,7 @@ void InputDevice::touchStylusEvent(int64_t displayId, int32_t action, int32_t pr
 
 void InputDevice::pointerMotionEvent(int64_t displayId, int32_t x, int32_t y) {
     // ALOGE("Pointer motion event: %d, %d", x, y);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         input->second->inject(DEVICE_TABLET, EV_ABS, ABS_X, x);
@@ -431,7 +431,7 @@ void InputDevice::pointerMotionEvent(int64_t displayId, int32_t x, int32_t y) {
 
 void InputDevice::pointerButtonEvent(int64_t displayId, uint32_t button, int32_t x, int32_t y, bool isDown) {
     // ALOGE("Pointer button event: %d, %d, %d, %d", button, x, y, isDown);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         input->second->inject(DEVICE_TABLET, EV_ABS, ABS_X, x);
@@ -445,7 +445,7 @@ void InputDevice::pointerButtonEvent(int64_t displayId, uint32_t button, int32_t
 
 void InputDevice::pointerScrollEvent(int64_t displayId, uint32_t value, bool isVertical) {
     // ALOGE("Pointer scroll event: %d, %d", value, isVertical ? 1 : 0);
-    Mutex::Autolock _l(mLock);
+    std::lock_guard<std::mutex> _l(mLock);
     auto input = mInputs.find(displayId);
     if (input != mInputs.end()) {
         input->second->inject(DEVICE_TABLET, EV_REL, isVertical ? REL_WHEEL : REL_HWHEEL, value);

@@ -9,12 +9,7 @@
 #include <unordered_map>
 
 #include <android/surface_control.h>
-#include <gui/Surface.h>
-#include <gui/DisplayEventReceiver.h>
-#include <ui/Fence.h>
-#include <ui/GraphicBuffer.h>
-#include <utils/Errors.h>
-#include <utils/Mutex.h>
+#include <android/native_window.h>
 
 #include <aidl/android/hardware/graphics/common/HardwareBuffer.h>
 #include <aidl/vendor/lindroid/composer/BnComposer.h>
@@ -24,9 +19,6 @@
 using aidl::android::hardware::graphics::common::HardwareBuffer;
 using aidl::vendor::lindroid::composer::DisplayConfiguration;
 using aidl::vendor::lindroid::composer::IComposerCallback;
-using android::Mutex;
-using android::sp;
-using android::Surface;
 
 namespace aidl {
 namespace vendor {
@@ -47,12 +39,9 @@ private:
     std::mutex mMutex;
     bool mStarted{false};
     vsync_callback_t mCallback;
-    ::android::DisplayEventReceiver mReceiver;
-    bool mReceiverReady{false};
 };
 
 struct ComposerDisplay {
-    sp<Surface> surface;
     ANativeWindow *nativeWindow = nullptr;
     ASurfaceControl *surfaceControl = nullptr;
     DisplayConfiguration displayConfig{};
@@ -76,14 +65,14 @@ public:
     virtual ndk::ScopedAStatus setBuffer(int64_t in_displayId, const HardwareBuffer &in_buffer, const ::ndk::ScopedFileDescriptor &in_fenceFd, int32_t *_aidl_return) override;
     virtual ndk::ScopedAStatus getUiRunning(bool *_aidl_return) override;
 
-    void onSurfaceCreated(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow);
-    void onSurfaceChanged(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow, int dpi, float refresh);
-    void onSurfaceDestroyed(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow);
+    void onSurfaceCreated(int64_t displayId, ANativeWindow *nativeWindow);
+    void onSurfaceChanged(int64_t displayId, ANativeWindow *nativeWindow, int dpi, float refresh);
+    void onSurfaceDestroyed(int64_t displayId, ANativeWindow *nativeWindow);
     void onDisplayDestroyed(int64_t displayId);
     void onAppForegroundChanged(int64_t displayId, bool foreground);
 
 private:
-    Mutex mLock;
+    std::mutex mLock;
 
     int32_t mSequenceId;
     std::shared_ptr<IComposerCallback> mCallbacks;

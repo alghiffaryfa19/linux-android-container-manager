@@ -1,4 +1,9 @@
 package android.hardware.graphics.common;
+import android.hardware.graphics.common.HardwareBufferDescription;
+import android.hardware.common.NativeHandle;
 
 @VintfStability
-parcelable HardwareBuffer cpp_header "android/hardware_buffer_aidl.h" ndk_header "android/hardware_buffer_aidl.h";
+parcelable HardwareBuffer {
+    HardwareBufferDescription description;
+    NativeHandle handle;
+}
