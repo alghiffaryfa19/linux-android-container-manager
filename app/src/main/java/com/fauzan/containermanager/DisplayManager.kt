@@ -46,7 +46,7 @@ object DisplayManager {
         if (handle == 0L) {
             handle = nativeCreate()
         }
-        val socketPath = "$containerPath/var/display_daemon.sock"
+        val socketPath = "$containerPath/tmp/display_daemon.sock"
         val bridgePath = "${context.cacheDir.absolutePath}/bridge.sock"
         
         if (ContainerScript.fdHelperPath.isEmpty()) {
