@@ -1,0 +1,175 @@
+ldconfig: /usr/local/lib/libevdi.so.1 is not a symbolic link
+
+root@lindroid:/# fastfetch
+        _,met$$$$$gg.          root@lindroid
+     ,g$$$$$$$$$$$$$$$P.       -------------
+   ,g$$P""       """Y$$.".     OS: Debian GNU/Linux 13 (trixie) aarch64       `$$$.
+',$$P       ,ggs.     `$$b:    Host: Qualcomm Technologies, Inc. 8550 sheng.    $$$
+ $$P      d$'     ,    $$P     Kernel: Linux 5.15.178-android13-8-g6f2f96be86b9d$$'
+ $$;      Y$b._   _,d$P'       Uptime: 7 mins
+ Y$$.    `.`"Y$$$$P"'          Packages: 1663 (dpkg)
+ `$$b      "-.__               Shell: bash 5.2.37
+  `Y$$b                        Display (QCM0001): 3048x2032 @ 120 Hz in 125"
+     `$$b.                     Cursor: Adwaita
+       `Y$$b.                  Terminal: xterm
+         `"Y$b._               Terminal Font: fixed (8.0pt)           `""""
+                               CPU: kalama (8) @ 3.19 GHz
+                               GPU: Mesa llvmpipe (LLVM 19.1.7, 128 bits)
+                               Memory: 4.47 GiB / 7.29 GiB (61%)
+                               Swap: 2.21 GiB / 6.00 GiB (37%)
+                               Disk (/): 36.94 GiB / 59.62 GiB (62%) - f2fs
+                               Battery (N81A_10000mah_120w): 46% [Discharging]
+                               Locale: C
+
+
+
+root@lindroid:/# dmesg | grep ueventd
+[    1.359151] [  T243] KernelSU: hook_manager: unmark 243 exec /system/bin/ueventd
+[    1.364180] [  T243] ueventd: ueventd started!
+[    1.365339] [  T243] ueventd: Parsing file /system/etc/ueventd.rc...
+[    1.365902] [  T243] ueventd: Added '/vendor/etc/ueventd.rc' to import list
+[    1.365906] [  T243] ueventd: Added '/odm/etc/ueventd.rc' to import list
+[    7.385927] [ T1935] ueventd: firmware: loading 'kiwi/amss20.bin' for '/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin'
+[    7.386664] [ T1935] ueventd: found /vendor/firmware_mnt/image/kiwi/amss20.bin for /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin
+[    7.390202] [ T1935] ueventd: loading /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin took 4ms
+[    7.875918] [ T1511] ueventd: firmware: could not find firmware for regulatory.db
+[    7.875941] [ T1511] ueventd: firmware: attempted /apex/com.xiaomi.wifi/etc/regulatory.db, open failed: No such file or directory
+[    7.875946] [ T1511] ueventd: firmware: attempted /etc/firmware/regulatory.db, open failed: No such file or directory
+[    7.875950] [ T1511] ueventd: firmware: attempted /odm/firmware/regulatory.db, open failed: No such file or directory
+[    7.875954] [ T1511] ueventd: firmware: attempted /vendor/firmware/regulatory.db, open failed: No such file or directory
+[    7.875957] [ T1511] ueventd: firmware: attempted /firmware/image/regulatory.db, open failed: No such file or directory
+[    7.875961] [ T1511] ueventd: firmware: attempted /apex/com.xiaomi.wifi/etc/firmware/regulatory.db, open failed: No such file or directory
+[   12.586667] [ T3977] ueventd: firmware: loading 'BLH-cs35l43-dsp1-spk-prot.bin' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin'
+[   12.586829] [ T3977] ueventd: found /odm/firmware/BLH-cs35l43-dsp1-spk-prot.bin for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin
+[   12.587228] [ T3977] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin took 0ms
+[   12.788252] [ T3980] ueventd: firmware: loading 'cs35l43-dsp1-spk-prot.wmfw' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw'
+[   12.788393] [ T3980] ueventd: found /odm/firmware/cs35l43-dsp1-spk-prot.wmfw for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw
+[   12.788471] [ T3980] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw took 0ms
+[   13.070679] [ T4153] ueventd: firmware: loading 'BLL-cs35l43-dsp1-spk-prot.bin' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin'
+[   13.071116] [ T4153] ueventd: found /odm/firmware/BLL-cs35l43-dsp1-spk-prot.bin for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin
+[   13.071361] [ T4153] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin took 0ms
+[   13.279316] [ T4160] ueventd: firmware: loading 'cs35l43-dsp1-spk-prot.wmfw' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0042/firmware/cs35l43-dsp1-spk-prot.wmfw'
+[   17.642698] [ T4791] ueventd: firmware: loading 'novatek_nt36532_n81a_fw_csot.bin' for '/devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin'
+[   17.642839] [ T4791] ueventd: found /odm/firmware/novatek_nt36532_n81a_fw_csot.bin for /devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin
+[   17.643485] [ T4791] ueventd: loading /devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin took 0ms
+[   36.091977] [ T5416] ueventd: firmware: loading 'kiwi/amss20.bin' for '/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin'
+[   36.092184] [ T5416] ueventd: found /vendor/firmware_mnt/image/kiwi/amss20.bin for /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin
+[   36.094648] [ T5416] ueventd: loading /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin took 2ms
+[   36.613339] [ T5777] ueventd: firmware: loading 'kiwi/regdb_xiaomi.bin' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin'
+[   36.613569] [ T5777] ueventd: found /vendor/firmware_mnt/image/kiwi/regdb_xiaomi.bin for /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin
+[   36.613761] [ T5777] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin took 0ms
+[   36.625938] [ T5780] ueventd: firmware: loading 'kiwi/bd_n81agl.elf' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf'
+[   36.626098] [ T5780] ueventd: found /vendor/firmware_mnt/image/kiwi/bd_n81agl.elf for /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf
+[   36.626196] [ T5780] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf took 0ms
+[   36.661431] [ T5792] ueventd: firmware: loading 'kiwi/qdss_trace_config_v2.cfg' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!qdss_trace_config_v2.cfg'
+[   43.755887] [ T1396] PowerDet:Cpu usage:8% user + 1% kernel, comm:ueventd, pid:243, cpu_mask:ff, pcomm:ueventd, ppid:243
+[  307.612821] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.800222] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.815022] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.815035] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.819069] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.819460] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.820221] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.820574] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.821823] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  329.716360] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  369.041179] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+root@lindroid:/# dmesg | grep uevent
+[    0.165169] [    T1] device-mapper: uevent: version 1.0.3
+[    1.359151] [  T243] KernelSU: hook_manager: unmark 243 exec /system/bin/ueventd
+[    1.364180] [  T243] ueventd: ueventd started!
+[    1.365339] [  T243] ueventd: Parsing file /system/etc/ueventd.rc...
+[    1.365902] [  T243] ueventd: Added '/vendor/etc/ueventd.rc' to import list
+[    1.365906] [  T243] ueventd: Added '/odm/etc/ueventd.rc' to import list
+[    7.385927] [ T1935] ueventd: firmware: loading 'kiwi/amss20.bin' for '/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin'
+[    7.386664] [ T1935] ueventd: found /vendor/firmware_mnt/image/kiwi/amss20.bin for /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin
+[    7.390202] [ T1935] ueventd: loading /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin took 4ms
+[    7.875918] [ T1511] ueventd: firmware: could not find firmware for regulatory.db
+[    7.875941] [ T1511] ueventd: firmware: attempted /apex/com.xiaomi.wifi/etc/regulatory.db, open failed: No such file or directory
+[    7.875946] [ T1511] ueventd: firmware: attempted /etc/firmware/regulatory.db, open failed: No such file or directory
+[    7.875950] [ T1511] ueventd: firmware: attempted /odm/firmware/regulatory.db, open failed: No such file or directory
+[    7.875954] [ T1511] ueventd: firmware: attempted /vendor/firmware/regulatory.db, open failed: No such file or directory
+[    7.875957] [ T1511] ueventd: firmware: attempted /firmware/image/regulatory.db, open failed: No such file or directory
+[    7.875961] [ T1511] ueventd: firmware: attempted /apex/com.xiaomi.wifi/etc/firmware/regulatory.db, open failed: No such file or directory
+[   10.286268] [ T2772] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   10.315453] [ T2772] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   10.315497] [ T2772] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[   12.009579] [  T181] android_work: did not send uevent (0 0 0000000000000000)
+[   12.586667] [ T3977] ueventd: firmware: loading 'BLH-cs35l43-dsp1-spk-prot.bin' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin'
+[   12.586829] [ T3977] ueventd: found /odm/firmware/BLH-cs35l43-dsp1-spk-prot.bin for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin
+[   12.587228] [ T3977] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0040/firmware/BLH-cs35l43-dsp1-spk-prot.bin took 0ms
+[   12.788252] [ T3980] ueventd: firmware: loading 'cs35l43-dsp1-spk-prot.wmfw' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw'
+[   12.788393] [ T3980] ueventd: found /odm/firmware/cs35l43-dsp1-spk-prot.wmfw for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw
+[   12.788471] [ T3980] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/cs35l43-dsp1-spk-prot.wmfw took 0ms
+[   13.070679] [ T4153] ueventd: firmware: loading 'BLL-cs35l43-dsp1-spk-prot.bin' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin'
+[   13.071116] [ T4153] ueventd: found /odm/firmware/BLL-cs35l43-dsp1-spk-prot.bin for /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin
+[   13.071361] [ T4153] ueventd: loading /devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0041/firmware/BLL-cs35l43-dsp1-spk-prot.bin took 0ms
+[   13.279316] [ T4160] ueventd: firmware: loading 'cs35l43-dsp1-spk-prot.wmfw' for '/devices/platform/soc/8c0000.qcom,qupv3_2_geni_se/880000.i2c/i2c-2/2-0042/firmware/cs35l43-dsp1-spk-prot.wmfw'
+[   17.642698] [ T4791] ueventd: firmware: loading 'novatek_nt36532_n81a_fw_csot.bin' for '/devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin'
+[   17.642839] [ T4791] ueventd: found /odm/firmware/novatek_nt36532_n81a_fw_csot.bin for /devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin
+[   17.643485] [ T4791] ueventd: loading /devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.spi/spi_master/spi0/spi0.0/firmware/novatek_nt36532_n81a_fw_csot.bin took 0ms
+[   21.468754] [ T4150] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   21.474050] [ T4150] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   21.474060] [ T4150] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[   21.569386] [ T1383] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   21.574730] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   21.574738] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[   21.703436] [ T1383] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   21.712026] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   21.712034] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[   21.713103] [ T1383] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   21.721722] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   21.721730] [ T1383] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[   36.091977] [ T5416] ueventd: firmware: loading 'kiwi/amss20.bin' for '/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin'
+[   36.092184] [ T5416] ueventd: found /vendor/firmware_mnt/image/kiwi/amss20.bin for /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin
+[   36.094648] [ T5416] ueventd: loading /devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/firmware/kiwi!amss20.bin took 2ms
+[   36.613339] [ T5777] ueventd: firmware: loading 'kiwi/regdb_xiaomi.bin' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin'
+[   36.613569] [ T5777] ueventd: found /vendor/firmware_mnt/image/kiwi/regdb_xiaomi.bin for /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin
+[   36.613761] [ T5777] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!regdb_xiaomi.bin took 0ms
+[   36.625938] [ T5780] ueventd: firmware: loading 'kiwi/bd_n81agl.elf' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf'
+[   36.626098] [ T5780] ueventd: found /vendor/firmware_mnt/image/kiwi/bd_n81agl.elf for /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf
+[   36.626196] [ T5780] ueventd: loading /devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!bd_n81agl.elf took 0ms
+[   36.661431] [ T5792] ueventd: firmware: loading 'kiwi/qdss_trace_config_v2.cfg' for '/devices/platform/soc/b0000000.qcom,cnss-qca-converged/firmware/kiwi!qdss_trace_config_v2.cfg'
+[   43.755887] [ T1396] PowerDet:Cpu usage:8% user + 1% kernel, comm:ueventd, pid:243, cpu_mask:ff, pcomm:ueventd, ppid:243
+[   44.520720] [ T4360] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[   44.537122] [ T4360] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[   44.537133] [ T4360] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[  307.560904] [T17734] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[  307.606988] [T17734] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[  307.606996] [T17734] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[  307.612821] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.800222] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.815022] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.815035] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.819069] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.819460] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.820221] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.820574] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  319.821823] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  329.716360] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+[  369.000274] [T18038] BATTERY_CHG: add_xiaomi_uevent: kstrtoint pen_soc:ff
+[  369.037764] [T18038] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger: currnet uevent info :
+[  369.037776] [T18038] qti_battery_charger soc:qcom,pmic_glink:qcom,battery_charger:  DEVTYPE=dev_type_xiaomi_uevent
+[  369.041179] [  T243] ueventd: Error reading from Uevent Fd: I/O error
+root@lindroid:/# dmesg | grep evdi
+[    0.241507] [    T1] [evdi-lindroid] Loading EVDI-Lindroid driver v1.0.0
+[    0.241596] [    T1] [evdi-lindroid] Event system initialized
+[    0.241745] [    T1] [evdi-lindroid] Sysfs interface created at /sys/devices/evdi-lindroid/
+[    0.241746] [    T1] [evdi-lindroid] Driver loaded successfully
+[  206.899562] [T16230] [evdi-lindroid] Device 0 initialized
+[  206.901934] [T16230] [evdi-lindroid] Modeset initialized for device 0
+[  206.903833] [T16230] [drm] Initialized evdi-lindroid 1.0.0 NEVER for evdi-lindroid.0 on minor 1
+[  206.903839] [T16230] [evdi-lindroid] Platform device probed successfully, DRM device registered
+[  206.903871] [T16230] [evdi-lindroid] Created new device via sysfs (total: 1)
+[  319.794844] [T17815] [evdi-lindroid] Device 0 connected: 3048x1906@120Hz id:0
+root@lindroid:/# dmesg | grep lindroid
+[    0.241507] [    T1] [evdi-lindroid] Loading EVDI-Lindroid driver v1.0.0
+[    0.241596] [    T1] [evdi-lindroid] Event system initialized
+[    0.241745] [    T1] [evdi-lindroid] Sysfs interface created at /sys/devices/evdi-lindroid/
+[    0.241746] [    T1] [evdi-lindroid] Driver loaded successfully
+[  206.899562] [T16230] [evdi-lindroid] Device 0 initialized
+[  206.901934] [T16230] [evdi-lindroid] Modeset initialized for device 0
+[  206.903833] [T16230] [drm] Initialized evdi-lindroid 1.0.0 NEVER for evdi-lindroid.0 on minor 1
+[  206.903839] [T16230] [evdi-lindroid] Platform device probed successfully, DRM device registered
+[  206.903871] [T16230] [evdi-lindroid] Created new device via sysfs (total: 1)
+[  319.794844] [T17815] [evdi-lindroid] Device 0 connected: 3048x1906@120Hz id:0
