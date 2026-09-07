@@ -8,6 +8,10 @@
 #include <vector>
 
 // Provide ALOGE, ALOGI
+#ifndef ALOG_TAG
+#define ALOG_TAG "AOSP_COMPAT"
+#endif
+
 #ifndef ALOGE
 #define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, ALOG_TAG, __VA_ARGS__)
 #endif

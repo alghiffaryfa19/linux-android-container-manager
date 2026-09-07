@@ -3,36 +3,6 @@
 #include <jni.h>
 #include <string>
 
-extern "C" {
-    typedef int32_t binder_status_t;
-    struct AIBinder;
-}
-#include <dlfcn.h>
-
-static binder_status_t AServiceManager_addService_dynamic(AIBinder* binder, const char* instance) {
-    typedef binder_status_t (*addService_t)(AIBinder*, const char*);
-    static addService_t func = nullptr;
-    if (!func) {
-        void* lib = dlopen("libbinder_ndk.so", RTLD_NOW);
-        if (lib) {
-            func = (addService_t) dlsym(lib, "AServiceManager_addService");
-        }
-    }
-    if (func) return func(binder, instance);
-    return -1;
-}
-
-static void ABinderProcess_joinThreadPool_dynamic() {
-    typedef void (*joinThreadPool_t)();
-    static joinThreadPool_t func = nullptr;
-    if (!func) {
-        void* lib = dlopen("libbinder_ndk.so", RTLD_NOW);
-        if (lib) {
-            func = (joinThreadPool_t) dlsym(lib, "ABinderProcess_joinThreadPool");
-        }
-    }
-    if (func) func();
-}
 #include <android/native_window_jni.h>
 #include "aosp_compat.h"
 #include <memory>
@@ -51,7 +21,7 @@ Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
     JNIEnv *env, jclass /* clazz */) {
     ALOGI("Init native: Starting composer socket service...");
 
-    composer = ndk::SharedRefBase::make<ComposerImpl>();
+    composer = std::make_shared<ComposerImpl>();
     extern void start_socket_server();
     start_socket_server();
 }

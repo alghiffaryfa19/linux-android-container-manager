@@ -4,11 +4,9 @@
 #include <unistd.h>
 #include <cmath>
 #include <cinttypes>
-#include "common/aosp_compat.h"
 
-#define LOG_TAG "ComposerImpl"
-#define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define ALOG_TAG "ComposerImpl"
+#include "common/aosp_compat.h"
 
 namespace aidl {
 namespace vendor {
@@ -61,7 +59,7 @@ void ComposerImpl::setBufferFromFd(int64_t displayId, int fd, uint32_t width, ui
         .stride = stride,
     };
     AHardwareBuffer *ahwb = nullptr;
-    const status_t status = AHardwareBuffer_createFromHandle(
+    const status_t status = android::AHardwareBuffer_createFromHandle(
         &desc, nativeHandle, AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE, &ahwb);
     
     native_handle_delete(nativeHandle);
