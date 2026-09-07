@@ -1,6 +1,6 @@
 package android.hardware.graphics.common;
 
-@VintfStability
+
 @Backing(type="long")
 enum BufferUsage {
     CPU_READ_NEVER = 0,

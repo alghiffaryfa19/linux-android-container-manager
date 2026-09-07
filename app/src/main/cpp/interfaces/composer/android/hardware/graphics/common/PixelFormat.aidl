@@ -1,6 +1,6 @@
 package android.hardware.graphics.common;
 
-@VintfStability
+
 @Backing(type="int")
 enum PixelFormat {
     UNSPECIFIED = 0,
