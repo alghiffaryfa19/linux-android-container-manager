@@ -12,7 +12,7 @@
 #define DEVICE_TABLET 2
 #define DEVICE_TOUCH_STYLUS 3
 
-using status_t = int32_t;
+#include "aosp_compat.h"
 
 struct UInputDevice {
     void getFD(int32_t device, int32_t *fd);

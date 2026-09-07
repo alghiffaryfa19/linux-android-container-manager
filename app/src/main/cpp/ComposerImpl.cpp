@@ -56,11 +56,7 @@ static inline void close_if_valid(int fd) {
     if (fd >= 0) ::close(fd);
 }
 
-static inline void destroy_cloned_handle(native_handle_t* h) {
-    if (!h) return;
-    native_handle_delete(h);
-}
-
+// Removed duplicate destroy_cloned_handle
 static inline float frame_rate_from_display_config(const DisplayConfiguration& cfg) {
     if (cfg.vsyncPeriod <= 0) return 60.0f;
     double hz = 1e9 / static_cast<double>(cfg.vsyncPeriod);
@@ -180,7 +176,7 @@ ndk::ScopedAStatus ComposerImpl::setBuffer(int64_t in_displayId, const HardwareB
         if (!m_ui_running)
             m_ui_running = true;
         auto it = mDisplays.find(in_displayId);
-        if (it == mDisplays.end() || it->second->surface == nullptr) {
+        if (it == mDisplays.end() || it->second->nativeWindow == nullptr) {
             close_if_valid(acquireFd);
             return ndk::ScopedAStatus::ok();
         }
@@ -193,7 +189,7 @@ ndk::ScopedAStatus ComposerImpl::setBuffer(int64_t in_displayId, const HardwareB
         .height = static_cast<uint32_t>(hardwareBuffer.description.height),
         .layers = static_cast<uint32_t>(hardwareBuffer.description.layers),
         .format = static_cast<uint32_t>(hardwareBuffer.description.format),
-        .usage = (static_cast<uint64_t>(hardwareBuffer.description.usage) | GraphicBuffer::USAGE_HW_TEXTURE),
+        .usage = (static_cast<uint64_t>(hardwareBuffer.description.usage) | AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE),
         .stride = static_cast<uint32_t>(hardwareBuffer.description.stride),
     };
     int numFds = nativeHandle ? nativeHandle->numFds : 0;
@@ -276,26 +272,18 @@ ndk::ScopedAStatus ComposerImpl::getUiRunning(bool *_aidl_return) {
     return ndk::ScopedAStatus::ok();
 }
 
-void ComposerImpl::onSurfaceCreated(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow) {
+void ComposerImpl::onSurfaceCreated(int64_t displayId, ANativeWindow *nativeWindow) {
     if (nativeWindow == nullptr) {
         ALOGE("%s: Get ANativeWindow ERROR!", __FUNCTION__);
-        return;
-    }
-    if (surface == nullptr) {
-        ALOGE("%s: Get Surface ERROR!", __FUNCTION__);
         return;
     }
     ALOGI("%s: Display: %" PRId64 ", Width: %d, Height: %d", __FUNCTION__, displayId, ANativeWindow_getWidth(nativeWindow), ANativeWindow_getHeight(nativeWindow));
     //TODO: Do something with this information
 }
 
-void ComposerImpl::onSurfaceChanged(int64_t displayId, sp<Surface> surface, ANativeWindow *nativeWindow, int dpi, float refresh) {
+void ComposerImpl::onSurfaceChanged(int64_t displayId, ANativeWindow *nativeWindow, int dpi, float refresh) {
     if (nativeWindow == nullptr) {
         ALOGE("%s: Get ANativeWindow ERROR!", __FUNCTION__);
-        return;
-    }
-    if (surface == nullptr) {
-        ALOGE("%s: Get Surface ERROR!", __FUNCTION__);
         return;
     }
     ALOGI("%s: Display: %" PRId64 ", Width: %d, Height: %d, dpi: %d, refreshRate: %f", __FUNCTION__, 
@@ -341,12 +329,10 @@ void ComposerImpl::onSurfaceChanged(int64_t displayId, sp<Surface> surface, ANat
             }
 
             targetDisplay->nativeWindow = nativeWindow;
-            targetDisplay->surface = surface;
             targetDisplay->displayConfig = displayConfig;
         } else {
             targetDisplay = new ComposerDisplay();
             targetDisplay->nativeWindow = nativeWindow;
-            targetDisplay->surface = surface;
             targetDisplay->displayConfig = displayConfig;
             targetDisplay->mVsyncThread.setCallback([this, displayId, targetDisplay](int64_t timestamp, uint32_t count32) {
                 (void)count32;

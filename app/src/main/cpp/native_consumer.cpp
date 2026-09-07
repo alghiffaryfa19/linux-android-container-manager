@@ -12,7 +12,6 @@ extern "C" {
 #include <android/native_window_jni.h>
 #include "aosp_compat.h"
 #include <memory>
-#include <android_runtime/android_view_Surface.h>
 
 #include "ComposerImpl.h"
 #include "InputDevice.h"

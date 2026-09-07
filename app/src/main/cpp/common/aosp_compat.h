@@ -26,6 +26,8 @@
 #define NO_INIT -ENODEV
 #define BAD_VALUE -EINVAL
 
+typedef int32_t status_t;
+
 // Provide native_handle_t
 typedef struct native_handle {
     int version;
