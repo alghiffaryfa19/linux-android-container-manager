@@ -1,1 +1,41 @@
+root@lindroid:/# systemctl status create-disp
+● create-disp.service - Lindroid create disp service
+     Loaded: loaded (/etc/systemd/system/create-disp.ser>
+     Active: active (running) since Mon 2026-09-07 15:33>
+ Invocation: c748a35a4c1440fa8e134679b2af4a2e
+   Main PID: 358 (create-disp)
+     Status: "create-disp ready."
+     Memory: 16K
+     CGroup: /system.slice/create-disp.service
+             └─358 /usr/bin/create-disp
 
+Sep 07 15:33:17 lindroid systemd[1]: Starting create-dis>
+Sep 07 15:33:17 lindroid create-disp[358]: Found evdi-li>
+Sep 07 15:33:17 lindroid systemd[1]: Started create-disp>
+
+root@lindroid:/# export DISPLAY=:1 startplasma-x11
+bash: export: `startplasma-x11': not a valid identifier
+root@lindroid:/# export DISPLAY=:1
+root@lindroid:/# startplasma-x11
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+$DISPLAY is not set or cannot connect to the X server.
+root@lindroid:/# export DISPLAY=:0
+startplasma-x11
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+$DISPLAY is not set or cannot connect to the X server.
+root@lindroid:/# /usr/bin/create-disp
+Found evdi-lindroid at /dev/dri/card1
+
+^C^C^C^C^C^C
+
+hang, tidak bisa ctrl+C
+
+
+ini di adb shell
+sheng:/ # logcat -s ContainerManagerNative ComposerImpl SocketServerclear                                                        --------- beginning of main                                                                                                      09-07 22:33:31.640 12324 12324 I ContainerManagerNative: Init native: Starting composer socket service...                        09-07 22:33:31.640 12324 12324 I ComposerImpl: onSurfaceCreated Display: 0                                                       09-07 22:33:31.640 12324 12324 I ComposerImpl: onSurfaceChanged Display: 0
