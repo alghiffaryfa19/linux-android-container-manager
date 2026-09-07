@@ -64,7 +64,9 @@ static void* socket_server_thread(void* arg) {
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
     
-    int dirfd = -1;
+    char old_cwd[4096];
+    bool changed_cwd = false;
+
     if (strlen(socket_path) < sizeof(addr.sun_path)) {
         strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
         unlink(socket_path);
@@ -78,29 +80,34 @@ static void* socket_server_thread(void* arg) {
                 dir[dirlen] = '\0';
                 const char *base = slash + 1;
                 
-                dirfd = open(dir, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
-                if (dirfd >= 0) {
-                    snprintf(addr.sun_path, sizeof(addr.sun_path), "/proc/self/fd/%d/%s", dirfd, base);
-                    unlink(socket_path); // Need to unlink the actual path
+                if (getcwd(old_cwd, sizeof(old_cwd)) != nullptr) {
+                    if (chdir(dir) == 0) {
+                        changed_cwd = true;
+                        strncpy(addr.sun_path, base, sizeof(addr.sun_path) - 1);
+                        unlink(base); // unlink in the current directory
+                    }
                 }
             }
         }
         
-        if (dirfd < 0) {
-            ALOGE("Socket path too long and workaround failed");
+        if (!changed_cwd) {
+            ALOGE("Socket path too long and chdir workaround failed");
             close(server_fd);
             return nullptr;
         }
     }
 
-    if (bind(server_fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+    int bind_res = bind(server_fd, (struct sockaddr*)&addr, sizeof(addr));
+    
+    if (changed_cwd) {
+        chdir(old_cwd);
+    }
+
+    if (bind_res < 0) {
         ALOGE("Failed to bind socket: %s", strerror(errno));
-        if (dirfd >= 0) close(dirfd);
         close(server_fd);
         return nullptr;
     }
-
-    if (dirfd >= 0) close(dirfd);
 
     if (listen(server_fd, 5) < 0) {
         ALOGE("Failed to listen: %s", strerror(errno));
