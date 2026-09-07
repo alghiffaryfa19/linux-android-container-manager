@@ -1,0 +1,14 @@
+logcat -s ContainerManagerNative ComposerImpl SocketServer
+--------- beginning of main
+09-07 23:03:03.719 16178 16178 I ContainerManagerNative: Init native: Starting composer socket service...
+09-07 23:03:03.719 16178 16178 I ComposerImpl: onSurfaceCreated Display: 0
+09-07 23:03:03.719 16178 16178 I ComposerImpl: onSurfaceChanged Display: 0
+09-07 23:03:03.719 16178 20544 E SocketServer: Failed to bind socket: Invalid argument
+09-07 23:03:26.850 16178 16178 I ComposerImpl: onSurfaceCreated Display: 0
+09-07 23:03:26.850 16178 16178 I ComposerImpl: onSurfaceChanged Display: 0
+09-07 23:04:23.680 16178 16178 I ComposerImpl: onSurfaceCreated Display: 0
+09-07 23:04:23.680 16178 16178 I ComposerImpl: onSurfaceChanged Display: 0
+09-07 23:05:43.439 20410 20410 I ContainerManagerNative: Init native: Starting composer socket service...
+09-07 23:05:43.440 20410 20410 I ComposerImpl: onSurfaceCreated Display: 0
+09-07 23:05:43.440 20410 20410 I ComposerImpl: onSurfaceChanged Display: 0
+09-07 23:05:43.440 20410 21466 E SocketServer: Failed to bind socket: Invalid argument
