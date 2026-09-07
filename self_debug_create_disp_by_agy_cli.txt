@@ -1,0 +1,307 @@
+Investigating Display Creation Failures
+  Berikut adalah laporan self-debug mendalam mengenai
+  penyebab layar Linux/DE masih blank hitam setelah
+  beralih ke create-disp, serta penyebab startplasma-
+  wayland belum bisa berjalan.
+  ──────
+  ### Ringkasan Diagnosa (Executive Summary)
+  Pemeriksaan menyeluruh telah dilakukan secara
+  langsung pada container Linux yang sedang berjalan,
+  log Android host (/system/bin/logcat), log systemd
+  (journalctl), proses create-disp, serta kode sumber
+  pada branch create-disp.
+  Ditemukan 6 Akar Masalah (Root Causes) yang saling
+  terkait:
+  ──────
+  ### 1. Socket Daemon Tertutup / Ter-mask oleh tmpfs
+  pada /tmp
+  • Fakta: Android app (ContainerDisplayActivity /
+  SocketServer) berhasil membuat dan mendengarkan
+  socket di:
+    /data/user/0/com.fauzan.
+  containermanager/files/containers/...
+  /tmp/display_daemon.sock
+  File socket ini dibuat langsung di storage fisik
+  ext4 container pada path tmp/display_daemon.sock.
+  • Akar Masalah: Saat container Linux booting, Debian
+  systemd menjalankan service tmp.mount yang me-mount
+  filesystem memory virtual tmpfs di atas /tmp (tmpfs
+  on /tmp type tmpfs).
+  • Dampak: Mount tmpfs tersebut menutupi (masking)
+  file asli di disk. Akibatnya, /tmp/display_daemon.
+  sock hilang dari pandangan container. Ketika create-
+  disp memanggil connect_socket(), ia mendapat error
+  ENOENT (No such file or directory). Terbukti dari
+  pengecekan descriptor PID 78 (create-disp):
+    /proc/78/fd:
+    4 -> /dev/dri/card2  (hanya buka card DRM, TIDAK
+  ada koneksi socket ke Android)
+  Karena socket tidak terhubung, Android tidak pernah
+  menerima perintah display sama sekali dan tetap
+  blank hitam.
+  ──────
+  ### 2. /sys Wajib ro (Mencegah Kernel Panic)
+  Menyebabkan systemd-logind Mengunci CanGraphical=no
+
+  • Fakta: Anda mengonfirmasi bahwa /sys jika di-mount
+  read-write (rw) akan memicu Kernel Panic pada kernel
+  Xiaomi/Android. Oleh karena itu, /sys wajib
+  berstatus ro.
+  • Akar Masalah:
+      1. Karena /sys berstatus ro, systemd-udevd tidak
+      bisa menerima uevent sintetik (udevadm trigger
+      gagal karena tidak bisa menulis "add"/"change"
+      ke /sys/devices/.../uevent).
+      2. Akibatnya, database udev di /run/udev/data/
+      dan direktori tag /run/udev/tags/ kosong.
+      3. systemd-logind memeriksa direktori
+      /run/udev/tags/master-of-seat/. Karena kosong,
+      properti seat0 bernilai:
+        loginctl show-seat seat0:
+        CanGraphical=no
+      4. SDDM mendeteksi CanGraphical=no. Sesuai
+      logika SDDM (if (!seat->canGraphical()) return;),
+      SDDM menolak membuat display server dan hanya
+      berdiam diri (idle).
+  ──────
+  ### 3. Masalah Fundamental Buffer di create-disp
+  (hwc2_socket_stub.cpp)
+
+  • Akar Masalah:
+  Pada repositori create-disp, fungsi alokasi gralloc
+  di-stub menggunakan handle kosong di
+  hwc2_socket_stub.cpp:
+    int hybris_gralloc_allocate(int width, int, int,
+  int, buffer_handle_t* handle, uint32_t* stride) {
+        static native_handle_t dummy_handle_storage;
+        memset(&dummy_handle_storage, 0,
+  sizeof(dummy_handle_storage));
+        dummy_handle_storage.version =
+  sizeof(native_handle_t);
+        if (handle) *handle = &dummy_handle_storage;
+        if (stride) *stride = (uint32_t)width;
+        return 0;
+    }
+  Perhatikan bahwa dummy_handle_storage.numFds = 0 dan
+  numInts = 0.
+  • Dampaknya Sangat Fatal:
+      1. EVDI tidak memiliki DMA-BUF: Saat KWin
+      meminta buffer via GBM/EVDI (create_buf &
+      get_buf), create-disp mengembalikan numFds = 0.
+      KWin tidak mendapatkan DMA-BUF valid dari kernel.
+      2. Frame tidak pernah dikirim ke Android: Di
+      baris 109 hwc2_socket_stub.cpp:
+        if (g_socket_fd >= 0 && buffer->handle &&
+      buffer->handle->numFds > 0) {
+            send_fd_and_msg(g_socket_fd, &msg, fd);
+        }
+      Karena numFds == 0, kondisi ini selalu bernilai
+      false. Tidak ada buffer maupun pesan
+      CMD_SET_BUFFER yang pernah dikirim ke Android.
+      3. Android Qualcomm Gralloc Incompatible: Di
+      sisi Android (ComposerImpl.cpp), fungsi
+      AHardwareBuffer_createFromHandle membutuhkan
+      format descriptor Qualcomm Gralloc SM8550
+      lengkap (magic 0x676d736d, 2 FDs termasuk
+      metadata fd, dan 24 data ints). Raw handle
+      dengan 1 FD biasa akan ditolak oleh mapper
+      Android.
+
+  ──────
+  ### 4. Mismatch DRM Device (card1 vs card2)
+
+  • Fakta:
+  Saat ini terdapat dua node EVDI:
+      • /dev/dri/card1 (evdi-lindroid.0)
+      • /dev/dri/card2 (evdi-lindroid.1)
+  • create-disp menggunakan fungsi
+  find_evdi_lindroid_device() yang membaca /dev/dri
+  dengan readdir(). Pada filesystem ext4 container
+  saat ini, readdir() mengembalikan card2 lebih dulu,
+  sehingga create-disp mengikat /dev/dri/card2.
+  • Namun di konfigurasi /etc/environment dan
+  /etc/sddm.conf.d/plasma-wayland.conf:
+    KWIN_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
+  KWin diarahkan membuka card1, bukan card2. KWin
+  merender ke node yang tidak aktif, sementara create-
+  disp menunggu di node lain.
+  ──────
+  ### 5. Kenapa Menjalankan startplasma-wayland Manual
+  di Shell Gagal?
+
+  Saat dicoba manual dari terminal bash:
+
+    kwin_core: Could not determine the active
+  graphical session
+    error: XDG_RUNTIME_DIR is invalid or not set in
+  the environment
+    kwin_core: Failed to find a free display socket
+    FATAL ERROR: could not add wayland socket
+
+  • startplasma-wayland dan kwin_wayland adalah
+  session Wayland untuk user biasa (lindroid), bukan
+  root.
+  • Program tersebut memerlukan variabel lingkungan:
+      • XDG_RUNTIME_DIR=/run/user/1000 (yang dibuat
+      oleh logind/PAM saat user login).
+      • Socket D-Bus session
+      (DBUS_SESSION_BUS_ADDRESS).
+      • Konfigurasi GPU / DRM (KWIN_DRM_DEVICES).
+  • Menjalankannya langsung dari terminal root tanpa
+  session runtime directory otomatis menyebabkan KWin
+  langsung exit fatal.
+  ──────
+  ### 6. Hilangnya Konfigurasi SDDM Autologin & Crash
+  Greeter Qt5
+
+  • Di Debian Trixie (KDE Plasma 6), tema login
+  default (debian-breeze) membutuhkan binary sddm-
+  greeter-qt6.
+  • Paket SDDM yang terpasang hanya menyediakan binary
+  /usr/bin/sddm-greeter (berbasis Qt 5).
+  • Tanpa file /etc/sddm.conf.d/autologin.conf, SDDM
+  mencoba memuat greeter login screen dan langsung
+  crash/exit:
+    The theme at "/usr/share/sddm/themes/debian-theme"
+  requires missing "/usr/bin/sddm-greeter-qt6"
+    Greeter stopped. SDDM::Auth::HELPER_SUCCESS
+
+  ──────
+  ### Solusi & Langkah Perbaikan
+
+  #### Langkah 1: Buka Akses Socket Android (Mask
+  tmp.mount)
+
+  Agar /tmp/display_daemon.sock yang dibuat Android di
+  storage container tidak tertutup oleh tmpfs:
+
+    # Mask tmp.mount agar systemd tidak menimpa /tmp
+  dengan tmpfs kosong
+    systemctl mask tmp.mount
+
+    # Unmount tmpfs yang saat ini menutupi /tmp (jika
+  sedang aktif)
+    umount /tmp || true
+
+  #### Langkah 2: Bypass CanGraphical=no Tanpa Perlu
+  /sys RW
+
+  Karena /sys tidak boleh di-mount rw, kita buat
+  service one-shot yang otomatis membuat tag udev di
+  /run/udev/ saat boot:
+
+    mkdir -p /run/udev/data /run/udev/tags/master-of-
+  seat /run/udev/tags/seat
+
+    # Buat entri database udev untuk card1 dan card2
+    cat << 'EOF' > /run/udev/data/c226:1
+    I:1000000
+    E:DEVPATH=/devices/evdi-lindroid/evdi-lindroid.
+  0/drm/card1
+    E:DEVNAME=/dev/dri/card1
+    E:DEVTYPE=drm_minor
+    E:MAJOR=226
+    E:MINOR=1
+    E:SUBSYSTEM=drm
+    E:ID_PATH=platform-evdi-lindroid.0
+    E:ID_PATH_TAG=platform-evdi-lindroid_0
+    E:DEVLINKS=/dev/dri/by-path/platform-evdi-
+  lindroid.0-card
+    E:TAGS=:master-of-seat:seat:uaccess:
+    E:CURRENT_TAGS=:master-of-seat:seat:uaccess:
+    E:ID_FOR_SEAT=drm-platform-evdi-lindroid_0
+    G:uaccess
+    G:seat
+    G:master-of-seat
+    Q:uaccess
+    Q:seat
+    Q:master-of-seat
+    V:1
+    EOF
+
+    cp /run/udev/data/c226:1 /run/udev/data/c226:2
+    sed -i 's/card1/card2/g; s/lindroid.0/lindroid.1/g;
+  s/lindroid_0/lindroid_1/g; s/MINOR=1/MINOR=2/g'
+  /run/udev/data/c226:2
+
+    # Pasang tag master-of-seat agar systemd-logind
+  langsung aktifkan CanGraphical
+    touch /run/udev/tags/master-of-seat/c226:1
+  /run/udev/tags/seat/c226:1
+    touch /run/udev/tags/master-of-seat/c226:2
+  /run/udev/tags/seat/c226:2
+
+    systemctl restart systemd-logind
+    # Hasil verifikasi live: loginctl show-seat seat0
+  langsung bernilai CanGraphical=yes!
+
+  #### Langkah 3: Aktifkan Autologin SDDM ke User
+  lindroid
+
+  Buat /etc/sddm.conf.d/autologin.conf:
+
+    [Autologin]
+    User=lindroid
+    Session=plasma.desktop
+    Relogin=false
+
+  #### Langkah 4: Samakan DRM Device dengan Node yang
+  Dibuka create-disp
+
+  Perbarui /etc/sddm.conf.d/plasma-wayland.conf dan
+  /etc/environment agar menggunakan kartu DRM yang
+  sesuai (misal /dev/dri/card2 atau /dev/dri/card1
+  tergantung urutan perangkat aktif):
+
+    [General]
+    DisplayServer=wayland
+
+  GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=xdg-
+  shell,KWIN_COMPOSE=O2ES,
+  KWIN_DRM_DEVICES=/dev/dri/card2:/dev/dri/card0,
+  GBM_BACKEND=hybris,
+  __GLX_VENDOR_LIBRARY_NAME=libhybris,
+  __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_
+  vendor.d/10_libhybris.json,EGL_PLATFORM=lindroid-drm
+
+    [Wayland]
+    CompositorCommand=kwin_wayland --drm --no-global-
+  shortcuts --no-lockscreen --inputmethod maliit-
+  keyboard --locale1
+
+  #### Langkah 5: Evaluasi Arsitektur create-disp vs
+  evdi-bridge
+
+  • Pada evdi-bridge: Alokasi buffer dilakukan oleh
+  Android SurfaceView (di mana buffer Qualcomm Adreno
+  sudah valid dan dialokasikan resmi oleh OS Android),
+  lalu file descriptor DMA-BUF dikirim ke Linux EVDI.
+  Cara ini terbukti berhasil karena Linux hanya perlu
+  merender ke buffer yang sudah disiapkan Android.
+  • Pada create-disp: create-disp mengasumsikan Linux
+  yang mengalokasikan buffer melalui Android Gralloc
+  HAL di Linux (hybris_gralloc_allocate). Namun karena
+  binary libui_compat_layer.so dan
+  libhwc2_compat_layer.so tidak ada di container
+  Xiaomi Anda, create-disp terpaksa menggunakan dummy
+  buffer kosong tanpa DMA-BUF (numFds = 0).
+
+  │ Important
+  │ Jika ingin tetap memakai create-disp,
+  │ hwc2_socket_stub.cpp harus dirombak agar:
+  │
+  │ 1. Menerima buffer dari Android (seperti alur evdi-
+  │ bridge), atau
+  │ 2. Mengalokasikan DMA-BUF riil (misal via
+  │ drmPrimeHandleToFD atau dma_heap) beserta format
+  │ struct native_handle_t Qualcomm yang valid sebelum
+  │ mengirimkannya ke Android.
+  │
+  │ Jika ingin tampilan KDE Plasma segera muncul
+  stabil
+  │ tanpa menulis ulang gralloc allocator di create-
+  │ disp, arsitektur evdi-bridge dengan perbaikan
+  │ SCM_RIGHTS dan loop poll (seperti di artefak
+  │ sebelumnya) merupakan jalur yang paling siap jalan
+  │ karena alokasi buffer ditangani langsung oleh
+  │ sistem Android host.
