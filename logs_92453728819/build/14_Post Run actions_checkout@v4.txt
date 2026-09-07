@@ -1,0 +1,11 @@
+﻿2026-09-07T13:39:39.4872971Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-07T13:39:39.4874323Z Post job cleanup.
+2026-09-07T13:39:39.5763486Z [command]/usr/bin/git version
+2026-09-07T13:39:39.5805378Z git version 2.55.0
+2026-09-07T13:39:39.5848086Z Temporarily overriding HOME='/home/runner/work/_temp/4f2fbb78-9c51-437b-acb5-b2fe096dc8ec' before making global git config changes
+2026-09-07T13:39:39.5849987Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-07T13:39:39.5854737Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/linux-android-container-manager/linux-android-container-manager
+2026-09-07T13:39:39.5914495Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-07T13:39:39.5955588Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-07T13:39:39.6198516Z fatal: No url found for submodule path 'scratch/avb' in .gitmodules
+2026-09-07T13:39:39.6234555Z ##[warning]The process '/usr/bin/git' failed with exit code 128

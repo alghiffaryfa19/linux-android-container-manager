@@ -14,9 +14,17 @@
 #ifndef ALOGI
 #define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, ALOG_TAG, __VA_ARGS__)
 #endif
+#ifndef ALOGD
+#define ALOGD(...) __android_log_print(ANDROID_LOG_DEBUG, ALOG_TAG, __VA_ARGS__)
+#endif
 #ifndef ALOGW
 #define ALOGW(...) __android_log_print(ANDROID_LOG_WARN, ALOG_TAG, __VA_ARGS__)
 #endif
+
+#define NO_ERROR 0
+#define OK 0
+#define NO_INIT -ENODEV
+#define BAD_VALUE -EINVAL
 
 // Provide native_handle_t
 typedef struct native_handle {

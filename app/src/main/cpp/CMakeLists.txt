@@ -3,11 +3,7 @@ cmake_minimum_required(VERSION 3.22.1)
 project("containermanager" C CXX)
 
 set(AIDL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/composer)
-set(AIDL_FILES
-    ${AIDL_DIR}/vendor/lindroid/composer/DisplayConfiguration.aidl
-    ${AIDL_DIR}/vendor/lindroid/composer/IComposerCallback.aidl
-    ${AIDL_DIR}/vendor/lindroid/composer/IComposer.aidl
-)
+file(GLOB_RECURSE AIDL_FILES "${AIDL_DIR}/*.aidl")
 
 set(AIDL_OUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/aidl_out)
 file(MAKE_DIRECTORY ${AIDL_OUT_DIR})
@@ -17,16 +13,20 @@ find_program(AIDL_EXECUTABLE NAMES aidl PATHS "$ENV{ANDROID_SDK_ROOT}/build-tool
 if(AIDL_EXECUTABLE)
     set(AIDL_CPP_SRCS "")
     foreach(aidl_file ${AIDL_FILES})
-        get_filename_component(aidl_name ${aidl_file} NAME_WE)
-        set(out_cpp ${AIDL_OUT_DIR}/vendor/lindroid/composer/${aidl_name}.cpp)
-        set(out_h ${AIDL_OUT_DIR}/vendor/lindroid/composer/${aidl_name}.h)
+        file(RELATIVE_PATH aidl_rel ${AIDL_DIR} ${aidl_file})
+        string(REPLACE ".aidl" "" aidl_base ${aidl_rel})
+        set(out_cpp ${AIDL_OUT_DIR}/${aidl_base}.cpp)
+        set(out_h ${AIDL_OUT_DIR}/${aidl_base}.h)
+        # NDK AIDL also generates an additional directory prefix `aidl/` for headers!
+        set(out_h_real ${AIDL_OUT_DIR}/aidl/${aidl_base}.h)
         add_custom_command(
-            OUTPUT ${out_cpp} ${out_h}
+            OUTPUT ${out_cpp} ${out_h_real}
             COMMAND ${AIDL_EXECUTABLE} --lang=ndk -I${AIDL_DIR} -o${AIDL_OUT_DIR} -h${AIDL_OUT_DIR} ${aidl_file}
             DEPENDS ${aidl_file}
         )
         list(APPEND AIDL_CPP_SRCS ${out_cpp})
     endforeach()
+    add_custom_target(generate_aidl_files DEPENDS ${AIDL_CPP_SRCS})
 else()
     message(WARNING "aidl tool not found! Ensure build-tools is installed.")
 endif()
@@ -45,6 +45,10 @@ target_include_directories(containermanager PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/common
     ${AIDL_OUT_DIR}
 )
+
+if(AIDL_EXECUTABLE)
+    add_dependencies(containermanager generate_aidl_files)
+endif()
 
 # Note: We omit audio, camera, tracy etc. to keep it lightweight.
 

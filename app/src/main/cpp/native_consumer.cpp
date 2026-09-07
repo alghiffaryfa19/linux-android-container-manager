@@ -3,8 +3,12 @@
 #include <jni.h>
 #include <string>
 
-#include <android/binder_manager.h>
-#include <android/binder_process.h>
+extern "C" {
+    typedef int32_t binder_status_t;
+    struct AIBinder;
+    binder_status_t AServiceManager_addService(AIBinder* binder, const char* instance);
+    void ABinderProcess_joinThreadPool();
+}
 #include <android/native_window_jni.h>
 #include "aosp_compat.h"
 #include <memory>
