@@ -1,0 +1,17 @@
+root@lindroid:/# /usr/bin/evdi_bridge
+[evdi-bridge] Starting EVDI to Android display bridge...
+[evdi-bridge] Listening on /var/display_daemon.sock. Waiting for Android app...
+[evdi-bridge] Connected to Android app!
+[evdi-bridge] Got connection FDs: data_fd=7, shm_fd=8, fence_fd=6, audio_fd=9
+[evdi-bridge] Screen info: 3048x1906 (format: 1, refresh: 120000 mHz)
+[evdi-bridge] Waiting for DMA-BUFs on data_fd...
+[evdi-bridge] Received 4 DMA-BUFs! Dimensions: 3048x1906, Stride: 13312 bytes
+[libevdi] Opened /dev/dri/card0 as slave drm device
+[libevdi] Process has master on /dev/dri/card1, err: Invalid argument
+[libevdi] Opened /dev/dri/card1 as slave drm device
+[libevdi] LibEvdi version (1.15.0)
+[libevdi] Evdi version (1.0.0)
+[libevdi] Using /dev/dri/card1
+[evdi-bridge] EVDI device 1 opened successfully!
+[evdi-bridge] Connected virtual display 3048x1906@120Hz
+[evdi-bridge] Bridge loop running. Waiting for EVDI events...
