@@ -6,8 +6,32 @@
 extern "C" {
     typedef int32_t binder_status_t;
     struct AIBinder;
-    binder_status_t AServiceManager_addService(AIBinder* binder, const char* instance);
-    void ABinderProcess_joinThreadPool();
+}
+#include <dlfcn.h>
+
+static binder_status_t AServiceManager_addService_dynamic(AIBinder* binder, const char* instance) {
+    typedef binder_status_t (*addService_t)(AIBinder*, const char*);
+    static addService_t func = nullptr;
+    if (!func) {
+        void* lib = dlopen("libbinder_ndk.so", RTLD_NOW);
+        if (lib) {
+            func = (addService_t) dlsym(lib, "AServiceManager_addService");
+        }
+    }
+    if (func) return func(binder, instance);
+    return -1;
+}
+
+static void ABinderProcess_joinThreadPool_dynamic() {
+    typedef void (*joinThreadPool_t)();
+    static joinThreadPool_t func = nullptr;
+    if (!func) {
+        void* lib = dlopen("libbinder_ndk.so", RTLD_NOW);
+        if (lib) {
+            func = (joinThreadPool_t) dlsym(lib, "ABinderProcess_joinThreadPool");
+        }
+    }
+    if (func) func();
 }
 #include <android/native_window_jni.h>
 #include "aosp_compat.h"
@@ -28,11 +52,11 @@ Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
     ALOGI("Init native: Starting composer binder service...");
 
     composer = ndk::SharedRefBase::make<ComposerImpl>();
-    binder_status_t status = AServiceManager_addService(composer->asBinder().get(), "vendor.lindroid.composer");
-    if (status != STATUS_OK) {
+    binder_status_t status = AServiceManager_addService_dynamic(composer->asBinder().get(), "vendor.lindroid.composer");
+    if (status != OK) {
         ALOGE("Could not register composer binder service");
     }
-    ABinderProcess_joinThreadPool();
+    ABinderProcess_joinThreadPool_dynamic();
 }
 
 extern "C" void
