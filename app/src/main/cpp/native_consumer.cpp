@@ -23,7 +23,7 @@ Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
     JNIEnv *env, jclass /* clazz */, jstring containerPath) {
     ALOGI("Init native: Starting composer socket service...");
     const char *path = env->GetStringUTFChars(containerPath, 0);
-    std::string socket_path = std::string(path) + "/var/display_daemon.sock";
+    std::string socket_path = std::string(path) + "/tmp/display_daemon.sock";
     env->ReleaseStringUTFChars(containerPath, path);
 
     composer = std::make_shared<ComposerImpl>();
