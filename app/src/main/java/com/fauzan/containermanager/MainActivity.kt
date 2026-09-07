@@ -299,7 +299,6 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     
     BackHandler(onBack = {
-        DisplayManager.stopDisplay()
         onBack()
     })
 
@@ -327,7 +326,7 @@ fun ContainerDisplayScreen(containerPath: String, onBack: () -> Unit) {
 
                         override fun surfaceDestroyed(holder: SurfaceHolder) {
                             looping = false
-                            DisplayManager.stopDisplay()
+                            DisplayManager.stopDisplay(holder.surface)
                         }
                     })
                 }

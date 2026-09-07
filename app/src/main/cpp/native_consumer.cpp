@@ -1,0 +1,122 @@
+#define ALOG_TAG "ContainerManagerNative"
+
+#include <jni.h>
+#include <string>
+
+#include <android/binder_manager.h>
+#include <android/binder_process.h>
+#include <android/native_window_jni.h>
+#include <utils/Log.h>
+#include <utils/StrongPointer.h>
+#include <android_runtime/android_view_Surface.h>
+
+#include "ComposerImpl.h"
+#include "InputDevice.h"
+
+using aidl::vendor::lindroid::composer::ComposerImpl;
+using namespace android;
+
+static std::shared_ptr<ComposerImpl> composer = nullptr;
+static sp<InputDevice> inputDevice = nullptr;
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
+    JNIEnv *env, jclass /* clazz */) {
+    ALOGI("Init native: Starting composer binder service...");
+
+    composer = ndk::SharedRefBase::make<ComposerImpl>();
+    binder_status_t status = AServiceManager_addService(composer->asBinder().get(), "vendor.lindroid.composer");
+    if (status != STATUS_OK) {
+        ALOGE("Could not register composer binder service");
+    }
+    ABinderProcess_joinThreadPool();
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceCreated(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId, jobject surface) {
+    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
+    if (sf == nullptr) {
+        ALOGE("Get Surface ERROR!");
+        return;
+    }
+    ANativeWindow* nativeWindow = ANativeWindow_fromSurface(env, surface);
+    if (nativeWindow == nullptr) {
+        ALOGE("Get ANativeWindow ERROR!");
+        return;
+    }
+    if (composer == nullptr) return;
+    composer->onSurfaceCreated(displayId, sf, nativeWindow);
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceChanged(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId, jobject surface, jint dpi, jfloat refresh) {
+    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
+    if (sf == nullptr) return;
+    ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
+    if (nativeWindow == nullptr) return;
+    if (composer == nullptr) return;
+    composer->onSurfaceChanged(displayId, sf, nativeWindow, dpi, refresh);
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeSurfaceDestroyed(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId, jobject surface) {
+    sp<Surface> sf = android_view_Surface_getSurface(env, surface);
+    if (sf == nullptr) return;
+    ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
+    if (nativeWindow == nullptr) return;
+    if (composer == nullptr) return;
+    composer->onSurfaceDestroyed(displayId, sf, nativeWindow);
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeDisplayDestroyed(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId) {
+    if (composer == nullptr) return;
+    composer->onDisplayDestroyed(displayId);
+}
+
+extern "C" jboolean
+Java_com_fauzan_containermanager_DisplayManager_nativeGetUiRunning(
+    JNIEnv *env, jclass /* clazz */) {
+    if (composer == nullptr) return JNI_FALSE;
+    bool isUiRunning;
+    composer->getUiRunning(&isUiRunning);
+    return isUiRunning;
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeSetAppForeground(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId, jboolean foreground) {
+    if (composer == nullptr) return;
+    composer->onAppForegroundChanged(displayId, foreground);
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeInitInputDevice(
+    JNIEnv *env, jclass /* clazz */) {
+    inputDevice = new InputDevice();
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeReconfigureInputDevice(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId, jint width, jint height) {
+    if (inputDevice == nullptr) return;
+    inputDevice->reconfigure(displayId, width, height);
+}
+
+extern "C" void
+Java_com_fauzan_containermanager_DisplayManager_nativeStopInputDevice(
+    JNIEnv *env, jclass /* clazz */,
+    jlong displayId) {
+    if (inputDevice == nullptr) return;
+    inputDevice->stop(displayId);
+}

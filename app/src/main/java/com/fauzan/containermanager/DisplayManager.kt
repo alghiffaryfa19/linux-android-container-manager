@@ -9,18 +9,18 @@ object DisplayManager {
         Log.i("CMDisplayMgr", "DisplayManager: starting display (Build Version: 2026-09-06 v2)")
     }
 
-    private var handle: Long = 0
+    @JvmStatic external fun nativeStartComposerService()
+    @JvmStatic external fun nativeSurfaceCreated(displayId: Long, surface: Surface)
+    @JvmStatic external fun nativeSurfaceChanged(displayId: Long, surface: Surface, dpi: Int, refresh: Float)
+    @JvmStatic external fun nativeSurfaceDestroyed(displayId: Long, surface: Surface)
+    @JvmStatic external fun nativeDisplayDestroyed(displayId: Long)
+    @JvmStatic external fun nativeGetUiRunning(): Boolean
+    @JvmStatic external fun nativeSetAppForeground(displayId: Long, foreground: Boolean)
+    @JvmStatic external fun nativeInitInputDevice()
+    @JvmStatic external fun nativeReconfigureInputDevice(displayId: Long, width: Int, height: Int)
+    @JvmStatic external fun nativeStopInputDevice(displayId: Long)
 
-    @JvmStatic external fun nativeCreate(): Long
-    @JvmStatic external fun nativeDestroy(handle: Long)
-    @JvmStatic external fun nativeConfigure(
-        handle: Long, socketPath: String, useRoot: Boolean,
-        helperPath: String, bridgePath: String, topappEnable: Boolean, topappPath: String,
-        topappMode: Int, topappStops: String
-    )
-    @JvmStatic external fun nativeSetRefreshRate(handle: Long, hz: Float)
-    @JvmStatic external fun nativeStart(handle: Long, surface: Surface, clipboardTarget: Any?, activityTarget: Any?)
-    @JvmStatic external fun nativeStop(handle: Long)
+    private var isComposerStarted = false
 
     @JvmStatic
     fun runRootCommandAsync(command: String) {
@@ -43,18 +43,11 @@ object DisplayManager {
     }
 
     fun startDisplay(context: android.content.Context, surface: Surface, containerPath: String) {
-        if (handle == 0L) {
-            handle = nativeCreate()
+        if (!isComposerStarted) {
+            nativeStartComposerService()
+            nativeInitInputDevice()
+            isComposerStarted = true
         }
-        val socketPath = "$containerPath/var/display_daemon.sock"
-        val bridgePath = "${context.cacheDir.absolutePath}/bridge.sock"
-        
-        if (ContainerScript.fdHelperPath.isEmpty()) {
-            ContainerScript.deployBinaries(context)
-        }
-        val helperPath = ContainerScript.fdHelperPath
-        
-        nativeConfigure(handle, socketPath, true, helperPath, bridgePath, false, "", 1, "")
         
         val display = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             context.display
@@ -64,14 +57,19 @@ object DisplayManager {
             wm.defaultDisplay
         }
         val refreshRate = display?.refreshRate ?: 60f
-        nativeSetRefreshRate(handle, refreshRate)
+        val dpi = context.resources.configuration.densityDpi
         
-        nativeStart(handle, surface, null, null)
+        nativeSurfaceCreated(0L, surface)
+        nativeSurfaceChanged(0L, surface, dpi, refreshRate)
+        nativeSetAppForeground(0L, true)
     }
 
-    fun stopDisplay() {
-        if (handle != 0L) {
-            nativeStop(handle)
+    fun stopDisplay(surface: Surface) {
+        if (isComposerStarted) {
+            nativeSetAppForeground(0L, false)
+            nativeSurfaceDestroyed(0L, surface)
+            nativeDisplayDestroyed(0L)
+            nativeStopInputDevice(0L)
         }
     }
 }
