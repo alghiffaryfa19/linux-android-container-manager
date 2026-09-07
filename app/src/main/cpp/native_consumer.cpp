@@ -13,8 +13,10 @@
 using aidl::vendor::lindroid::composer::ComposerImpl;
 using namespace android;
 
-static std::shared_ptr<ComposerImpl> composer = nullptr;
+std::shared_ptr<ComposerImpl> composer = nullptr;
 static std::shared_ptr<InputDevice> inputDevice = nullptr;
+
+extern void start_socket_server();
 
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
@@ -22,7 +24,6 @@ Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
     ALOGI("Init native: Starting composer socket service...");
 
     composer = std::make_shared<ComposerImpl>();
-    extern void start_socket_server();
     start_socket_server();
 }
 
