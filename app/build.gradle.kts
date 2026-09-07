@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.fauzan.containermanager"
-        minSdk = 30
+        minSdk = 31
         targetSdk = 34
         versionCode = 3
         versionName = "1.2"
