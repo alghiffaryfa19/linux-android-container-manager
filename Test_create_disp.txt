@@ -1,0 +1,11 @@
+adb shell
+sheng:/ # service check vendor.lindroid.composer
+Service vendor.lindroid.composer: not found
+sheng:/ #
+
+Linux console
+root@lindroid:/tmp/create-disp/build# create-disp
+Found evdi-lindroid at /dev/dri/card1
+library "libhwc2_compat_layer.so" not found
+Segmentation fault
+root@lindroid:/tmp/create-disp/build#
