@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <android/log.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <string.h>
 
@@ -62,15 +63,44 @@ static void* socket_server_thread(void* arg) {
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+    
+    int dirfd = -1;
+    if (strlen(socket_path) < sizeof(addr.sun_path)) {
+        strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+        unlink(socket_path);
+    } else {
+        const char *slash = strrchr(socket_path, '/');
+        if (slash) {
+            size_t dirlen = slash - socket_path;
+            char dir[4096];
+            if (dirlen < sizeof(dir)) {
+                memcpy(dir, socket_path, dirlen);
+                dir[dirlen] = '\0';
+                const char *base = slash + 1;
+                
+                dirfd = open(dir, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+                if (dirfd >= 0) {
+                    snprintf(addr.sun_path, sizeof(addr.sun_path), "/proc/self/fd/%d/%s", dirfd, base);
+                    unlink(socket_path); // Need to unlink the actual path
+                }
+            }
+        }
+        
+        if (dirfd < 0) {
+            ALOGE("Socket path too long and workaround failed");
+            close(server_fd);
+            return nullptr;
+        }
+    }
 
-    unlink(socket_path);
-
-    if (bind(server_fd, (struct sockaddr*)&addr, sizeof(sa_family_t) + strlen(socket_path) + 1) < 0) {
+    if (bind(server_fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
         ALOGE("Failed to bind socket: %s", strerror(errno));
+        if (dirfd >= 0) close(dirfd);
         close(server_fd);
         return nullptr;
     }
+
+    if (dirfd >= 0) close(dirfd);
 
     if (listen(server_fd, 5) < 0) {
         ALOGE("Failed to listen: %s", strerror(errno));
