@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposedmodule">true</string>
+    <string name="xposeddescription">Linux Container Manager with uEvent patch for Lindroid</string>
+    <string name="xposedminversion">93</string>
+</resources>
