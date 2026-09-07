@@ -1,0 +1,114 @@
+Multiple display managers can run simultaneously if they
+are configured to manage different servers; to achieve
+this, configure the display managers accordingly, edit
+each of their init scripts in /etc/init.d, and disable
+the check for a default display manager.
+
+  1. lightdm  2. sddm
+
+Default display manager:
+usermod: no changes
+usermod: no changes
+Failed to open /dev/tty: No such file or directory
+----------------------------------------------------------------------
+dbus-run-session startxfce4             /usr/bin/startxfce4: Starting X server
+
+(EE)
+Fatal server error:
+(EE) Server is already active for display 0
+        If this server is no longer running, remove /tmp/.X0-lock
+        and start again.
+(EE)
+(EE)
+Please consult the The X.Org Foundation support
+         at http://wiki.x.org
+ for help.
+(EE)
+-----------------------------------------------------------------------
+root@lindroid:/# rm /tmp/.X0-lock
+root@lindroid:/# dbus-run-session startxfce4
+/usr/bin/startxfce4: Starting X server
+
+_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed
+_XSERVTransMakeAllCOTSServerListeners: server already running
+(EE)
+Fatal server error:
+(EE) Cannot establish any listening sockets - Make sure an X server isn't already running(EE)
+(EE)
+Please consult the The X.Org Foundation support
+         at http://wiki.x.org
+ for help.
+(EE) Please also check the log file at "/var/log/Xorg.0.log" for additional information.
+(EE)
+(EE) Server terminated with error (1). Closing log file.
+----------------------------------------------------------------------
+root@lindroid:/# export $(dbus-launch)
+root@lindroid:/# startplasma-x11
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+$DISPLAY is not set or cannot connect to the X server.
+----------------------------------------------------------------------
+root@lindroid:/# weston --backend=drm-backend.so --drm-device=/dev/dri/card1
+Date: 2026-09-07 UTC
+[04:34:58.133] weston 14.0.2
+               https://wayland.freedesktop.org
+               Bug reports to: https://gitlab.freedesktop.org/wayland/weston/issues/
+               Build: 14.0.2
+[04:34:58.133] Command line: weston --backend=drm-backend.so --drm-device=/dev/dri/card1
+[04:34:58.133] OS: Linux, 5.15.178-android13-8-g6f2f96be86b9, #1 SMP PREEMPT Wed Jul 2 02:41:59 UTC 2025, aarch64
+[04:34:58.133] Flight recorder: enabled
+[04:34:58.133] fatal: environment variable XDG_RUNTIME_DIR is not set.
+Refer to your distribution on how to get it, or
+http://www.freedesktop.org/wiki/Specifications/basedir-spec
+on how to implement it.
+-----------------------------------------------------------------------
+root@lindroid:/# mkdir -p /run/user/0
+chmod 700 /run/user/0
+export XDG_RUNTIME_DIR=/run/user/0
+
+weston --backend=drm-backend.so --drm-device=/dev/dri/card1
+Date: 2026-09-07 UTC
+[04:36:25.754] weston 14.0.2
+               https://wayland.freedesktop.org
+               Bug reports to: https://gitlab.freedesktop.org/wayland/weston/issues/
+               Build: 14.0.2
+[04:36:25.754] Command line: weston --backend=drm-backend.so --drm-device=/dev/dri/card1
+[04:36:25.754] OS: Linux, 5.15.178-android13-8-g6f2f96be86b9, #1 SMP PREEMPT Wed Jul 2 02:41:59 UTC 2025, aarch64
+[04:36:25.754] Flight recorder: enabled
+[04:36:25.754] Starting with no config file.
+[04:36:25.755] Output repaint window is 7 ms maximum.
+[04:36:25.756] Loading module '/usr/lib/aarch64-linux-gnu/libweston-14/drm-backend.so'
+[04:36:25.765] initializing drm backend
+[04:36:25.765] Trying libseat launcher...
+[04:36:25.765] [libseat/backend/seatd.c:64] Could not connect to socket /run/seatd.sock: No such file or directory
+[04:36:25.765] [libseat/libseat.c:76] Backend 'seatd' failed to open seat, skipping
+[04:36:25.765] [libseat/backend/logind.c:621] Could not get primary session for user: No data available
+[04:36:25.765] [libseat/libseat.c:76] Backend 'logind' failed to open seat, skipping
+[04:36:25.766] [seatd/seat.c:48] Created VT-bound seat seat0
+[04:36:25.766] [seatd/server.c:145] New client connected (pid: 943, uid: 0, gid: 0)
+[04:36:25.766] [libseat/backend/seatd.c:673] Started embedded seatd
+[04:36:25.766] [common/terminal.c:162] Could not open target tty: No such file or directory
+[04:36:25.766] [seatd/seat.c:70] Could not open tty0 to update VT: No such file or directory
+[04:36:25.766] [seatd/seat.c:239] Added client 0 to seat0
+[04:36:25.766] [common/terminal.c:162] Could not open target tty: No such file or directory
+[04:36:25.766] [seatd/seat.c:80] Could not open terminal for VT 0: No such file or directory
+[04:36:25.766] [seatd/seat.c:544] Could not open VT for client
+[04:36:25.766] [common/terminal.c:162] Could not open target tty: No such file or directory
+[04:36:25.766] [seatd/seat.c:94] Could not open terminal to clean up VT 0: No such file or directory
+[04:36:25.766] [libseat/libseat.c:73] Seat opened with backend 'builtin'
+[04:36:25.767] libseat: session control granted
+[04:36:25.767] ERROR: could not open DRM device '/dev/dri/card1'
+[04:36:25.767] no drm device found
+[04:36:25.767] [common/terminal.c:162] Could not open target tty: No such file or directory
+[04:36:25.767] [seatd/seat.c:94] Could not open terminal to clean up VT 0: No such file or directory
+[04:36:25.767] [seatd/seat.c:290] Removed client 0 from seat0
+[04:36:25.767] fatal: failed to create compositor backend
+Internal warning: debug scope 'drm-backend' has not been destroyed.
+root@lindroid:/# [04:36:25.768] [seatd/client.c:496] Client disconnected
+[04:36:25.768] [libseat/backend/seatd.c:685] Stopped embedded seatd
+-------------------------------------------------------------------
+root@lindroid:/# zcat /proc/config.gz | grep CONFIG_VT
+# CONFIG_VT is not set
+root@lindroid:/#
