@@ -49,14 +49,11 @@ static std::shared_ptr<InputDevice> inputDevice = nullptr;
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
     JNIEnv *env, jclass /* clazz */) {
-    ALOGI("Init native: Starting composer binder service...");
+    ALOGI("Init native: Starting composer socket service...");
 
     composer = ndk::SharedRefBase::make<ComposerImpl>();
-    binder_status_t status = AServiceManager_addService_dynamic(composer->asBinder().get(), "vendor.lindroid.composer");
-    if (status != OK) {
-        ALOGE("Could not register composer binder service");
-    }
-    ABinderProcess_joinThreadPool_dynamic();
+    extern void start_socket_server();
+    start_socket_server();
 }
 
 extern "C" void
