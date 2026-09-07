@@ -9,7 +9,7 @@ object DisplayManager {
         Log.i("CMDisplayMgr", "DisplayManager: starting display (Build Version: 2026-09-06 v2)")
     }
 
-    @JvmStatic external fun nativeStartComposerService()
+    @JvmStatic external fun nativeStartComposerService(containerPath: String)
     @JvmStatic external fun nativeSurfaceCreated(displayId: Long, surface: Surface)
     @JvmStatic external fun nativeSurfaceChanged(displayId: Long, surface: Surface, dpi: Int, refresh: Float)
     @JvmStatic external fun nativeSurfaceDestroyed(displayId: Long, surface: Surface)
@@ -44,7 +44,7 @@ object DisplayManager {
 
     fun startDisplay(context: android.content.Context, surface: Surface, containerPath: String) {
         if (!isComposerStarted) {
-            nativeStartComposerService()
+            nativeStartComposerService(containerPath)
             nativeInitInputDevice()
             isComposerStarted = true
         }

@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <android/log.h>
+#include <sys/stat.h>
 #include <errno.h>
 #include <string.h>
 
@@ -47,7 +48,11 @@ static int recv_fd_and_msg(int sockfd, DisplayMsg* msg) {
     return fd;
 }
 
-static void* socket_server_thread(void*) {
+static void* socket_server_thread(void* arg) {
+    std::string socket_path_str = *static_cast<std::string*>(arg);
+    delete static_cast<std::string*>(arg);
+    const char* socket_path = socket_path_str.c_str();
+
     int server_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (server_fd < 0) {
         ALOGE("Failed to create socket");
@@ -57,9 +62,9 @@ static void* socket_server_thread(void*) {
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    const char* socket_path = "containermanager_disp";
-    addr.sun_path[0] = '\0'; // abstract namespace
-    strncpy(&addr.sun_path[1], socket_path, sizeof(addr.sun_path) - 2);
+    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+
+    unlink(socket_path);
 
     if (bind(server_fd, (struct sockaddr*)&addr, sizeof(sa_family_t) + strlen(socket_path) + 1) < 0) {
         ALOGE("Failed to bind socket: %s", strerror(errno));
@@ -73,7 +78,10 @@ static void* socket_server_thread(void*) {
         return nullptr;
     }
 
-    ALOGI("Socket server listening on @%s", socket_path);
+    // Set permissions so the container can access it
+    chmod(socket_path, 0777);
+
+    ALOGI("Socket server listening on %s", socket_path);
 
     while (true) {
         int client_fd = accept(server_fd, nullptr, nullptr);
@@ -107,11 +115,13 @@ static void* socket_server_thread(void*) {
     }
 
     close(server_fd);
+    unlink(socket_path);
     return nullptr;
 }
 
-void start_socket_server() {
+void start_socket_server(const char* socket_path) {
     pthread_t thread;
-    pthread_create(&thread, nullptr, socket_server_thread, nullptr);
+    std::string* path_arg = new std::string(socket_path);
+    pthread_create(&thread, nullptr, socket_server_thread, path_arg);
     pthread_detach(thread);
 }

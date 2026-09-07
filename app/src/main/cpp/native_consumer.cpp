@@ -16,15 +16,18 @@ using namespace android;
 std::shared_ptr<ComposerImpl> composer = nullptr;
 static std::shared_ptr<InputDevice> inputDevice = nullptr;
 
-extern void start_socket_server();
+extern void start_socket_server(const char* socket_path);
 
 extern "C" void
 Java_com_fauzan_containermanager_DisplayManager_nativeStartComposerService(
-    JNIEnv *env, jclass /* clazz */) {
+    JNIEnv *env, jclass /* clazz */, jstring containerPath) {
     ALOGI("Init native: Starting composer socket service...");
+    const char *path = env->GetStringUTFChars(containerPath, 0);
+    std::string socket_path = std::string(path) + "/var/display_daemon.sock";
+    env->ReleaseStringUTFChars(containerPath, path);
 
     composer = std::make_shared<ComposerImpl>();
-    start_socket_server();
+    start_socket_server(socket_path.c_str());
 }
 
 extern "C" void
