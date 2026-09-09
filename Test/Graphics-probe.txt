@@ -1,0 +1,4 @@
+EGL_PLATFORM=null HYBRIS_EGLPLATFORM=null sh ./build-and-run.sh
+HYBRIS_PROBE platform=null
+library "libui_compat_layer.so" not found
+Segmentation fault
